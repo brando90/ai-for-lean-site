@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conjecture Prover &mdash; Automated Lean 4 Verification</title>
+    <style>
+        :root {
+            --bg: #fafafa;
+            --fg: #1a1a1a;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --border: #d1d5db;
+            --card: #ffffff;
+            --muted: #6b7280;
+            --success: #059669;
+            --code-bg: #f3f4f6;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: var(--bg);
+            color: var(--fg);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            padding: 3rem 0 2rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 2.5rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        header p {
+            color: var(--muted);
+            font-size: 1.05rem;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        .intro {
+            margin-bottom: 2.5rem;
+        }
+
+        .intro p {
+            margin-bottom: 1rem;
+        }
+
+        .pipeline {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.2rem 1.5rem;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.85rem;
+            line-height: 1.8;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            color: var(--muted);
+        }
+
+        .pipeline .stage {
+            color: var(--fg);
+            font-weight: 600;
+        }
+
+        form {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.4rem;
+        }
+
+        label .required {
+            color: #dc2626;
+        }
+
+        label .hint {
+            font-weight: 400;
+            color: var(--muted);
+            font-size: 0.82rem;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 0.7rem 0.9rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-family: 'Georgia', serif;
+            font-size: 1rem;
+            line-height: 1.6;
+            transition: border-color 0.2s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        textarea {
+            min-height: 180px;
+            resize: vertical;
+        }
+
+        textarea.small {
+            min-height: 80px;
+        }
+
+        .consent-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .consent-group input[type="checkbox"] {
+            margin-top: 0.3rem;
+            width: 16px;
+            height: 16px;
+        }
+
+        .consent-group label {
+            font-weight: 400;
+            font-size: 0.88rem;
+            color: var(--muted);
+        }
+
+        button[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 0.85rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button[type="submit"]:hover {
+            background: var(--accent-hover);
+        }
+
+        .what-you-get {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        @media (max-width: 600px) {
+            .what-you-get { grid-template-columns: 1fr; }
+        }
+
+        .what-you-get .item {
+            background: var(--code-bg);
+            border-radius: 8px;
+            padding: 1rem 1.2rem;
+        }
+
+        .what-you-get .item strong {
+            display: block;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 0.85rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .what-you-get .item span {
+            font-size: 0.88rem;
+            color: var(--muted);
+        }
+
+        .example {
+            background: var(--code-bg);
+            border-left: 3px solid var(--accent);
+            padding: 1rem 1.2rem;
+            border-radius: 0 6px 6px 0;
+            margin: 1rem 0;
+            font-size: 0.92rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border);
+            margin-top: 3rem;
+            color: var(--muted);
+            font-size: 0.85rem;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Conjecture Prover</h1>
+            <p>Submit a mathematical conjecture. Get a Lean 4 verified proof.</p>
+        </header>
+
+        <section class="intro">
+            <p>
+                We run an automated pipeline that takes your conjecture in plain mathematical
+                language and attempts to produce a formal proof in
+                <a href="https://lean-lang.org/" target="_blank">Lean 4</a> with
+                <a href="https://leanprover-community.github.io/mathlib4_docs/" target="_blank">Mathlib</a>.
+                Multiple AI models collaborate to generate natural-language proofs, formalize
+                them, and verify correctness through the Lean proof assistant.
+            </p>
+
+            <h2>What you get back</h2>
+            <div class="what-you-get">
+                <div class="item">
+                    <strong>If proved</strong>
+                    <span>A Lean 4 proof file, LaTeX paper, and PDF &mdash; machine-verified.</span>
+                </div>
+                <div class="item">
+                    <strong>If disproved</strong>
+                    <span>A formal counterexample or negation proof with explanation.</span>
+                </div>
+                <div class="item">
+                    <strong>If open</strong>
+                    <span>The formal statement in Lean 4 plus numerical experiments supporting or refuting your conjecture.</span>
+                </div>
+                <div class="item">
+                    <strong>Always</strong>
+                    <span>A response to every submission &mdash; you will hear back regardless of outcome.</span>
+                </div>
+            </div>
+
+            <h2>How it works</h2>
+            <div class="pipeline">
+                <span class="stage">Your conjecture</span>
+                &rarr; NL proof sketch
+                &rarr; Multi-model debate
+                &rarr; <span class="stage">Lean 4 formalization</span>
+                &rarr; Verification &amp; repair (up to 5 attempts)
+                &rarr; Semantic alignment check
+                &rarr; Negation guard
+                &rarr; <span class="stage">Results emailed to you</span>
+            </div>
+
+            <h2>Example input</h2>
+            <div class="example">
+                <em>"For every integer n, n&sup5; &minus; n is divisible by 30."</em>
+            </div>
+            <p style="color: var(--muted); font-size: 0.9rem;">
+                You can use plain text, LaTeX notation ($\beta$, \mathbb{R}), or a mix.
+                The more precise your statement, the better the result.
+            </p>
+        </section>
+
+        <h2>Submit your conjecture</h2>
+
+        <form action="https://formsubmit.co/brandojazz@gmail.com" method="POST">
+            <!-- FormSubmit config -->
+            <input type="hidden" name="_subject" value="New conjecture submission">
+            <input type="hidden" name="_captcha" value="true">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_next" value="https://brando90.github.io/ai-for-lean-site/thanks.html">
+            <!-- Honeypot -->
+            <input type="text" name="_honey" style="display:none">
+
+            <div class="form-group">
+                <label for="name">Your name</label>
+                <input type="text" id="name" name="name" placeholder="e.g. Andreas Haupt">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email <span class="required">*</span>
+                    <span class="hint">&mdash; we'll send results here</span></label>
+                <input type="email" id="email" name="email" required
+                       placeholder="you@university.edu">
+            </div>
+
+            <div class="form-group">
+                <label for="conjecture">Conjecture <span class="required">*</span>
+                    <span class="hint">&mdash; state it as precisely as you can</span></label>
+                <textarea id="conjecture" name="conjecture" required
+                    placeholder="For every integer n &ge; 1, the sum of the first n odd natural numbers equals n&sup2;.&#10;&#10;Or use LaTeX: For all $n \geq 1$, $\sum_{k=1}^{n} (2k-1) = n^2$."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="context">Additional context
+                    <span class="hint">&mdash; background, motivation, known partial results</span></label>
+                <textarea id="context" name="context" class="small"
+                    placeholder="e.g. This is related to the XYZ conjecture. Partial results exist for the case n &le; 100."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="references">References
+                    <span class="hint">&mdash; papers, URLs, or textbook citations</span></label>
+                <input type="text" id="references" name="references"
+                       placeholder="e.g. Erdos & Renyi (1960), arXiv:2401.12345">
+            </div>
+
+            <div class="consent-group">
+                <input type="checkbox" id="consent" name="consent" required>
+                <label for="consent">
+                    I understand that my conjecture and results may be shared publicly
+                    (e.g., as a GitHub pull request with the Lean proof). My email will
+                    not be published.
+                </label>
+            </div>
+
+            <button type="submit">Submit Conjecture</button>
+        </form>
+
+        <footer>
+            <p>
+                Built by <a href="https://brando90.github.io" target="_blank">Brando Miranda</a>
+                at Stanford University.
+                Pipeline source: <a href="https://github.com/brando90/agentic-nl-fl-maths" target="_blank">agentic-nl-fl-maths</a>.
+            </p>
+            <p style="margin-top: 0.5rem;">
+                Questions? Email <a href="mailto:brando.science@gmail.com">brando.science@gmail.com</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
