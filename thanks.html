@@ -4,92 +4,153 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submitted &mdash; Conjecture Prover</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #fafafa;
-            --fg: #1a1a1a;
-            --accent: #2563eb;
-            --muted: #6b7280;
-            --success: #059669;
-            --border: #d1d5db;
+            --bg-primary: #0a0a0f;
+            --fg: #e4e4e7;
+            --fg-muted: #71717a;
+            --accent: #818cf8;
+            --accent-bright: #a5b4fc;
+            --green: #34d399;
+            --border: rgba(255, 255, 255, 0.08);
+            --glass: rgba(255, 255, 255, 0.04);
+            --glass-border: rgba(255, 255, 255, 0.08);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Georgia', 'Times New Roman', serif;
-            background: var(--bg);
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg-primary);
             color: var(--fg);
             line-height: 1.7;
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
+            overflow: hidden;
+        }
+        .bg-glow {
+            position: fixed; inset: 0; z-index: 0;
+            pointer-events: none; overflow: hidden;
+        }
+        .bg-glow .orb {
+            position: absolute; border-radius: 50%;
+            filter: blur(100px); opacity: 0.35;
+            animation: drift 20s ease-in-out infinite alternate;
+        }
+        .bg-glow .orb:nth-child(1) {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, #059669 0%, transparent 70%);
+            top: -150px; left: -50px;
+        }
+        .bg-glow .orb:nth-child(2) {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, #6366f1 0%, transparent 70%);
+            bottom: -100px; right: -50px;
+            animation-delay: -7s;
+        }
+        @keyframes drift {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(20px, -20px) scale(1.05); }
         }
         .card {
+            position: relative; z-index: 1;
             max-width: 520px;
             text-align: center;
             padding: 3rem 2rem;
         }
-        .check {
-            width: 64px;
-            height: 64px;
-            background: var(--success);
+        .check-ring {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            background: rgba(52, 211, 153, 0.1);
+            border: 2px solid rgba(52, 211, 153, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            animation: scale-in 0.5s ease;
+        }
+        .check-ring .inner {
+            width: 52px; height: 52px;
+            background: var(--green);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1.5rem;
+            box-shadow: 0 0 30px rgba(52, 211, 153, 0.4);
         }
-        .check svg {
-            width: 32px;
-            height: 32px;
+        .check-ring svg { width: 28px; height: 28px; }
+        @keyframes scale-in {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
         h1 {
-            font-size: 1.6rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
             margin-bottom: 1rem;
+            letter-spacing: -0.02em;
         }
         p {
-            color: var(--muted);
+            color: var(--fg-muted);
             margin-bottom: 1rem;
+            font-size: 0.95rem;
         }
-        a {
-            color: var(--accent);
-            text-decoration: none;
-        }
-        a:hover { text-decoration: underline; }
         .back {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
             margin-top: 1.5rem;
-            padding: 0.6rem 1.5rem;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            padding: 0.7rem 1.5rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
+            font-family: 'Inter', sans-serif;
             font-size: 0.9rem;
-            color: var(--fg);
+            color: var(--accent-bright);
+            text-decoration: none;
+            transition: all 0.3s;
         }
         .back:hover {
-            background: #f3f4f6;
-            text-decoration: none;
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.15);
+        }
+        .back svg {
+            width: 16px; height: 16px;
         }
     </style>
 </head>
 <body>
+    <div class="bg-glow">
+        <div class="orb"></div>
+        <div class="orb"></div>
+    </div>
     <div class="card">
-        <div class="check">
-            <svg fill="none" stroke="white" viewBox="0 0 24 24" stroke-width="3">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
-            </svg>
+        <div class="check-ring">
+            <div class="inner">
+                <svg fill="none" stroke="white" viewBox="0 0 24 24" stroke-width="3">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                </svg>
+            </div>
         </div>
         <h1>Conjecture submitted</h1>
         <p>
-            Your conjecture has been received and will be queued for automated
-            proof verification. You'll receive results by email &mdash; typically
-            within a few hours.
+            Your conjecture has been received and queued for automated
+            proof verification. You'll receive results by email &mdash;
+            typically within a few hours.
         </p>
         <p>
             The pipeline will attempt to prove, disprove, or provide empirical
             evidence for your conjecture using Lean 4 and Mathlib.
         </p>
-        <a href="/" class="back">Submit another conjecture</a>
+        <a href="./" class="back">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12"/>
+            </svg>
+            Submit another conjecture
+        </a>
     </div>
 </body>
 </html>

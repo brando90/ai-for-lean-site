@@ -4,365 +4,828 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conjecture Prover &mdash; Automated Lean 4 Verification</title>
+    <meta name="description" content="Submit a mathematical conjecture and receive a machine-verified Lean 4 proof. Powered by multi-model AI and the Mathlib library.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #fafafa;
-            --fg: #1a1a1a;
-            --accent: #2563eb;
-            --accent-hover: #1d4ed8;
-            --border: #d1d5db;
-            --card: #ffffff;
-            --muted: #6b7280;
-            --success: #059669;
-            --code-bg: #f3f4f6;
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --bg-card-hover: rgba(255, 255, 255, 0.06);
+            --fg: #e4e4e7;
+            --fg-muted: #71717a;
+            --fg-dim: #52525b;
+            --accent: #818cf8;
+            --accent-bright: #a5b4fc;
+            --accent-glow: rgba(129, 140, 248, 0.15);
+            --accent-hover: #6366f1;
+            --green: #34d399;
+            --green-dim: rgba(52, 211, 153, 0.15);
+            --red: #f87171;
+            --amber: #fbbf24;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.15);
+            --glass: rgba(255, 255, 255, 0.04);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --input-bg: rgba(255, 255, 255, 0.05);
+            --radius: 12px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        html { scroll-behavior: smooth; }
+
         body {
-            font-family: 'Georgia', 'Times New Roman', serif;
-            background: var(--bg);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
             color: var(--fg);
             line-height: 1.7;
+            overflow-x: hidden;
         }
 
-        .container {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 2rem 1.5rem;
+        /* ---- Animated background ---- */
+        .bg-glow {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .bg-glow .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.35;
+            animation: drift 20s ease-in-out infinite alternate;
+        }
+        .bg-glow .orb:nth-child(1) {
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, #6366f1 0%, transparent 70%);
+            top: -200px; left: -100px;
+            animation-duration: 25s;
+        }
+        .bg-glow .orb:nth-child(2) {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, #8b5cf6 0%, transparent 70%);
+            bottom: -150px; right: -100px;
+            animation-duration: 30s;
+            animation-delay: -5s;
+        }
+        .bg-glow .orb:nth-child(3) {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, #06b6d4 0%, transparent 70%);
+            top: 40%; left: 60%;
+            animation-duration: 22s;
+            animation-delay: -10s;
+            opacity: 0.2;
+        }
+        @keyframes drift {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -40px) scale(1.05); }
+            66% { transform: translate(-20px, 20px) scale(0.95); }
+            100% { transform: translate(10px, -10px) scale(1.02); }
         }
 
-        header {
-            text-align: center;
-            padding: 3rem 0 2rem;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 2.5rem;
+        /* ---- Floating math symbols ---- */
+        .math-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
         }
-
-        h1 {
+        .math-bg span {
+            position: absolute;
+            font-family: 'Playfair Display', 'Times New Roman', serif;
+            color: rgba(255, 255, 255, 0.03);
             font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.02em;
+            animation: float-up linear infinite;
+            user-select: none;
+        }
+        @keyframes float-up {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
-        header p {
-            color: var(--muted);
-            font-size: 1.05rem;
+        /* ---- Layout ---- */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* ---- Hero ---- */
+        .hero {
+            text-align: center;
+            padding: 6rem 0 4rem;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            color: var(--accent-bright);
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .hero-badge .dot {
+            width: 6px; height: 6px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.5); }
+            50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); }
+        }
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, var(--accent-bright) 50%, #c4b5fd 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero .subtitle {
+            font-size: 1.15rem;
+            color: var(--fg-muted);
+            max-width: 540px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.8;
+        }
+        .hero .subtitle a {
+            color: var(--accent-bright);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(165, 180, 252, 0.3);
+            transition: border-color 0.2s;
+        }
+        .hero .subtitle a:hover {
+            border-color: var(--accent-bright);
+        }
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.85rem 2rem;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 100px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
+        }
+        .hero-cta:hover {
+            background: var(--accent-hover);
+            box-shadow: 0 0 50px rgba(99, 102, 241, 0.5);
+            transform: translateY(-1px);
+        }
+        .hero-cta svg {
+            width: 18px; height: 18px;
+            transition: transform 0.2s;
+        }
+        .hero-cta:hover svg {
+            transform: translateX(3px);
+        }
+
+        /* ---- Sections ---- */
+        section { padding: 3rem 0; }
+
+        .section-label {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
         }
 
         h2 {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin: 2rem 0 1rem;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        }
-
-        .intro {
-            margin-bottom: 2.5rem;
-        }
-
-        .intro p {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
             margin-bottom: 1rem;
         }
+        .section-desc {
+            color: var(--fg-muted);
+            max-width: 560px;
+            margin-bottom: 2rem;
+        }
 
-        .pipeline {
-            background: var(--code-bg);
+        /* ---- Outcome cards ---- */
+        .outcomes {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        @media (max-width: 600px) {
+            .outcomes { grid-template-columns: 1fr; }
+        }
+        .outcome-card {
+            background: var(--bg-card);
             border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+        .outcome-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+        }
+        .outcome-card .icon {
+            width: 36px; height: 36px;
             border-radius: 8px;
-            padding: 1.2rem 1.5rem;
-            font-family: 'SF Mono', 'Fira Code', monospace;
-            font-size: 0.85rem;
-            line-height: 1.8;
-            overflow-x: auto;
-            margin: 1.5rem 0;
-            color: var(--muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
         }
-
-        .pipeline .stage {
-            color: var(--fg);
+        .outcome-card .icon.proved { background: var(--green-dim); color: var(--green); }
+        .outcome-card .icon.disproved { background: rgba(248, 113, 113, 0.15); color: var(--red); }
+        .outcome-card .icon.open { background: rgba(251, 191, 36, 0.15); color: var(--amber); }
+        .outcome-card .icon.always { background: var(--accent-glow); color: var(--accent-bright); }
+        .outcome-card h3 {
+            font-size: 0.95rem;
             font-weight: 600;
+            margin-bottom: 0.4rem;
+        }
+        .outcome-card p {
+            font-size: 0.85rem;
+            color: var(--fg-muted);
+            line-height: 1.6;
         }
 
-        form {
-            background: var(--card);
+        /* ---- Pipeline visualization ---- */
+        .pipeline-wrap {
+            background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 12px;
+            border-radius: var(--radius);
             padding: 2rem;
-            margin: 2rem 0;
+            overflow-x: auto;
+        }
+        .pipeline-steps {
+            display: flex;
+            align-items: flex-start;
+            gap: 0;
+            min-width: max-content;
+        }
+        .pipeline-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-width: 100px;
+            position: relative;
+        }
+        .pipeline-step .node {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            margin-bottom: 0.6rem;
+            position: relative;
+            z-index: 2;
+        }
+        .pipeline-step .node.active {
+            background: var(--accent);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+        }
+        .pipeline-step .node.dim {
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .pipeline-step .step-label {
+            font-size: 0.72rem;
+            color: var(--fg-muted);
+            max-width: 90px;
+            line-height: 1.4;
+        }
+        .pipeline-step .step-label.bright {
+            color: var(--fg);
+            font-weight: 500;
+        }
+        .pipeline-arrow {
+            display: flex;
+            align-items: center;
+            padding-top: 8px;
+            color: var(--fg-dim);
+            font-size: 0.8rem;
+            min-width: 30px;
+            justify-content: center;
+        }
+        .pipeline-arrow svg {
+            width: 20px; height: 20px;
+            opacity: 0.4;
         }
 
+        /* ---- Example ---- */
+        .example-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent);
+            border-radius: 2px var(--radius) var(--radius) 2px;
+            padding: 1.5rem 1.8rem;
+            margin: 1.5rem 0;
+        }
+        .example-block .example-tag {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 0.6rem;
+        }
+        .example-block p {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            color: var(--fg);
+            line-height: 1.6;
+        }
+        .example-hint {
+            font-size: 0.82rem;
+            color: var(--fg-dim);
+            margin-top: 1rem;
+        }
+
+        /* ---- Form section ---- */
+        .form-section {
+            padding: 4rem 0;
+        }
+        .form-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
         .form-group {
             margin-bottom: 1.5rem;
         }
-
-        label {
+        .form-group label {
             display: block;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-bottom: 0.4rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--fg);
         }
-
-        label .required {
-            color: #dc2626;
+        .form-group label .req {
+            color: var(--red);
+            margin-left: 2px;
         }
-
-        label .hint {
+        .form-group label .hint {
             font-weight: 400;
-            color: var(--muted);
-            font-size: 0.82rem;
+            color: var(--fg-dim);
+            font-size: 0.78rem;
         }
-
-        input[type="text"],
-        input[type="email"],
-        textarea {
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group textarea {
             width: 100%;
-            padding: 0.7rem 0.9rem;
+            padding: 0.75rem 1rem;
+            background: var(--input-bg);
             border: 1px solid var(--border);
-            border-radius: 6px;
-            font-family: 'Georgia', serif;
-            font-size: 1rem;
+            border-radius: 8px;
+            color: var(--fg);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
             line-height: 1.6;
-            transition: border-color 0.2s;
+            transition: all 0.2s;
         }
-
-        input:focus, textarea:focus {
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--fg-dim);
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+            background: rgba(255, 255, 255, 0.07);
         }
-
-        textarea {
-            min-height: 180px;
+        .form-group textarea {
+            min-height: 160px;
             resize: vertical;
         }
-
-        textarea.small {
+        .form-group textarea.small {
             min-height: 80px;
         }
-
         .consent-group {
             display: flex;
             align-items: flex-start;
-            gap: 0.6rem;
-            margin-bottom: 1.5rem;
+            gap: 0.7rem;
+            margin: 1.5rem 0;
         }
-
         .consent-group input[type="checkbox"] {
-            margin-top: 0.3rem;
-            width: 16px;
-            height: 16px;
+            margin-top: 0.25rem;
+            width: 16px; height: 16px;
+            accent-color: var(--accent);
+            cursor: pointer;
         }
-
         .consent-group label {
+            font-size: 0.82rem;
+            color: var(--fg-muted);
+            line-height: 1.5;
             font-weight: 400;
-            font-size: 0.88rem;
-            color: var(--muted);
+            cursor: pointer;
         }
-
-        button[type="submit"] {
-            display: block;
+        .submit-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
             width: 100%;
-            padding: 0.85rem;
-            background: var(--accent);
-            color: white;
+            padding: 0.9rem;
+            background: linear-gradient(135deg, var(--accent) 0%, #7c3aed 100%);
+            color: #fff;
             border: none;
-            border-radius: 8px;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+        }
+        .submit-btn:hover {
+            box-shadow: 0 6px 35px rgba(99, 102, 241, 0.5);
+            transform: translateY(-1px);
+        }
+        .submit-btn svg {
+            width: 18px; height: 18px;
         }
 
-        button[type="submit"]:hover {
-            background: var(--accent-hover);
-        }
-
-        .what-you-get {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin: 1.5rem 0;
-        }
-
-        @media (max-width: 600px) {
-            .what-you-get { grid-template-columns: 1fr; }
-        }
-
-        .what-you-get .item {
-            background: var(--code-bg);
-            border-radius: 8px;
-            padding: 1rem 1.2rem;
-        }
-
-        .what-you-get .item strong {
-            display: block;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            font-size: 0.85rem;
-            margin-bottom: 0.3rem;
-        }
-
-        .what-you-get .item span {
-            font-size: 0.88rem;
-            color: var(--muted);
-        }
-
-        .example {
-            background: var(--code-bg);
-            border-left: 3px solid var(--accent);
-            padding: 1rem 1.2rem;
-            border-radius: 0 6px 6px 0;
+        /* ---- Divider ---- */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
             margin: 1rem 0;
-            font-size: 0.92rem;
         }
 
+        /* ---- Footer ---- */
         footer {
             text-align: center;
-            padding: 2rem 0;
+            padding: 3rem 0;
             border-top: 1px solid var(--border);
-            margin-top: 3rem;
-            color: var(--muted);
-            font-size: 0.85rem;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            margin-top: 2rem;
         }
-
+        footer p {
+            font-size: 0.82rem;
+            color: var(--fg-dim);
+            margin-bottom: 0.4rem;
+        }
         footer a {
-            color: var(--accent);
+            color: var(--accent-bright);
             text-decoration: none;
+            transition: color 0.2s;
+        }
+        footer a:hover {
+            color: #fff;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 0.8rem;
+        }
+        .footer-links a {
+            font-size: 0.8rem;
+            color: var(--fg-muted);
         }
 
-        footer a:hover {
-            text-decoration: underline;
+        /* ---- Responsive ---- */
+        @media (max-width: 600px) {
+            .hero { padding: 4rem 0 3rem; }
+            .hero h1 { font-size: 2.2rem; }
+            .form-card { padding: 1.5rem; }
+            .pipeline-wrap { padding: 1.5rem 1rem; }
+        }
+
+        /* ---- Fade-in animations ---- */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
+    <!-- Animated background -->
+    <div class="bg-glow">
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+    </div>
+
+    <!-- Floating math symbols -->
+    <div class="math-bg" id="mathBg"></div>
+
     <div class="container">
-        <header>
+        <!-- Hero -->
+        <div class="hero">
+            <div class="hero-badge">
+                <span class="dot"></span>
+                Pipeline active &mdash; accepting submissions
+            </div>
             <h1>Conjecture Prover</h1>
-            <p>Submit a mathematical conjecture. Get a Lean 4 verified proof.</p>
-        </header>
-
-        <section class="intro">
-            <p>
-                We run an automated pipeline that takes your conjecture in plain mathematical
-                language and attempts to produce a formal proof in
-                <a href="https://lean-lang.org/" target="_blank">Lean 4</a> with
-                <a href="https://leanprover-community.github.io/mathlib4_docs/" target="_blank">Mathlib</a>.
-                Multiple AI models collaborate to generate natural-language proofs, formalize
-                them, and verify correctness through the Lean proof assistant.
+            <p class="subtitle">
+                Submit a mathematical conjecture in plain language.
+                Get back a machine-verified
+                <a href="https://lean-lang.org/" target="_blank" rel="noopener">Lean&nbsp;4</a>
+                proof &mdash; or a formal counterexample.
             </p>
+            <a href="#submit" class="hero-cta">
+                Submit a conjecture
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                </svg>
+            </a>
+        </div>
 
+        <!-- Outcomes -->
+        <section class="fade-in">
+            <span class="section-label">Outcomes</span>
             <h2>What you get back</h2>
-            <div class="what-you-get">
-                <div class="item">
-                    <strong>If proved</strong>
-                    <span>A Lean 4 proof file, LaTeX paper, and PDF &mdash; machine-verified.</span>
+            <p class="section-desc">
+                Every submission receives a response. The pipeline attempts proof,
+                disproof, and empirical analysis.
+            </p>
+            <div class="outcomes">
+                <div class="outcome-card">
+                    <div class="icon proved">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                    </div>
+                    <h3>Proved</h3>
+                    <p>A Lean 4 proof file, LaTeX paper, and PDF &mdash; fully machine-verified against Mathlib.</p>
                 </div>
-                <div class="item">
-                    <strong>If disproved</strong>
-                    <span>A formal counterexample or negation proof with explanation.</span>
+                <div class="outcome-card">
+                    <div class="icon disproved">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </div>
+                    <h3>Disproved</h3>
+                    <p>A formal counterexample or negation proof with a detailed explanation.</p>
                 </div>
-                <div class="item">
-                    <strong>If open</strong>
-                    <span>The formal statement in Lean 4 plus numerical experiments supporting or refuting your conjecture.</span>
+                <div class="outcome-card">
+                    <div class="icon open">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 8v4l3 3"/></svg>
+                    </div>
+                    <h3>Open</h3>
+                    <p>The formal Lean 4 statement plus numerical experiments supporting or refuting your conjecture.</p>
                 </div>
-                <div class="item">
-                    <strong>Always</strong>
-                    <span>A response to every submission &mdash; you will hear back regardless of outcome.</span>
+                <div class="outcome-card">
+                    <div class="icon always">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    </div>
+                    <h3>Always</h3>
+                    <p>You hear back on every submission &mdash; with results, artifacts, and a full report.</p>
                 </div>
             </div>
+        </section>
 
+        <!-- Pipeline -->
+        <section class="fade-in">
+            <span class="section-label">Pipeline</span>
             <h2>How it works</h2>
-            <div class="pipeline">
-                <span class="stage">Your conjecture</span>
-                &rarr; NL proof sketch
-                &rarr; Multi-model debate
-                &rarr; <span class="stage">Lean 4 formalization</span>
-                &rarr; Verification &amp; repair (up to 5 attempts)
-                &rarr; Semantic alignment check
-                &rarr; Negation guard
-                &rarr; <span class="stage">Results emailed to you</span>
+            <p class="section-desc">
+                Multiple AI models collaborate to prove your conjecture,
+                with iterative repair and multi-layer verification.
+            </p>
+            <div class="pipeline-wrap">
+                <div class="pipeline-steps">
+                    <div class="pipeline-step">
+                        <div class="node active">
+                            <svg width="18" height="18" fill="none" stroke="#fff" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                        </div>
+                        <span class="step-label bright">Your conjecture</span>
+                    </div>
+                    <div class="pipeline-arrow">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </div>
+                    <div class="pipeline-step">
+                        <div class="node dim">
+                            <svg width="16" height="16" fill="none" stroke="#a1a1aa" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                        </div>
+                        <span class="step-label">NL proof sketch</span>
+                    </div>
+                    <div class="pipeline-arrow">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </div>
+                    <div class="pipeline-step">
+                        <div class="node dim">
+                            <svg width="16" height="16" fill="none" stroke="#a1a1aa" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        </div>
+                        <span class="step-label">Multi-model debate</span>
+                    </div>
+                    <div class="pipeline-arrow">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </div>
+                    <div class="pipeline-step">
+                        <div class="node active">
+                            <svg width="18" height="18" fill="none" stroke="#fff" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                        </div>
+                        <span class="step-label bright">Lean 4 formalization</span>
+                    </div>
+                    <div class="pipeline-arrow">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </div>
+                    <div class="pipeline-step">
+                        <div class="node dim">
+                            <svg width="16" height="16" fill="none" stroke="#a1a1aa" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                        </div>
+                        <span class="step-label">Verify &amp; repair</span>
+                    </div>
+                    <div class="pipeline-arrow">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </div>
+                    <div class="pipeline-step">
+                        <div class="node dim">
+                            <svg width="16" height="16" fill="none" stroke="#a1a1aa" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                        </div>
+                        <span class="step-label">Semantic &amp; negation guard</span>
+                    </div>
+                    <div class="pipeline-arrow">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </div>
+                    <div class="pipeline-step">
+                        <div class="node active">
+                            <svg width="18" height="18" fill="none" stroke="#fff" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        </div>
+                        <span class="step-label bright">Results emailed</span>
+                    </div>
+                </div>
             </div>
+        </section>
 
-            <h2>Example input</h2>
-            <div class="example">
-                <em>"For every integer n, n&sup5; &minus; n is divisible by 30."</em>
+        <!-- Example -->
+        <section class="fade-in">
+            <span class="section-label">Example</span>
+            <h2>What to submit</h2>
+            <div class="example-block">
+                <div class="example-tag">Sample input</div>
+                <p>&ldquo;For every integer n, n&#8309; &minus; n is divisible by 30.&rdquo;</p>
             </div>
-            <p style="color: var(--muted); font-size: 0.9rem;">
-                You can use plain text, LaTeX notation ($\beta$, \mathbb{R}), or a mix.
+            <p class="example-hint">
+                Plain text, LaTeX notation (<code style="background:var(--input-bg);padding:0.15rem 0.4rem;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:0.8rem;">$\sum_{k=1}^{n}$</code>), or a mix.
                 The more precise your statement, the better the result.
             </p>
         </section>
 
-        <h2>Submit your conjecture</h2>
+        <div class="divider"></div>
 
-        <form action="https://formsubmit.co/brandojazz@gmail.com" method="POST">
-            <!-- FormSubmit config -->
-            <input type="hidden" name="_subject" value="New conjecture submission">
-            <input type="hidden" name="_captcha" value="true">
-            <input type="hidden" name="_template" value="table">
-            <input type="hidden" name="_next" value="https://brando90.github.io/conjecture-prover/thanks.html">
-            <!-- Honeypot -->
-            <input type="text" name="_honey" style="display:none">
+        <!-- Submit form -->
+        <section class="form-section fade-in" id="submit">
+            <span class="section-label">Submit</span>
+            <h2>Your conjecture</h2>
+            <p class="section-desc">
+                State your conjecture as precisely as you can. We'll attempt a formal
+                proof and email you the results.
+            </p>
 
-            <div class="form-group">
-                <label for="name">Your name</label>
-                <input type="text" id="name" name="name" placeholder="e.g. Andreas Haupt">
+            <div class="form-card">
+                <form action="https://formsubmit.co/brandojazz@gmail.com" method="POST">
+                    <!-- FormSubmit config -->
+                    <input type="hidden" name="_subject" value="New conjecture submission">
+                    <input type="hidden" name="_captcha" value="true">
+                    <input type="hidden" name="_template" value="table">
+                    <input type="hidden" name="_next" value="https://brando90.github.io/conjecture-prover/thanks.html">
+                    <!-- Honeypot -->
+                    <input type="text" name="_honey" style="display:none">
+
+                    <div class="form-group">
+                        <label for="name">Your name</label>
+                        <input type="text" id="name" name="name" placeholder="e.g. Andreas Haupt">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email<span class="req">*</span>
+                            <span class="hint">&mdash; we'll send results here</span></label>
+                        <input type="email" id="email" name="email" required
+                               placeholder="you@university.edu">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="conjecture">Conjecture<span class="req">*</span>
+                            <span class="hint">&mdash; state it as precisely as you can</span></label>
+                        <textarea id="conjecture" name="conjecture" required
+                            placeholder="For every integer n >= 1, the sum of the first n odd natural numbers equals n^2.&#10;&#10;Or use LaTeX: For all $n \geq 1$, $\sum_{k=1}^{n} (2k-1) = n^2$."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="context">Additional context
+                            <span class="hint">&mdash; background, motivation, known partial results</span></label>
+                        <textarea id="context" name="context" class="small"
+                            placeholder="e.g. This is related to the XYZ conjecture. Partial results exist for the case n <= 100."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="references">References
+                            <span class="hint">&mdash; papers, URLs, or textbook citations</span></label>
+                        <input type="text" id="references" name="references"
+                               placeholder="e.g. Erdos & Renyi (1960), arXiv:2401.12345">
+                    </div>
+
+                    <div class="consent-group">
+                        <input type="checkbox" id="consent" name="consent" required>
+                        <label for="consent">
+                            I understand that my conjecture and results may be shared publicly
+                            (e.g., as a GitHub pull request with the Lean proof). My email will
+                            not be published.
+                        </label>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        Submit Conjecture
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                        </svg>
+                    </button>
+                </form>
             </div>
+        </section>
 
-            <div class="form-group">
-                <label for="email">Email <span class="required">*</span>
-                    <span class="hint">&mdash; we'll send results here</span></label>
-                <input type="email" id="email" name="email" required
-                       placeholder="you@university.edu">
-            </div>
-
-            <div class="form-group">
-                <label for="conjecture">Conjecture <span class="required">*</span>
-                    <span class="hint">&mdash; state it as precisely as you can</span></label>
-                <textarea id="conjecture" name="conjecture" required
-                    placeholder="For every integer n &ge; 1, the sum of the first n odd natural numbers equals n&sup2;.&#10;&#10;Or use LaTeX: For all $n \geq 1$, $\sum_{k=1}^{n} (2k-1) = n^2$."></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="context">Additional context
-                    <span class="hint">&mdash; background, motivation, known partial results</span></label>
-                <textarea id="context" name="context" class="small"
-                    placeholder="e.g. This is related to the XYZ conjecture. Partial results exist for the case n &le; 100."></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="references">References
-                    <span class="hint">&mdash; papers, URLs, or textbook citations</span></label>
-                <input type="text" id="references" name="references"
-                       placeholder="e.g. Erdos & Renyi (1960), arXiv:2401.12345">
-            </div>
-
-            <div class="consent-group">
-                <input type="checkbox" id="consent" name="consent" required>
-                <label for="consent">
-                    I understand that my conjecture and results may be shared publicly
-                    (e.g., as a GitHub pull request with the Lean proof). My email will
-                    not be published.
-                </label>
-            </div>
-
-            <button type="submit">Submit Conjecture</button>
-        </form>
-
+        <!-- Footer -->
         <footer>
             <p>
-                Built by <a href="https://brando90.github.io" target="_blank">Brando Miranda</a>
-                at Stanford University.
-                Pipeline source: <a href="https://github.com/brando90/agentic-nl-fl-maths" target="_blank">agentic-nl-fl-maths</a>.
+                Built by <a href="https://brando90.github.io" target="_blank" rel="noopener">Brando Miranda</a>
+                at Stanford University
             </p>
-            <p style="margin-top: 0.5rem;">
-                Questions? Email <a href="mailto:brando.science@gmail.com">brando.science@gmail.com</a>
-            </p>
+            <div class="footer-links">
+                <a href="https://github.com/brando90/conjecture-prover" target="_blank" rel="noopener">GitHub</a>
+                <a href="mailto:brando.science@gmail.com">Contact</a>
+                <a href="https://lean-lang.org/" target="_blank" rel="noopener">Lean 4</a>
+                <a href="https://leanprover-community.github.io/mathlib4_docs/" target="_blank" rel="noopener">Mathlib</a>
+            </div>
         </footer>
     </div>
+
+    <script>
+        // Floating math symbols
+        const symbols = [
+            '\u2200', '\u2203', '\u2208', '\u2282', '\u222B', '\u2211',
+            '\u221E', '\u2207', '\u03B1', '\u03B2', '\u03B3', '\u03B4',
+            '\u03B5', '\u03B6', '\u03B8', '\u03BB', '\u03BC', '\u03C0',
+            '\u03C3', '\u03C6', '\u03C8', '\u03C9', '\u2202', '\u00D7',
+            '\u2248', '\u2260', '\u2264', '\u2265', '\u21D2', '\u2194',
+            '\u22C5', '\u2295', '\u2297', '\u222A', '\u2229', '\u00AC',
+            '\u2228', '\u2227', '\u22A2', '\u22A8', '\u2102', '\u211D',
+            '\u2124', '\u2115', '\u210F', '\u2113'
+        ];
+        const mathBg = document.getElementById('mathBg');
+        function spawnSymbol() {
+            const span = document.createElement('span');
+            span.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+            span.style.left = Math.random() * 100 + '%';
+            span.style.fontSize = (1.2 + Math.random() * 2.5) + 'rem';
+            span.style.animationDuration = (15 + Math.random() * 25) + 's';
+            span.style.animationDelay = '0s';
+            mathBg.appendChild(span);
+            setTimeout(() => span.remove(), 40000);
+        }
+        // Initial batch
+        for (let i = 0; i < 15; i++) {
+            setTimeout(spawnSymbol, Math.random() * 8000);
+        }
+        // Continuous
+        setInterval(spawnSymbol, 2000);
+
+        // Fade-in on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
 </body>
 </html>
