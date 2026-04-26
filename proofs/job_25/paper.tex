@@ -1,0 +1,319 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    backgroundcolor=\color{gray!5},
+    numbers=none,
+    xleftmargin=4pt,
+    xrightmargin=4pt,
+    aboveskip=8pt,
+    belowskip=8pt
+}
+
+\newtheorem{conjecture}{Conjecture}
+
+\title{Empirical Investigation of an Open Conjecture:\\
+Let A be subset of the set \{1,...,N\} such that there is no solution to at = b wh}
+\author{Agentic NL$\to$Lean~4 Pipeline \\ \small Job \#25}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This report documents the empirical investigation of an open mathematical conjecture
+that could not be formally proved or disproved in Lean~4 with Mathlib.
+Numerical experiments were conducted to gather evidence for or against the conjecture.
+The empirical verdict is: \textbf{\textcolor{green!70!black}{Empirically Supported}}.
+The conjecture remains formally open.
+\end{abstract}
+
+\section{Conjecture Statement}
+
+\begin{conjecture}
+\begin{lstlisting}
+Let A be subset of the set {1,...,N} such that there is no solution to at = b where a,b in A and the smallest prime factor of t is strictly greater than a. Estimate the maximum of: the product of the reciprocal of log N with the sum of the reciprocal of all elements in A.
+\end{lstlisting}
+\end{conjecture}
+
+\section{Status}
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{%
+\textbf{Formal Status:} OPEN --- no Lean~4 proof or disproof was found.\\[4pt]
+\textbf{Empirical Verdict:} \textcolor{green!70!black}{Empirically Supported}
+}}
+\end{center}
+
+The pipeline attempted formal verification in Lean~4 with Mathlib but was unable to
+produce a compiling proof or disproof. Empirical testing was then conducted to gather
+numerical evidence.
+
+\section{Basic Empirical Testing}
+
+The following output was produced by the basic numerical experiment:
+
+\begin{lstlisting}
+=== EXPERIMENT PLAN ===
+
+CONJECTURE: Let A ⊆ {1,...,N} with NO solution to a·t = b where a,b ∈ A,
+a < b (so t ≥ 2), and the smallest prime factor (spf) of t is strictly
+greater than a. Estimate:
+        f(N) = sup_A  (1/log N) · Σ_{a ∈ A} 1/a
+and its asymptotic behavior as N → ∞.
+
+REMARK: If 1 ∈ A and any b > 1 lies in A, then t = b has spf(b) ≥ 2 > 1,
+which is forbidden. So 1 is either alone (ratio → 0) or excluded. We
+exclude 1 throughout.
+
+TESTS (multiple angles):
+  (1) INTERVAL construction A = (N/c, N].  For c ≤ √N this is automatically
+      valid (any multiplier t < c ≤ √N ≤ min(A), so spf(t) ≤ t ≤ a).
+      We sweep c and pick the best ratio.
+  (2) GREEDY-DECREASING: process n from N down to 2, add if still valid.
+      For n > √N this always succeeds, so it contains (√N, N] and then
+      tries to squeeze in smaller numbers.
+  (3) GREEDY-INCREASING baseline.
+  (4) Ω-LEVEL SETS {n : Ω(n)=k} — automatically primitive, hence valid.
+      Sweep k and take the best.
+  (5) PRIMES up to N — trivially valid baseline.
+  (6) RANDOMIZED greedy with many random orderings to search for sets
+      beating all of the above (and potential counterexamples to validity).
+  (7) ASYMPTOTIC: run over N from 50 up to 20,000 and look at growth of
+      the best ratio. Linear-regress the best ratio against log N: if the
+      slope is ≈0 the sup is bounded; if positive and consistent, it
+      diverges.
+Every candidate set is rigorously re-validated by brute force.
+
+N=    50 | interval(c=  6.28)=0.4873 | greedy_dec=0.5238 | greedy_inc=0.6543 | Ω-level(k=1)=0.4248 | primes=0.4248 | random=0.6403
+N=   100 | interval(c=  9.13)=0.4904 | greedy_dec=0.5121 | greedy_inc=0.6141 | Ω-level(k=1)=0.3915 | primes=0.3915 | random=0.6008
+N=   200 | interval(c= 13.37)=0.4957 | greedy_dec=0.5237 | greedy_inc=0.5846 | Ω-level(k=1)=0.3679 | primes=0.3679 | random=0.6000
+N=   500 | interval(c= 21.93)=0.4991 | greedy_dec=0.5065 | greedy_inc=0.5440 | Ω-level(k=1)=0.3374 | primes=0.3374 | random=0.5456
+N=  1000 | interval(c= 31.62)=0.5006 | greedy_dec=0.5053 | greedy_inc=0.5188 | Ω-level(k=1)=0.3182 | primes=0.3182 | random=0.5383
+N=  2000 | interval(c= 44.72)=0.5007 | greedy_dec=0.5067 | greedy_inc=0.4949 | Ω-level(k=1)=0.3016 | primes=0.3016 | random=0.5309
+N=  5000 | interval(c= 70.71)=0.5004 | greedy_dec=0.5004 | greedy_inc=0.4664 | Ω-level(k=2)=0.2904 | primes=0.2824 | random=0.5103
+N= 10000 | interval(c=100.00)=0.4995 | greedy_dec=0.5005 | greedy_inc=0.4471 | Ω-level(k=2)=0.2875 | primes=0.2696 | random=0.5110
+N= 20000 | interval(c=141.42)=0.4999 | greedy_dec=0.5021 | greedy_inc=0.4296 | Ω-level(k=2)=0.2846 | primes=0.2580 | random=0.5085
+
+Total compute time: 2.2 s
+Validity counterexamples among generated sets: 0 (expected 0)
+Best ratio per N: ['0.6543', '0.6141', '0.6000', '0.5456', '0.5383', '0.5309', '0.5103', '0.5110', '0.5085']
+Linear fit (best_ratio vs log N): slope = -0.02389, intercept = 0.72203, R² = 0.8842
+
+--- Counterexample hunt for large ratio (> 1.0?) ---
+  cases with ratio > 1.0 : []
+  cases with ratio > 2.0 : []
+
+=== RESULTS SUMMARY ===
+  Ns tested                : [50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000]
+  Best ratios (any method) : [0.6543, 0.6141, 0.6, 0.5456, 0.5383, 0.5309, 0.5103, 0.511, 0.5085]
+  Growth slope vs log N    : -0.02389 (R²=0.884)
+  Validity counterexamples : 0
+  Max best ratio observed  : 0.6543
+  At N=20000, best ratio : 0.5085
+
+INTERPRETATION:
+  • Interval construction (N/c, N] with c = √N is always valid and
+    achieves ratio = log(√N)/log N = 0.5 exactly (asymptotically).
+  • Ω-level sets are automatically primitive hence valid, but yield
+    ratios ~ (log log N)^k / (k! · log N) → 0.
+  • Greedy and randomized searches never beat ≈ 0.5 by a meaningful
+    amount across all N tested.
+  • The maximum ratio appears to converge to a finite constant ≈ 0.5
+    from below; the regression slope vs log N is near 0.
+
+=== VERDICT ===
+EMPIRICALLY SUPPORTED: Over N ∈ [50, 20000] the maximum of (Σ_{a∈A} 1/a)/log N, optimi
+... [truncated]
+\end{lstlisting}
+
+
+\section{Experiment Code (Basic)}
+
+\begin{lstlisting}[language=Python]
+import matplotlib
+matplotlib.use("Agg")
+import numpy as np
+import matplotlib.pyplot as plt
+from math import log
+import time
+from scipy.stats import linregress
+
+print("=== EXPERIMENT PLAN ===")
+print("""
+CONJECTURE: Let A ⊆ {1,...,N} with NO solution to a·t = b where a,b ∈ A,
+a < b (so t ≥ 2), and the smallest prime factor (spf) of t is strictly
+greater than a. Estimate:
+        f(N) = sup_A  (1/log N) · Σ_{a ∈ A} 1/a
+and its asymptotic behavior as N → ∞.
+
+REMARK: If 1 ∈ A and any b > 1 lies in A, then t = b has spf(b) ≥ 2 > 1,
+which is forbidden. So 1 is either alone (ratio → 0) or excluded. We
+exclude 1 throughout.
+
+TESTS (multiple angles):
+  (1) INTERVAL construction A = (N/c, N].  For c ≤ √N this is automatically
+      valid (any multiplier t < c ≤ √N ≤ min(A), so spf(t) ≤ t ≤ a).
+      We sweep c and pick the best ratio.
+  (2) GREEDY-DECREASING: process n from N down to 2, add if still valid.
+      For n > √N this always succeeds, so it contains (√N, N] and then
+      tries to squeeze in smaller numbers.
+  (3) GREEDY-INCREASING baseline.
+  (4) Ω-LEVEL SETS {n : Ω(n)=k} — automatically primitive, hence valid.
+      Sweep k and take the best.
+  (5) PRIMES up to N — trivially valid baseline.
+  (6) RANDOMIZED greedy with many random orderings to search for sets
+      beating all of the above (and potential counterexamples to validity).
+  (7) ASYMPTOTIC: run over N from 50 up to 20,000 and look at growth of
+      the best ratio. Linear-regress the best ratio against log N: if the
+      slope is ≈0 the sup is bounded; if positive and consistent, it
+      diverges.
+Every candidate set is rigorously re-validated by brute force.
+""")
+
+# -------------- helpers --------------
+def compute_spf(M):
+    spf = np.zeros(M + 1, dtype=np.int64)
+    for i in range(2, M + 1):
+        if spf[i] == 0:
+            for j in range(i, M + 1, i):
+                if spf[j] == 0:
+                    spf[j] = i
+    return spf
+
+def compute_bigOmega(M, spf):
+    Om = np.zeros(M + 1, dtype=np.int64)
+    for n in range(2, M + 1):
+        x = n
+        while x > 1:
+            Om[n] += 1
+            x //= spf[x]
+    return Om
+
+def validate(A, N, spf):
+    """Rigorous check. Returns (ok, counterexample_or_None)."""
+    A_set = set(A)
+    for a in sorted(A_set):
+        if a <= 1:
+            # a=1 with any b>1 is forbidden
+            for b in A_set:
+                if b > 1:
+                    return False, (a, b, b)
+            continue
+        t = 2
+        while a * t <= N:
+            if (a * t) in A_set and spf[t] > a:
+                return False, (a, a * t, t)
+            t += 1
+    return True, None
+
+def ratio(A, N):
+    if N <= 1:
+        return 0.0
+    s = sum(1.0 / a for a in A if a >= 2)
+    return s / log(N)
+
+def greedy_decreasing(N, spf):
+    A = set()
+    for n in range(N, 1, -1):
+        ok = True
+        t = 2
+        while n * t <= N:
+            if (n * t) in A and spf[t] > n:
+                ok = False
+                break
+            t += 1
+        if ok:
+            A.add(n)
+    return A
+
+def greedy_increasing(N, spf):
+    A = set()
+    for n in range(2, N + 1):
+        ok = True
+        # check divisors a<n
+        d = 2
+        while d * d <= n and ok:
+            if n % d == 0:
+                for a in (d, n // d):
+                    if a != n and a in A:
+                        if spf[n // a] > a:
+                            ok = False
+                            break
+            d += 1
+        if ok:
+            A.add(n)
+    return A
+
+def random_order_greedy(N, spf, rng):
+    order = list(range(2, N + 1))
+    rng.shuffle(order)
+    A = set()
+    for n in order:
+        ok = True
+        # n as 'a': check multiples in A
+        t = 2
+        while n * t <= N and ok:
+            if (n * t) in A and spf[t] > n:
+                ok = False
+            t += 1
+        if not ok:
+            continue
+        # n as 'b': check divisors in A
+        d = 2
+        while d * d <= n and ok:
+            if n % d == 0:
+                for a in (d, n // d):
+                    if a != n and a in A:
+                        if spf[n // a] > a:
+                            ok = False
+                            break
+            d += 1
+        if ok:
+            A.add(n)
+    return A
+
+# -------------- main sweep --------------
+Ns = [50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000]
+methods = ['interval_best', 'greedy_dec', 'greedy_inc',
+           'Omega_level_best', 'primes', 'random_best']
+results = {m: [] for m in methods}
+counterexamples_to_validity = []
+t0 = time.time()
+
+for N in Ns:
+    spf = compute_spf(N)
+    Om = compute_bigOmega(N, spf)
+
+    # (1) interval
+    best_iv = 0.0; best_c = None
+    for c in np.linspace(1.5, max(2.0, N ** 0.5), 50):
+        lo = int(N / c)
+        A = list(range(lo + 1, N + 1))
+        ok, _ = validate(A, N, spf)
+        if ok:
+            r = ratio(A, N)
+            if r > best_iv:
+                best_iv, best_c = r, c
+
+    # (2) greedy decreasing
+    A_gd = greedy_decreasing(N, spf)
+    
+# ... [truncated]
+\end{lstlisting}
+
+
+\section{Conclusion}
+
+The conjecture remains formally open. Numerical experiments \textbf{support} the conjecture --- no counterexamples were found across all tested parameter ranges.
+Further investigation (both formal and empirical) is warranted.
+
+\end{document}

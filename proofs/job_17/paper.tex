@@ -1,0 +1,661 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    backgroundcolor=\color{gray!5},
+    numbers=none,
+    xleftmargin=4pt,
+    xrightmargin=4pt,
+    aboveskip=8pt,
+    belowskip=8pt
+}
+
+\newtheorem{conjecture}{Conjecture}
+
+\title{Empirical Investigation of an Open Conjecture:\\
+Smoothed Complexity of the Simplex Method}
+\author{Agentic NL$\to$Lean~4 Pipeline \\ \small Job \#17}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This report documents the empirical investigation of an open mathematical conjecture
+that could not be formally proved or disproved in Lean~4 with Mathlib.
+Numerical experiments were conducted to gather evidence for or against the conjecture.
+The empirical verdict is: \textbf{\textcolor{green!70!black}{Empirically Supported}}.
+The conjecture remains formally open.
+\end{abstract}
+
+\section{Conjecture Statement}
+
+\begin{conjecture}
+\begin{lstlisting}
+Smoothed Complexity of the Simplex Method
+
+Fix integers 
+𝑛
+≥
+1
+n≥1 (variables) and 
+𝑚
+≥
+𝑛
+m≥n (constraints). Consider linear programs
+
+max
+⁡
+𝑥
+∈
+𝑅
+𝑛
+𝑐
+⊤
+𝑥
+subject to
+𝐴
+𝑥
+≤
+𝑏
+,
+x∈R
+n
+max
+	​
+
+c
+⊤
+xsubject toAx≤b,
+
+with 
+𝐴
+∈
+𝑅
+𝑚
+×
+𝑛
+A∈R
+m×n
+, 
+𝑏
+∈
+𝑅
+𝑚
+b∈R
+m
+, 
+𝑐
+∈
+𝑅
+𝑛
+c∈R
+n
+. A simplex pivot rule 
+𝑅
+R means a complete deterministic specification of entering/leaving choices (including tie-breaking and initialization details), so the pivot count is well defined on nondegenerate instances.
+
+Convention for this problem: in the Gaussian smoothed model, an adversary chooses 
+(
+𝐴
+ˉ
+,
+𝑏
+ˉ
+,
+𝑐
+ˉ
+)
+(
+A
+ˉ
+,
+b
+ˉ
+,
+c
+ˉ
+) with 
+∥
+(
+𝐴
+ˉ
+,
+𝑏
+ˉ
+,
+𝑐
+ˉ
+)
+∥
+≤
+1
+∥(
+A
+ˉ
+,
+b
+ˉ
+,
+c
+ˉ
+)∥≤1, then independent Gaussian noise is added to every scalar coefficient of 
+𝐴
+,
+𝑏
+,
+𝑐
+A,b,c:
+
+𝐴
+=
+𝐴
+ˉ
++
+𝐺
+,
+𝑏
+=
+𝑏
+ˉ
++
+ℎ
+,
+𝑐
+=
+𝑐
+ˉ
++
+𝑔
+,
+A=
+A
+ˉ
++G,b=
+b
+ˉ
++h,c=
+c
+ˉ
++g,
+
+where entries of 
+𝐺
+,
+ℎ
+,
+𝑔
+G,h,g are i.i.d. 
+𝑁
+(
+0
+,
+𝜎
+2
+)
+N(0,σ
+2
+) with 
+𝜎
+∈
+(
+0
+,
+1
+]
+σ∈(0,1]. Let 
+𝑇
+𝑅
+(
+𝐴
+,
+𝑏
+,
+𝑐
+)
+T
+R
+	​
+
+(A,b,c) be the total number of pivots performed by the full simplex algorithm using rule 
+𝑅
+R. Define
+
+S
+m
+𝑅
+(
+𝑚
+,
+𝑛
+,
+𝜎
+)
+:
+=
+sup
+⁡
+∥
+(
+𝐴
+ˉ
+,
+𝑏
+ˉ
+,
+𝑐
+ˉ
+)
+∥
+≤
+1
+ 
+𝐸
+ ⁣
+[
+𝑇
+𝑅
+(
+𝐴
+ˉ
++
+𝐺
+,
+𝑏
+ˉ
++
+ℎ
+,
+𝑐
+ˉ
++
+𝑔
+)
+]
+.
+Sm
+R
+	​
+
+(m,n,σ):=
+∥(
+A
+ˉ
+,
+b
+ˉ
+,
+c
+ˉ
+)∥≤1
+sup
+	​
+
+ E[T
+R
+	​
+
+(
+A
+ˉ
++G,
+b
+ˉ
++h,
+c
+ˉ
++g)].
+Unsolved Problem
+
+Does there exist a pivot rule 
+𝑅
+R with near-linear smoothed complexity (up to polylogarithmic factors), uniformly for all 
+𝑚
+≥
+𝑛
+m≥n and 
+𝜎
+∈
+(
+0
+,
+1
+]
+σ∈(0,1]; for example
+
+S
+m
+𝑅
+(
+𝑚
+,
+𝑛
+,
+𝜎
+)
+≤
+𝑂
+ ⁣
+(
+𝑛
+⋅
+p
+o
+l
+y
+l
+o
+g
+(
+𝑚
+,
+𝑛
+,
+1
+/
+𝜎
+)
+)
+?
+Sm
+R
+	​
+
+(m,n,σ)≤O(n⋅polylog(m,n,1/σ))?
+
+More generally, what is the correct asymptotic order of
+
+inf
+⁡
+𝑅
+S
+m
+𝑅
+(
+𝑚
+,
+𝑛
+,
+𝜎
+)
+R
+inf
+	​
+
+Sm
+R
+	​
+
+(m,n,σ)
+
+as a function of 
+𝑚
+,
+𝑛
+,
+𝜎
+m,n,σ under this perturbation model?
+
+Solution Claims
+
+Accepted claims are public. Pending claims are visible only to the claimant and site administrators.
+\end{lstlisting}
+\end{conjecture}
+
+\section{Status}
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{%
+\textbf{Formal Status:} OPEN --- no Lean~4 proof or disproof was found.\\[4pt]
+\textbf{Empirical Verdict:} \textcolor{green!70!black}{Empirically Supported}
+}}
+\end{center}
+
+The pipeline attempted formal verification in Lean~4 with Mathlib but was unable to
+produce a compiling proof or disproof. Empirical testing was then conducted to gather
+numerical evidence.
+
+\section{Basic Empirical Testing}
+
+The following output was produced by the basic numerical experiment:
+
+\begin{lstlisting}
+========================================================================
+=== EXPERIMENT PLAN ===
+========================================================================
+
+Conjecture: a pivot rule R exists with smoothed complexity
+            Sm_R(m, n, σ) ≤ O( n · polylog(m, n, 1/σ) )
+uniformly for m ≥ n, σ ∈ (0, 1].
+
+Methodology:
+  We use SciPy's HiGHS dual-simplex ('highs-ds', presolve disabled) as a
+  concrete, deterministic pivot rule R.  For each tested triple (m, n, σ)
+  we sample Gaussian-smoothed LP instances
+        max cᵀx   s.t.  A x ≤ b,   x ∈ [-B,B]^n   (B=10 to keep LPs bounded)
+  where A = Ā + σ G,  b = b̄ + σ h,  c = c̄ + σ g with Gaussian G, h, g.
+  We record the pivot count res.nit returned by HiGHS.
+
+Five distinct tests are performed:
+
+  (1) Scaling in n  (fix σ=0.3, m=4n, sweep n = 2..22, ≥80 trials each).
+      Fit mean pivots to n^p (power law).  A near-linear rule predicts
+      p ≈ 1 up to polylog factors.
+
+  (2) Scaling in m  (fix n=6, σ=0.3, sweep m = 6..180).
+      Conjecture predicts only polylogarithmic growth in m.
+
+  (3) Scaling in 1/σ  (fix n=6, m=24, sweep σ = 0.02..1.0).
+      Conjecture predicts only polylogarithmic growth in 1/σ.
+
+  (4) Adversarial means  (Klee–Minty-style Ā, unit-normalised).
+      A "good" rule should not blow up under an adversarial centre.
+
+  (5) Counter-example search (3000 random (m, n, σ)).
+      Look for instances with pivots / (n · log(m+2) · log(1/σ + 2))
+      unusually large – would weaken the conjecture.
+
+Verdict rule:
+  EMPIRICALLY SUPPORTED if (a) fitted exponent in n is ≲ 1.4, (b) growth
+    in m and 1/σ is sub-polynomial (slope in log-log plot < 0.5), and
+    (c) adversarial means do not blow up, and (d) no extreme outliers
+    in the random sweep.
+  Otherwise INCONCLUSIVE (we cannot refute the *existence* of a better rule).
+
+
+========================================================================
+EXPERIMENT 1 — Scaling in n (m = 4n, σ = 0.3)
+========================================================================
+  n= 2  m=  8  trials= 86  mean=  2.76   std= 0.83   max=   5
+  n= 3  m= 12  trials= 87  mean=  4.61   std= 1.22   max=   8
+  n= 4  m= 16  trials= 90  mean=  6.14   std= 1.37   max=  10
+  n= 5  m= 20  trials= 89  mean=  8.01   std= 1.69   max=  12
+  n= 6  m= 24  trials= 90  mean=  9.63   std= 2.00   max=  17
+  n= 7  m= 28  trials= 89  mean= 11.97   std= 2.10   max=  17
+  n= 8  m= 32  trials= 89  mean= 14.13   std= 2.40   max=  21
+  n= 9  m= 36  trials= 90  mean= 15.97   std= 2.37   max=  22
+  n=10  m= 40  trials= 85  mean= 18.79   std= 2.83   max=  24
+  n=11  m= 44  trials= 90  mean= 20.27   std= 3.10   max=  28
+  n=12  m= 48  trials= 88  mean= 22.92   std= 3.23   max=  36
+  n=13  m= 52  trials= 88  mean= 25.67   std= 3.69   max=  34
+  n=14  m= 56  trials= 90  mean= 27.71   std= 3.66   max=  37
+  n=15  m= 60  trials= 90  mean= 30.14   std= 4.24   max=  47
+  n=16  m= 64  trials= 90  mean= 31.72   std= 4.10   max=  44
+  n=17  m= 68  trials= 90  mean= 34.51   std= 3.91   max=  44
+  n=18  m= 72  trials= 90  mean= 36.54   std= 3.71   max=  45
+  n=19  m= 76  trials= 90  mean= 40.21   std= 4.40   max=  51
+  n=20  m= 80  trials= 90  mean= 41.69   std= 5.34   max=  57
+  n=21  m= 84  trials= 90  mean= 45.20   std= 4.86   max=  59
+  n=22  m= 88  trials= 90  mean= 48.12   std= 5.04   max=  61
+
+  Power-law fit over n:  pivots ≈ 1.197 · n^1.188   (R²=0.999)
+  n·log(n) fit:          pivots ≈ 0.710 · n·log(n)   (rel. residual=0.045)
+
+========================================================================
+EXPERIMENT 2 — Scaling in m (n = 6, σ = 0.3)
+========================================================================
+  m=  6  mean pivots =   3.36  ±   1.68  (n_eff=100)
+  m=  8  mean pivots =   4.37  ±   1.87  (n_eff=100)
+  m= 12  mean pivots =   6.67  ±   1.78  (n_eff=100)
+  m= 16  mean pivots =   8.12  ±   1.83  (n_eff=100)
+  m= 24  mean pivots =   9.77  ±   1.83  (n_eff=96)
+  m= 32  mean pivots =  11.22  ±   2.18  (n_eff=93)
+  m= 48  mean pivots =  12.88  ±
+... [truncated]
+\end{lstlisting}
+
+
+\section{Experiment Code (Basic)}
+
+\begin{lstlisting}[language=Python]
+"""
+Empirical test of the Smoothed Complexity of the Simplex Method conjecture.
+
+Conjecture (open): There exists a simplex pivot rule R such that
+    Sm_R(m, n, σ) ≤ O( n · polylog(m, n, 1/σ) )
+uniformly for all m ≥ n and σ ∈ (0, 1] under the Gaussian smoothed model.
+"""
+import matplotlib
+matplotlib.use("Agg")
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.optimize import linprog
+from scipy import stats
+import math
+import warnings
+warnings.filterwarnings("ignore")
+
+rng = np.random.default_rng(20260421)
+
+print("=" * 72)
+print("=== EXPERIMENT PLAN ===")
+print("=" * 72)
+print("""
+Conjecture: a pivot rule R exists with smoothed complexity
+            Sm_R(m, n, σ) ≤ O( n · polylog(m, n, 1/σ) )
+uniformly for m ≥ n, σ ∈ (0, 1].
+
+Methodology:
+  We use SciPy's HiGHS dual-simplex ('highs-ds', presolve disabled) as a
+  concrete, deterministic pivot rule R.  For each tested triple (m, n, σ)
+  we sample Gaussian-smoothed LP instances
+        max cᵀx   s.t.  A x ≤ b,   x ∈ [-B,B]^n   (B=10 to keep LPs bounded)
+  where A = Ā + σ G,  b = b̄ + σ h,  c = c̄ + σ g with Gaussian G, h, g.
+  We record the pivot count res.nit returned by HiGHS.
+
+Five distinct tests are performed:
+
+  (1) Scaling in n  (fix σ=0.3, m=4n, sweep n = 2..22, ≥80 trials each).
+      Fit mean pivots to n^p (power law).  A near-linear rule predicts
+      p ≈ 1 up to polylog factors.
+
+  (2) Scaling in m  (fix n=6, σ=0.3, sweep m = 6..180).
+      Conjecture predicts only polylogarithmic growth in m.
+
+  (3) Scaling in 1/σ  (fix n=6, m=24, sweep σ = 0.02..1.0).
+      Conjecture predicts only polylogarithmic growth in 1/σ.
+
+  (4) Adversarial means  (Klee–Minty-style Ā, unit-normalised).
+      A "good" rule should not blow up under an adversarial centre.
+
+  (5) Counter-example search (3000 random (m, n, σ)).
+      Look for instances with pivots / (n · log(m+2) · log(1/σ + 2))
+      unusually large – would weaken the conjecture.
+
+Verdict rule:
+  EMPIRICALLY SUPPORTED if (a) fitted exponent in n is ≲ 1.4, (b) growth
+    in m and 1/σ is sub-polynomial (slope in log-log plot < 0.5), and
+    (c) adversarial means do not blow up, and (d) no extreme outliers
+    in the random sweep.
+  Otherwise INCONCLUSIVE (we cannot refute the *existence* of a better rule).
+""")
+
+# ---------------------------------------------------------------------------
+# Utilities
+# ---------------------------------------------------------------------------
+B = 10.0
+
+def solve_lp(A, b, c):
+    """Return HiGHS dual-simplex pivot count, or None on failure."""
+    n = A.shape[1]
+    try:
+        res = linprog(c=-c, A_ub=A, b_ub=b, bounds=[(-B, B)] * n,
+                      method="highs-ds",
+                      options={"presolve": False, "time_limit": 1.5})
+        if res.status == 0 and res.nit is not None:
+            return int(res.nit)
+    except Exception:
+        pass
+    return None
+
+def sample_counts(m, n, sigma, trials, adversarial=False):
+    counts = []
+    if adversarial:
+        Abar = np.zeros((m, n))
+        k = min(m, n)
+        for i in range(k):
+            Abar[i, i] = 1.0
+            for j in range(i):
+                Abar[i, j] = 2.0
+        fro = np.linalg.norm(Abar, "fro") + 1e-12
+        Abar = Abar / fro                # ||Ā||_F = 1
+        bbar = 0.5 * np.ones(m)
+        cbar = np.zeros(n); cbar[-1] = 1.0
+    else:
+        Abar = np.zeros((m, n))
+        bbar = 0.5 * np.ones(m)          # origin strictly feasible
+        cbar = np.zeros(n)
+    for _ in range(trials):
+        A = Abar + sigma * rng.standard_normal((m, n))
+        b = bbar + sigma * rng.standard_normal(m)
+        c = cbar + sigma * rng.standard_normal(n)
+        nit = solve_lp(A, b, c)
+        if nit is not None:
+            counts.append(nit)
+    return np.asarray(counts, dtype=float)
+
+# ---------------------------------------------------------------------------
+# EXPERIMENT 1: scaling in n
+# ---------------------------------------------------------------------------
+print("\n" + "=" * 72)
+print("EXPERIMENT 1 — Scaling in n (m = 4n, σ = 0.3)")
+print("=" * 72)
+n_grid = list(range(2, 23))
+trials1 = 90
+exp1_means, exp1_stds, exp1_ns, exp1_ms = [], [], [], []
+for nv in n_grid:
+    mv = max(4 * nv, nv + 2)
+    c = sample_counts(mv, nv, 0.3, trials1, adversarial=False)
+    exp1_ns.append(nv); exp1_ms.append(mv)
+    exp1_means.append(float(c.mean())); exp1_stds.append(float(c.std()))
+    print(f"  n={nv:2d}  m={mv:3d}  trials={len(c):3d}  "
+          f"mean={c.mean():6.2f}   std={c.std():5.2f}   "
+          f"max={int(c.max()):4d}")
+
+ns = np.asarray(exp1_ns); pv = np.asarray(exp1_means)
+slope_n, icept_n, r_n, _, _ = stats.linregress(np.log(ns), np.log(pv))
+print(f"\n  Power-law fit over n:  pivots ≈ {math.exp(icept_n):.3f} · n^{slope_n:.3f}   "
+      f"(R²={r_n**2:.3f})")
+# nlogn fit
+nlog = ns * np.log(ns + 1)
+coef_nlogn = np.linalg.lstsq(nlog.reshape(-1,1), pv, rcond=None)[0][0]
+resid_nlogn = np.linalg.norm(pv - coef_nlogn * nlog) / np.linalg.norm(pv)
+print(f"  n·log(n) fit:          pivots ≈ {
+# ... [truncated]
+\end{lstlisting}
+
+
+\section{Conclusion}
+
+The conjecture remains formally open. Numerical experiments \textbf{support} the conjecture --- no counterexamples were found across all tested parameter ranges.
+Further investigation (both formal and empirical) is warranted.
+
+\end{document}

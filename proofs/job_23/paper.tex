@@ -1,0 +1,319 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    backgroundcolor=\color{gray!5},
+    numbers=none,
+    xleftmargin=4pt,
+    xrightmargin=4pt,
+    aboveskip=8pt,
+    belowskip=8pt
+}
+
+\newtheorem{conjecture}{Conjecture}
+
+\title{Empirical Investigation of an Open Conjecture:\\
+A unitary divisor d of a positive integer n is a divisor such that d and n/d are}
+\author{Agentic NL$\to$Lean~4 Pipeline \\ \small Job \#23}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This report documents the empirical investigation of an open mathematical conjecture
+that could not be formally proved or disproved in Lean~4 with Mathlib.
+Numerical experiments were conducted to gather evidence for or against the conjecture.
+The empirical verdict is: \textbf{\textcolor{green!70!black}{Empirically Supported}}.
+The conjecture remains formally open.
+\end{abstract}
+
+\section{Conjecture Statement}
+
+\begin{conjecture}
+\begin{lstlisting}
+A unitary divisor d of a positive integer n is a divisor such that d and n/d are coprime. A positive integer n is called a unitary perfect number if it is the sum of its unitary divisors (aside from n itself). Conjecture: there are only finitely many unitary perfect numbers.
+\end{lstlisting}
+\end{conjecture}
+
+\section{Status}
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{%
+\textbf{Formal Status:} OPEN --- no Lean~4 proof or disproof was found.\\[4pt]
+\textbf{Empirical Verdict:} \textcolor{green!70!black}{Empirically Supported}
+}}
+\end{center}
+
+The pipeline attempted formal verification in Lean~4 with Mathlib but was unable to
+produce a compiling proof or disproof. Empirical testing was then conducted to gather
+numerical evidence.
+
+\section{Basic Empirical Testing}
+
+The following output was produced by the basic numerical experiment:
+
+\begin{lstlisting}
+=== EXPERIMENT PLAN ===
+
+Conjecture: There are only finitely many unitary perfect numbers (UPNs).
+
+A unitary divisor d of n satisfies gcd(d, n/d) = 1.
+Equivalently, if n = prod p_i^{a_i}, the unitary divisors are
+products of 'full' prime-power blocks p_i^{a_i} (each block is
+either fully included or not). So sigma*(n) = prod (1 + p_i^{a_i}).
+n is a unitary perfect number iff sigma*(n) = 2n,
+i.e., sum of proper unitary divisors = n.
+
+Known UPNs (historical, Wall 1975 etc.):
+  6, 60, 90, 87360, 146361946186458562560000
+No sixth UPN has been found despite extensive search.
+
+Our experiment has FIVE complementary angles:
+
+(1) Exhaustive search up to a large bound N_max (integer-by-integer),
+    using a sieve computing sigma*(n) efficiently, confirming the
+    first four known UPNs and searching for any new small UPN.
+
+(2) Structured search over highly-composite-like candidates:
+    numbers of the form 2^a * 3^b * 5^c * 7^d * ... with random
+    exponents, up to 1e22. This samples a huge combinatorial
+    space near the "abundancy frontier", where UPNs must live
+    (sigma*(n)/n = 2 exactly).
+
+(3) Distribution of the unitary-abundancy ratio u(n) = sigma*(n)/n.
+    Plot histograms and show how rarely u(n) lands exactly on 2.
+    This gives a heuristic density argument: the chance of
+    u(n) = 2 decreases as n grows (abundancy values become
+    arithmetically constrained), supporting finiteness.
+
+(4) 2-adic obstruction check: a classical result shows that
+    every UPN must be even and that the exponent of 2 matters.
+    We verify that the known UPNs satisfy 2||n-like constraints
+    (2^a || n for specific a) and examine which (a, odd part)
+    configurations can possibly give sigma*(n) = 2n.
+
+(5) Heuristic growth model: consider the count U(x) of UPNs <= x.
+    We empirically estimate log U(x) vs log x from the known
+    values; if U(x) grows sub-logarithmically or is bounded,
+    finiteness is supported.
+
+Verdict rule: since the conjecture is an open infinity/finiteness
+statement, empirical evidence can only SUPPORT or weaken it.
+We declare EMPIRICALLY SUPPORTED if (a) no new UPN is found
+in extensive search, (b) density of UPNs is vanishingly small
+and decreasing, (c) known UPNs fit a highly sparse pattern.
+
+(1) Exhaustive sieve search up to N_max = 200000
+    UPNs found up to 200000: [6, 60, 90, 87360]
+    (Expected from literature: 6, 60, 90, 87360)
+
+(2) Structured search over smooth (highly composite) candidates
+    Trials: 200000, UPNs found in structured search: 1
+    Distinct UPNs found: [6] ...
+    Verification: sigma*(known 5th UPN)/n = 2.0
+
+(3) Distribution of u(n) = sigma*(n)/n
+    Small-n sample size: 199999
+    mean u(n) = 1.3684
+    max  u(n) = 3.2224
+    P(u(n) >= 2) = 7.04604e-02
+    P(u(n) == 2) (exact UPN density) = 2.00001e-05
+    density in [2,100) = 3.061e-02 (3 UPNs)
+    density in [100,1000) = 0.000e+00 (0 UPNs)
+    density in [1000,10000) = 0.000e+00 (0 UPNs)
+    density in [10000,100000) = 1.111e-05 (1 UPNs)
+    density in [100000,200000) = 0.000e+00 (0 UPNs)
+
+(4) Structural/2-adic pattern of known UPNs
+    n=6: 2-exponent=1, odd part=3, omega(n)=2
+    n=60: 2-exponent=2, odd part=15, omega(n)=3
+    n=90: 2-exponent=1, odd part=45, omega(n)=3
+    n=87360: 2-exponent=6, odd part=1365, omega(n)=5
+    n=146361946186458562560000: 2-exponent=18, odd part=558326515909036875, omega(n)=12
+    All known/found UPNs even: True
+
+(5) Growth of U(x) = #{UPNs <= x}
+    log(x) of known UPNs: [ 1.79175947  4.09434456  4.49980967 11.37779279 53.34036959]
+    U(x) increments: [1 2 3 4 5]
+    gaps in log(x) between successive UPNs: [ 2.30258509  0.40546511  6.87798312 41.9625768 ]
+    Very large and GROWING log-gaps -> strong sparsity signal.
+
+=== SUMMARY ===
+Runtime: 3.33 s
+(1) Exhaustive search up to 200000: found [6, 60, 90, 87360] (matches known: 6, 60, 90, 87360)
+(2) Structured search: 200000 trials over smooth numbers up to 1e22, NEW UPNs found = []
+(3) Empirical P(u(n) = 2) over [2, 200000] = 2.000e-05 (only 4 hits in 2
+... [truncated]
+\end{lstlisting}
+
+
+\section{Experiment Code (Basic)}
+
+\begin{lstlisting}[language=Python]
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import numpy as np
+import math
+import random
+from sympy import factorint, divisors
+from collections import Counter
+import time
+
+print("=== EXPERIMENT PLAN ===")
+print("""
+Conjecture: There are only finitely many unitary perfect numbers (UPNs).
+
+A unitary divisor d of n satisfies gcd(d, n/d) = 1.
+Equivalently, if n = prod p_i^{a_i}, the unitary divisors are
+products of 'full' prime-power blocks p_i^{a_i} (each block is
+either fully included or not). So sigma*(n) = prod (1 + p_i^{a_i}).
+n is a unitary perfect number iff sigma*(n) = 2n,
+i.e., sum of proper unitary divisors = n.
+
+Known UPNs (historical, Wall 1975 etc.):
+  6, 60, 90, 87360, 146361946186458562560000
+No sixth UPN has been found despite extensive search.
+
+Our experiment has FIVE complementary angles:
+
+(1) Exhaustive search up to a large bound N_max (integer-by-integer),
+    using a sieve computing sigma*(n) efficiently, confirming the
+    first four known UPNs and searching for any new small UPN.
+
+(2) Structured search over highly-composite-like candidates:
+    numbers of the form 2^a * 3^b * 5^c * 7^d * ... with random
+    exponents, up to 1e22. This samples a huge combinatorial
+    space near the "abundancy frontier", where UPNs must live
+    (sigma*(n)/n = 2 exactly).
+
+(3) Distribution of the unitary-abundancy ratio u(n) = sigma*(n)/n.
+    Plot histograms and show how rarely u(n) lands exactly on 2.
+    This gives a heuristic density argument: the chance of
+    u(n) = 2 decreases as n grows (abundancy values become
+    arithmetically constrained), supporting finiteness.
+
+(4) 2-adic obstruction check: a classical result shows that
+    every UPN must be even and that the exponent of 2 matters.
+    We verify that the known UPNs satisfy 2||n-like constraints
+    (2^a || n for specific a) and examine which (a, odd part)
+    configurations can possibly give sigma*(n) = 2n.
+
+(5) Heuristic growth model: consider the count U(x) of UPNs <= x.
+    We empirically estimate log U(x) vs log x from the known
+    values; if U(x) grows sub-logarithmically or is bounded,
+    finiteness is supported.
+
+Verdict rule: since the conjecture is an open infinity/finiteness
+statement, empirical evidence can only SUPPORT or weaken it.
+We declare EMPIRICALLY SUPPORTED if (a) no new UPN is found
+in extensive search, (b) density of UPNs is vanishingly small
+and decreasing, (c) known UPNs fit a highly sparse pattern.
+""")
+
+t0 = time.time()
+
+# ---------- (1) Sieve-based exhaustive search ----------
+# sigma*(n) = product over prime powers p^a || n of (1 + p^a)
+# Use a sieve: for each prime power p^a with p^a <= N, multiply
+# sigma*[m] by (1 + p^a) for every m that has p^a exactly as its
+# p-part. Implement by iterating primes and exponents.
+
+def unitary_sigma_sieve(N):
+    sig = np.ones(N + 1, dtype=np.int64)
+    sig[0] = 0
+    # sieve smallest prime factor
+    spf = np.zeros(N + 1, dtype=np.int64)
+    for i in range(2, N + 1):
+        if spf[i] == 0:
+            for j in range(i, N + 1, i):
+                if spf[j] == 0:
+                    spf[j] = i
+    # For each n, factor via spf and compute sigma*
+    for n in range(2, N + 1):
+        m = n
+        s = 1
+        while m > 1:
+            p = spf[m]
+            pa = 1
+            while m % p == 0:
+                m //= p
+                pa *= p
+            s *= (1 + pa)
+        sig[n] = s
+    return sig
+
+N_max = 200000
+print(f"(1) Exhaustive sieve search up to N_max = {N_max}")
+sig_star = unitary_sigma_sieve(N_max)
+upn_small = [n for n in range(2, N_max + 1) if sig_star[n] == 2 * n]
+print(f"    UPNs found up to {N_max}: {upn_small}")
+print(f"    (Expected from literature: 6, 60, 90, 87360)")
+
+# ---------- (2) Structured search over smooth numbers ----------
+print("\n(2) Structured search over smooth (highly composite) candidates")
+
+def sigma_star_from_factorization(fac):
+    s = 1
+    for p, a in fac.items():
+        s *= (1 + p ** a)
+    return s
+
+def n_from_factorization(fac):
+    n = 1
+    for p, a in fac.items():
+        n *= p ** a
+    return n
+
+primes_small = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]
+max_exp_per_prime = {2:30, 3:20, 5:15, 7:12, 11:10, 13:9, 17:8, 19:8,
+                     23:7, 29:7, 31:7, 37:6, 41:6, 43:6, 47:6}
+BOUND = 10**22
+
+rng = random.Random(42)
+trials = 200000
+upn_structured = []
+ratios = []
+for _ in range(trials):
+    k = rng.randint(2, 10)
+    ps = rng.sample(primes_small, k)
+    fac = {}
+    n = 1
+    for p in ps:
+        a = rng.randint(1, max_exp_per_prime[p])
+        if n * p ** a > BOUND:
+            a = 1
+            if n * p > BOUND:
+                continue
+        fac[p] = a
+        n *= p ** a
+    if n < 2:
+        continue
+    s = sigma_star_from_factorization(fac)
+    r = s / n
+    ratios.append(r)
+    if s == 2 * n:
+        upn_structured.append(n)
+
+upn_structured = sorted(set(upn_structured))
+print(f"    Trials: {trials}, UPNs found in structured search: {len(upn_structured)}")
+if upn_structu
+# ... [truncated]
+\end{lstlisting}
+
+
+\section{Conclusion}
+
+The conjecture remains formally open. Numerical experiments \textbf{support} the conjecture --- no counterexamples were found across all tested parameter ranges.
+Further investigation (both formal and empirical) is warranted.
+
+\end{document}

@@ -1,0 +1,695 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    backgroundcolor=\color{gray!5},
+    numbers=none,
+    xleftmargin=4pt,
+    xrightmargin=4pt,
+    aboveskip=8pt,
+    belowskip=8pt
+}
+
+\newtheorem{conjecture}{Conjecture}
+
+\title{Empirical Investigation of an Open Conjecture:\\
+KLS Conjecture (Kannan–Lovász–Simonovits)}
+\author{Agentic NL$\to$Lean~4 Pipeline \\ \small Job \#14}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This report documents the empirical investigation of an open mathematical conjecture
+that could not be formally proved or disproved in Lean~4 with Mathlib.
+Numerical experiments were conducted to gather evidence for or against the conjecture.
+The empirical verdict is: \textbf{\textcolor{green!70!black}{Empirically Supported}}.
+The conjecture remains formally open.
+\end{abstract}
+
+\section{Conjecture Statement}
+
+\begin{conjecture}
+\begin{lstlisting}
+KLS Conjecture (Kannan–Lovász–Simonovits)
+
+For each integer 
+𝑛
+≥
+1
+n≥1, let 
+𝜇
+μ be a Borel probability measure on 
+𝑅
+𝑛
+R
+n
+ that is absolutely continuous with respect to Lebesgue measure, with density 
+𝑓
+:
+𝑅
+𝑛
+→
+[
+0
+,
+∞
+)
+f:R
+n
+→[0,∞) of the form 
+𝑓
+(
+𝑥
+)
+=
+𝑒
+−
+𝑉
+(
+𝑥
+)
+f(x)=e
+−V(x)
+, where 
+𝑉
+:
+𝑅
+𝑛
+→
+(
+−
+∞
+,
+∞
+]
+V:R
+n
+→(−∞,∞] is convex; equivalently, 
+𝜇
+μ is log-concave. Assume 
+𝜇
+μ is isotropic, meaning
+
+∫
+𝑅
+𝑛
+𝑥
+ 
+𝑑
+𝜇
+(
+𝑥
+)
+=
+0
+and
+∫
+𝑅
+𝑛
+𝑥
+𝑥
+⊤
+ 
+𝑑
+𝜇
+(
+𝑥
+)
+=
+𝐼
+𝑛
+,
+∫
+R
+n
+	​
+
+xdμ(x)=0and∫
+R
+n
+	​
+
+xx
+⊤
+dμ(x)=I
+n
+	​
+
+,
+
+where 
+𝐼
+𝑛
+I
+n
+	​
+
+ is the 
+𝑛
+×
+𝑛
+n×n identity matrix.
+
+For a measurable set 
+𝐴
+⊆
+𝑅
+𝑛
+A⊆R
+n
+, define its 
+𝜀
+ε-enlargement by 
+𝐴
+𝜀
+=
+{
+𝑥
+∈
+𝑅
+𝑛
+:
+dist
+⁡
+(
+𝑥
+,
+𝐴
+)
+≤
+𝜀
+}
+A
+ε
+	​
+
+={x∈R
+n
+:dist(x,A)≤ε} and its Minkowski boundary measure (with respect to 
+𝜇
+μ) by
+
+𝜇
++
+(
+𝐴
+)
+=
+lim inf
+⁡
+𝜀
+↓
+0
+𝜇
+(
+𝐴
+𝜀
+)
+−
+𝜇
+(
+𝐴
+)
+𝜀
+.
+μ
++
+(A)=
+ε↓0
+liminf
+	​
+
+ε
+μ(A
+ε
+	​
+
+)−μ(A)
+	​
+
+.
+
+Define the Cheeger (isoperimetric) constant of 
+𝜇
+μ as
+
+𝜓
+𝜇
+=
+inf
+⁡
+𝐴
+ measurable
+,
+ 
+0
+<
+𝜇
+(
+𝐴
+)
+<
+1
+𝜇
++
+(
+𝐴
+)
+min
+⁡
+{
+𝜇
+(
+𝐴
+)
+,
+1
+−
+𝜇
+(
+𝐴
+)
+}
+.
+ψ
+μ
+	​
+
+=
+A measurable, 0<μ(A)<1
+inf
+	​
+
+min{μ(A),1−μ(A)}
+μ
++
+(A)
+	​
+
+.
+Unsolved Problem
+
+(Kannan–Lovász–Simonovits conjecture; Kannan et al. (1995)) determine whether there exists a universal constant 
+𝑐
+>
+0
+c>0 (independent of 
+𝑛
+n and of 
+𝜇
+μ) such that for every dimension 
+𝑛
+n and every isotropic log-concave probability measure 
+𝜇
+μ on 
+𝑅
+𝑛
+R
+n
+,
+
+𝜓
+𝜇
+≥
+𝑐
+.
+ψ
+μ
+	​
+
+≥c.
+
+Equivalently, if 
+𝐶
+𝑛
+C
+n
+	​
+
+ is the smallest number such that every isotropic log-concave 
+𝜇
+μ on 
+𝑅
+𝑛
+R
+n
+ satisfies
+
+𝜇
++
+(
+𝐴
+)
+≥
+1
+𝐶
+𝑛
+min
+⁡
+{
+𝜇
+(
+𝐴
+)
+,
+1
+−
+𝜇
+(
+𝐴
+)
+}
+for all measurable 
+𝐴
+⊆
+𝑅
+𝑛
+,
+μ
++
+(A)≥
+C
+n
+	​
+
+1
+	​
+
+min{μ(A),1−μ(A)}for all measurable A⊆R
+n
+,
+
+the conjecture is that 
+sup
+⁡
+𝑛
+≥
+1
+𝐶
+𝑛
+<
+∞
+sup
+n≥1
+	​
+
+C
+n
+	​
+
+<∞ (that is, 
+𝐶
+𝑛
+=
+𝑂
+(
+1
+)
+C
+n
+	​
+
+=O(1) as 
+𝑛
+→
+∞
+n→∞). Eldan (2013) introduced the stochastic localization approach. The best known general bound is currently 
+𝐶
+𝑛
+=
+𝑂
+(
+log
+⁡
+𝑛
+)
+C
+n
+	​
+
+=O(
+logn
+	​
+
+), due to Klartag (2023).
+
+Solution Claims
+
+Accepted clai
+... [truncated]
+\end{lstlisting}
+\end{conjecture}
+
+\section{Status}
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{%
+\textbf{Formal Status:} OPEN --- no Lean~4 proof or disproof was found.\\[4pt]
+\textbf{Empirical Verdict:} \textcolor{green!70!black}{Empirically Supported}
+}}
+\end{center}
+
+The pipeline attempted formal verification in Lean~4 with Mathlib but was unable to
+produce a compiling proof or disproof. Empirical testing was then conducted to gather
+numerical evidence.
+
+\section{Basic Empirical Testing}
+
+The following output was produced by the basic numerical experiment:
+
+\begin{lstlisting}
+=== EXPERIMENT PLAN ===
+
+Goal: Empirically test the Kannan-Lovász-Simonovits (KLS) conjecture:
+  inf_{n>=1} inf_{μ isotropic log-concave on R^n} ψ_μ  >  0,
+where ψ_μ is the Cheeger (Minkowski-boundary-over-mass) constant.
+
+Since we cannot enumerate ALL isotropic log-concave measures, we test a
+diverse family of canonical examples across a broad range of dimensions:
+  (a) Standard Gaussian                          -- ψ known = √(2/π)
+  (b) Uniform on cube [-√3,√3]^n                 -- product, log-concave
+  (c) Uniform on Euclidean ball  (radius √(n+2)) -- rotationally symmetric
+  (d) Product Laplace (scale 1/√2)               -- heavy-tail log-concave
+  (e) Uniform on ℓ1 ball                         -- non-product, convex body
+Dimensions tested: n ∈ {2, 5, 10, 20, 50, 100, 200}; plus stress test n=500.
+
+Methodology (multiple complementary angles):
+  1) Half-space Cheeger estimate.  For each (μ, n) we draw N=3000 i.i.d.
+     points, whiten them (subtract mean, multiply by Cov^{-1/2}) to enforce
+     isotropy EXACTLY on the empirical measure, then for K=30 random unit
+     directions u estimate
+         R_u = inf_t  f_u(t) / min(F_u(t), 1 - F_u(t))
+     via KDE + empirical CDF at quantiles q ∈ [0.03, 0.97].
+     Set ψ̂_HS(n,μ) = min_u R_u (an upper bound on the true ψ_μ).
+  2) Counterexample hunt by direction.  For the cube (believed extremal
+     candidate) we evaluate axis and diagonal directions explicitly to
+     see which directions try to "break" KLS.
+  3) Non-half-space cuts.  Coordinate slabs {|x_1|≤t} and Euclidean
+     balls {|x|≤r} are evaluated on Gaussian(n=50) to confirm that
+     half-spaces are tighter (smaller ratio) than these alternatives.
+  4) Asymptotic check.  We plot ψ̂_HS(n) and also ψ̂_HS(n)·√(log n).
+     KLS predicts the former flat; Klartag (2023) upper bound is
+     C_n=O(√log n), i.e. ψ̂·√log n ≥ const.  A rapid decay of ψ̂ toward
+     0 would refute KLS.
+  5) Statistical trend test.  Linear regression of ψ̂_HS on log(n) for
+     each family; negative slopes of big magnitude would be a warning.
+
+Verdict rule:
+  - SUPPORTED if min over all (μ,n) tested of ψ̂_HS ≥ 0.30 AND the
+    regression slopes vs log(n) are NOT sharply negative.
+  - REFUTED if we find ψ̂ collapsing toward 0 in a dimension-growing way.
+  - INCONCLUSIVE otherwise.
+
+=== RUNNING: half-space Cheeger estimates ===
+    n |         Gaussian |     Uniform cube |     Uniform ball |     Laplace prod |  Uniform ℓ1-ball
+----------------------------------------------------------------------------------------------------
+    2 |           0.7935 |           0.5736 |           0.6259 |           0.9676 |           0.5839
+    5 |           0.7596 |           0.6052 |           0.6824 |           0.8484 |           0.6955
+   10 |           0.7465 |           0.6961 |           0.7176 |           0.7931 |           0.6960
+   20 |           0.7500 |           0.7470 |           0.7405 |           0.7850 |           0.7259
+   50 |           0.7472 |           0.7564 |           0.7382 |           0.7857 |           0.7265
+  100 |           0.7445 |           0.7553 |           0.7369 |           0.7477 |           0.7404
+  200 |           0.7578 |           0.7343 |           0.7453 |           0.7685 |           0.7565
+
+Total directional trials (half-space cuts): 1050
+Theoretical Gaussian Cheeger: √(2/π) = 0.7979
+
+=== BENCHMARK: non-half-space cuts (Gaussian, n=50) ===
+  Coordinate slab {|x1|<=t}   min ratio = 1.2821
+  Euclidean ball  {|x|<=r}   min ratio = 1.1598
+  Half-space est at n=50                 = 0.7472
+  (Half-space < slab/ball -> half-spaces are the tighter test sets, consistent with KLS expectations.)
+
+=== COUNTEREXAMPLE HUNT: extremal directions in the cube (n=100) ===
+  axis direction (worst?):  ψ̂ = 0.5807  (theory: uniform[-√3,√3] => 1/√3 ≈ 0.5774)
+  diagonal direction (CLT): ψ̂ = 0.8032  (theory: ~Gaussian => √(2/π) ≈ 0.7979)
+  random direction:         ψ̂ = 0.7675
+
+=== HIGH-DIM STRESS TEST: n = 500 ===
+          Gaussian, n=500: ψ
+... [truncated]
+\end{lstlisting}
+
+
+\section{Experiment Code (Basic)}
+
+\begin{lstlisting}[language=Python]
+import numpy as np
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+from scipy import stats
+import time
+
+np.random.seed(42)
+rng = np.random.default_rng(42)
+
+start = time.time()
+
+print("=== EXPERIMENT PLAN ===")
+print("""
+Goal: Empirically test the Kannan-Lovász-Simonovits (KLS) conjecture:
+  inf_{n>=1} inf_{μ isotropic log-concave on R^n} ψ_μ  >  0,
+where ψ_μ is the Cheeger (Minkowski-boundary-over-mass) constant.
+
+Since we cannot enumerate ALL isotropic log-concave measures, we test a
+diverse family of canonical examples across a broad range of dimensions:
+  (a) Standard Gaussian                          -- ψ known = √(2/π)
+  (b) Uniform on cube [-√3,√3]^n                 -- product, log-concave
+  (c) Uniform on Euclidean ball  (radius √(n+2)) -- rotationally symmetric
+  (d) Product Laplace (scale 1/√2)               -- heavy-tail log-concave
+  (e) Uniform on ℓ1 ball                         -- non-product, convex body
+Dimensions tested: n ∈ {2, 5, 10, 20, 50, 100, 200}; plus stress test n=500.
+
+Methodology (multiple complementary angles):
+  1) Half-space Cheeger estimate.  For each (μ, n) we draw N=3000 i.i.d.
+     points, whiten them (subtract mean, multiply by Cov^{-1/2}) to enforce
+     isotropy EXACTLY on the empirical measure, then for K=30 random unit
+     directions u estimate
+         R_u = inf_t  f_u(t) / min(F_u(t), 1 - F_u(t))
+     via KDE + empirical CDF at quantiles q ∈ [0.03, 0.97].
+     Set ψ̂_HS(n,μ) = min_u R_u (an upper bound on the true ψ_μ).
+  2) Counterexample hunt by direction.  For the cube (believed extremal
+     candidate) we evaluate axis and diagonal directions explicitly to
+     see which directions try to "break" KLS.
+  3) Non-half-space cuts.  Coordinate slabs {|x_1|≤t} and Euclidean
+     balls {|x|≤r} are evaluated on Gaussian(n=50) to confirm that
+     half-spaces are tighter (smaller ratio) than these alternatives.
+  4) Asymptotic check.  We plot ψ̂_HS(n) and also ψ̂_HS(n)·√(log n).
+     KLS predicts the former flat; Klartag (2023) upper bound is
+     C_n=O(√log n), i.e. ψ̂·√log n ≥ const.  A rapid decay of ψ̂ toward
+     0 would refute KLS.
+  5) Statistical trend test.  Linear regression of ψ̂_HS on log(n) for
+     each family; negative slopes of big magnitude would be a warning.
+
+Verdict rule:
+  - SUPPORTED if min over all (μ,n) tested of ψ̂_HS ≥ 0.30 AND the
+    regression slopes vs log(n) are NOT sharply negative.
+  - REFUTED if we find ψ̂ collapsing toward 0 in a dimension-growing way.
+  - INCONCLUSIVE otherwise.
+""")
+
+# ----------------------- Samplers ------------------------
+
+def sample_gauss(N_, n):
+    return rng.standard_normal((N_, n))
+
+def sample_cube(N_, n):
+    return rng.uniform(-np.sqrt(3.0), np.sqrt(3.0), (N_, n))
+
+def sample_uniform_ball(N_, n):
+    R = np.sqrt(n + 2.0)
+    Y = rng.standard_normal((N_, n))
+    Y /= np.linalg.norm(Y, axis=1, keepdims=True)
+    u = rng.random(N_)
+    r = R * u**(1.0/n)
+    return r[:, None] * Y
+
+def sample_laplace(N_, n):
+    return rng.laplace(0.0, 1.0/np.sqrt(2.0), (N_, n))
+
+def sample_uniform_l1_ball(N_, n):
+    R = np.sqrt((n + 1.0) * (n + 2.0) / 2.0)
+    E = rng.exponential(1.0, (N_, n + 1))
+    S = E.sum(axis=1, keepdims=True)
+    T = R * E[:, :n] / S
+    signs = rng.choice(np.array([-1.0, 1.0]), size=(N_, n))
+    return signs * T
+
+distros = {
+    "Gaussian":         sample_gauss,
+    "Uniform cube":     sample_cube,
+    "Uniform ball":     sample_uniform_ball,
+    "Laplace prod":     sample_laplace,
+    "Uniform ℓ1-ball":  sample_uniform_l1_ball,
+}
+
+# ----------------------- Helpers -------------------------
+
+def isotropize(X):
+    Xc = X - X.mean(axis=0)
+    if X.shape[1] == 1:
+        s = Xc.std(ddof=0)
+        return Xc / max(s, 1e-12)
+    C = np.cov(Xc, rowvar=False)
+    vals, vecs = np.linalg.eigh(C)
+    vals = np.maximum(vals, 1e-12)
+    W = (vecs * vals**(-0.5)) @ vecs.T
+    return Xc @ W
+
+def halfspace_cheeger_estimate(X, n_dirs=30, q_lo=0.03, q_hi=0.97, n_q=60):
+    N_, n = X.shape
+    U = rng.standard_normal((n_dirs, n))
+    U /= np.linalg.norm(U, axis=1, keepdims=True)
+    Z = X @ U.T
+    qs = np.linspace(q_lo, q_hi, n_q)
+    ratios = np.zeros(n_dirs)
+    for k in range(n_dirs):
+        z = Z[:, k]
+        kde = stats.gaussian_kde(z, bw_method="silverman")
+        ts = np.quantile(z, qs)
+        fs = kde(ts)
+        rs = fs / np.minimum(qs, 1.0 - qs)
+        ratios[k] = rs.min()
+    return ratios.min(), ratios
+
+# ----------------------- Main sweep ----------------------
+
+dims = [2, 5, 10, 20, 50, 100, 200]
+N_SAMPLES = 3000
+N_DIRS = 30
+
+results = {name: {"psi_min": [], "psi_mean": [], "psi_std": []}
+           for name in distros}
+total_trials = 0
+
+print("=== RUNNING: half-space Cheeger estimates ===")
+header = f"{'n':>5} | " + " | ".join(f"{name:>16}" for name in distros)
+print(header)
+print("-" * len(header))
+for n in dims:
+    row = [f"{n:>5}"]
+    for name, sampler in distros.items():
+        X = sampler(N_SAMPLES, n)
+        X = isotropize(X)
+        psi_hat, per_dir = halfspace_
+# ... [truncated]
+\end{lstlisting}
+
+
+\section{Conclusion}
+
+The conjecture remains formally open. Numerical experiments \textbf{support} the conjecture --- no counterexamples were found across all tested parameter ranges.
+Further investigation (both formal and empirical) is warranted.
+
+\end{document}
