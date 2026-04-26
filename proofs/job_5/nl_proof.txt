@@ -1,0 +1,88 @@
+# Proof Sketch: The Twin Prime Conjecture
+
+**Conjecture.** There are infinitely many pairs of primes $(p, p+2)$.
+
+This is the celebrated **Twin Prime Conjecture**, one of the oldest open problems in number theory, typically attributed to de Polignac (1849) in its general form. Below I describe the strongest known partial results, the main techniques involved, and explain why a full proof currently eludes us.
+
+---
+
+## 1. Historical and heuristic background
+
+**Brun's theorem (1919).** Viggo Brun proved, using a new sieve method now bearing his name, that
+$$\sum_{\substack{p,\, p+2 \text{ prime}}} \left(\frac{1}{p} + \frac{1}{p+2}\right) < \infty.$$
+The sum of reciprocals of twin primes converges to Brun's constant $B_2 \approx 1.9021605\ldots$. This is compatible with, but does not imply, infinitude.
+
+**Hardy–Littlewood conjecture (1923).** The circle method heuristic predicts
+$$\pi_2(x) := \#\{p \leq x : p, p+2 \text{ both prime}\} \sim 2 C_2 \frac{x}{(\log x)^2},$$
+where $C_2 = \prod_{p \geq 3}\left(1 - \frac{1}{(p-1)^2}\right) \approx 0.6601618\ldots$ is the twin prime constant. This quantitative form is also open but supported by extensive numerical evidence.
+
+---
+
+## 2. The sieve strategy
+
+Let $\mathcal{A} = \{n(n+2) : n \leq x\}$ and sieve out integers divisible by small primes. One wants to show that infinitely many $n$ survive with both $n$ and $n+2$ prime.
+
+The **parity problem** (Selberg) is the fundamental obstruction: classical sieves cannot distinguish integers with an even versus odd number of prime factors, and so they cannot alone produce primes in both $n$ and $n+2$. The best unconditional result via pure sieve theory is:
+
+**Chen's theorem (1966/1973).** There are infinitely many primes $p$ such that $p+2$ is either prime or a product of at most two primes (a "$P_2$-almost prime"). Chen's proof uses a weighted sieve combined with the Bombieri–Vinogradov theorem, which gives the primes in arithmetic progressions on average up to modulus $x^{1/2-\varepsilon}$.
+
+---
+
+## 3. Bounded gaps: the GPY–Zhang–Maynard–Tao breakthroughs
+
+Define $H_m = \liminf_{n\to\infty}(p_{n+m} - p_n)$. The twin prime conjecture asserts $H_1 = 2$.
+
+**Goldston–Pintz–Yıldırım (2005).** Using a refined Selberg-style sieve weighted by the divisor function, they proved
+$$\liminf_{n\to\infty}\frac{p_{n+1}-p_n}{\log p_n} = 0.$$
+Under a conjectural extension of Bombieri–Vinogradov (Elliott–Halberstam), they obtained $H_1 \leq 16$.
+
+**Zhang's theorem (2013).** Yitang Zhang proved $H_1 \leq 70{,}000{,}000$ unconditionally, by establishing a weakened but crucial Bombieri–Vinogradov-type distribution result beyond the $x^{1/2}$ barrier, for moduli with only small prime factors ("smooth moduli"). This uses deep input: the Weil bounds for Kloosterman sums and Deligne's work on the Riemann Hypothesis over finite fields.
+
+**Maynard–Tao (2013/2014).** Independently, Maynard and Tao introduced a **multidimensional Selberg sieve** using test functions $F(t_1, \ldots, t_k)$ on the simplex, rather than the one-variable construction of GPY. This gave:
+- $H_1 \leq 600$ unconditionally,
+- $H_m \ll m^3 e^{4m}$ for every $m$,
+- stronger bounds under Elliott–Halberstam.
+
+The **Polymath8b** project optimized this to $H_1 \leq 246$ unconditionally, and $H_1 \leq 12$ under Elliott–Halberstam, and $H_1 \leq 6$ under a generalized Elliott–Halberstam conjecture.
+
+Thus, unconditionally,
+$$\liminf_{n\to\infty}(p_{n+1}-p_n) \leq 246.$$
+
+---
+
+## 4. Why this does not prove the conjecture
+
+The Maynard–Tao sieve produces primes in at least two of $k$ shifts $\{n+h_1, \ldots, n+h_k\}$ for an admissible tuple, but **cannot specify which two**. Pinning the gap to exactly $2$ would require either:
+
+1. A Bombieri–Vinogradov-type theorem valid for modulus range $x^{\theta}$ with $\theta$ sufficiently close to $1$ (generalized Elliott–Halberstam with $\theta > 1/2$ alone is insufficient; even $\theta\to 1$ only yields $H_1 \leq 6$ in the Maynard–Tao framework), **and**
+2. A way to break the parity barrier to isolate gap exactly $2$ from gaps $4, 6, \ldots$.
+
+The parity problem (Selberg 1949) shows that the sieve axioms of Type-I/II information alone cannot distinguish primes from products of an odd number of primes, and no known technique circumvents this without external input (such as the input from automorphic forms used in Friedlander–Iwaniec's theorem on primes of the form $a^2 + b^4$, which is not known to apply here).
+
+---
+
+## 5. What a hypothetical complete proof would need
+
+A complete proof of the twin prime conjecture would likely require at least one of:
+- A dispersion-method estimate of Type-II sums for the sequence $n(n+2)$ strong enough to break the parity barrier,
+- A suitable extension of Deligne's equidistribution results yielding level of distribution $\theta = 1$ for primes,
+- A fundamentally new technique (e.g., from automorphic forms, ergodic theory, or additive combinatorics) that produces primes in specific residue classes of very small modulus.
+
+None of these is currently available.
+
+---
+
+## 6. Summary of what *is* proved
+
+- **Brun (1919):** $\sum 1/p$ over twin primes converges.
+- **Chen (1973):** Infinitely many primes $p$ with $p+2 \in P_1 \cup P_2$.
+- **Zhang (2013):** $H_1 \leq 7\times 10^7$.
+- **Maynard–Tao / Polymath8b (2014):** $H_1 \leq 246$ unconditionally; $H_1 \leq 6$ under GEH.
+- **Full conjecture $H_1 = 2$:** Open.
+
+---
+
+## Final Verdict
+
+## Final Verdict
+VERDICT: OPEN — The Twin Prime Conjecture is a famous unsolved problem; despite deep partial progress (Chen's theorem, Zhang's bounded-gaps theorem, and the Maynard–Tao sieve giving $\liminf(p_{n+1}-p_n)\le 246$), no proof that the gap equals exactly $2$ infinitely often is known, principally due to the parity obstruction in sieve theory.

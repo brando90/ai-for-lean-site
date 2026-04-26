@@ -1,0 +1,91 @@
+# Review, Critique, and Improvement of the Proof Sketch
+
+The reviewed sketch is essentially correct and reaches the right conclusion: this is Erdős's conjecture on arithmetic progressions, and it remains open for progressions of length $\geq 4$ as of April 2026. Before rewriting, let me register my critiques of the original sketch, and then produce a cleaner version.
+
+## Critique of the Reviewed Sketch
+
+1. **Misattribution of historical origin.** The conjecture is usually attributed jointly to Erdős and Turán (1936) for $k=3$, and generalized by Erdős to all $k$. The sketch should make this explicit.
+2. **Slight looseness in the dyadic step.** The sketch writes $|A_m| \le |A \cap [1,2^{m+1}]| \ll 2^{m+1}/(\log 2^{m+1})^{1+c}$. This is correct but wasteful: since $A_m$ is itself $3$-AP-free and lies in an interval of length $2^m$, we can apply $r_3$ directly to $A_m$, giving $|A_m| \le r_3(2^m)$. This is cleaner.
+3. **Missing the Behrend lower bound.** Without Behrend's construction $r_3(N) \gtrsim N \exp(-c\sqrt{\log N})$, it is not clear *why* strong quantitative bounds are needed. Mentioning Behrend explains the obstruction.
+4. **Slightly underselling Kelley–Meka.** Kelley–Meka (2023) gave $r_3(N) \ll N \exp\!\bigl(-c(\log N)^{1/12}\bigr)$, which more than suffices.
+5. **Status of $k=4$ could be clarified.** Green–Tao's polylogarithmic bound for $r_4$ is $r_4(N) \ll N/(\log N)^c$ for some small $c > 0$; this is *not* known to be summable dyadically, so the $k=4$ case is genuinely still open. Recent improvements (Leng–Sah–Sawhney 2024) push the bound further but also do not close the case.
+6. **Minor stylistic point on "infinitely many 3-APs."** The deletion argument is correct, but one should note the deletions must be from the 3-APs themselves, not arbitrary elements — a small clarification.
+
+With these critiques in hand, here is the improved proof sketch.
+
+---
+
+# Improved Proof Sketch
+
+**Attribution.** The assertion is the *Erdős conjecture on arithmetic progressions*, formulated by Erdős (and originally by Erdős–Turán for the $k=3$ case in 1936). It remains open in full generality as of this writing (April 2026). No complete proof exists in the literature. Tao's ICMS slides (July 24, 2024) explicitly state the conjecture is known only for $k=3$.
+
+What follows is therefore a proof of the strongest fully-proved consequence — the $k = 3$ case — together with a clear statement of what is missing for $k \geq 4$.
+
+## 1. Notation and the dyadic reduction
+
+For $k \geq 3$ and $N \geq 1$, let
+$$
+r_k(N) \;=\; \max\bigl\{|B| : B \subseteq \{1,\dots,N\},\ B \text{ contains no nontrivial $k$-AP}\bigr\}.
+$$
+
+**Lemma (dyadic criterion).** *Let $A \subseteq \mathbb{N}$ be $k$-AP-free. If*
+$$
+\sum_{m \ge 0}\frac{r_k(2^m)}{2^m} < \infty,
+$$
+*then $\sum_{a \in A} 1/a < \infty$.*
+
+*Proof.* Partition $A = \bigsqcup_{m \ge 0} A_m$ where $A_m = A \cap [2^m, 2^{m+1})$. Since $A_m$ is $k$-AP-free and lies in an interval of length $2^m$ (a translate of $\{1,\dots,2^m\}$, which preserves AP-freeness), we have $|A_m| \le r_k(2^m)$. Hence
+$$
+\sum_{a \in A_m}\frac{1}{a} \;\le\; \frac{|A_m|}{2^m} \;\le\; \frac{r_k(2^m)}{2^m},
+$$
+and summing over $m$ gives the claim. $\square$
+
+**Contrapositive.** *If $\sum_{m} r_k(2^m)/2^m$ converges, then every $A \subseteq \mathbb{N}$ with $\sum 1/a = \infty$ contains a nontrivial $k$-AP.*
+
+## 2. The $k = 3$ case (proved)
+
+**Theorem (Bloom–Sisask, 2020; improved by Kelley–Meka, 2023).** *There exists an absolute constant $c > 0$ such that*
+$$
+r_3(N) \;\ll\; \frac{N}{(\log N)^{1+c}}.
+$$
+*(Kelley–Meka strengthens this to $r_3(N) \ll N \exp\!\bigl(-c(\log N)^{1/12}\bigr)$.)*
+
+From this we get, for $N = 2^m$ and $m \ge 1$,
+$$
+\frac{r_3(2^m)}{2^m} \;\ll\; \frac{1}{m^{1+c}},
+$$
+so $\sum_m r_3(2^m)/2^m \ll \sum_m m^{-(1+c)} < \infty$ (a convergent $p$-series).
+
+Applying the Lemma with $k=3$: every $3$-AP-free subset $A \subseteq \mathbb{N}$ has convergent reciprocal sum. Contrapositively, every $A \subseteq \mathbb{N}$ with divergent reciprocal sum contains a nontrivial $3$-AP.
+
+**Upgrade to infinitely many $3$-APs.** Suppose $A$ had divergent reciprocal sum but only *finitely many* nontrivial $3$-APs. Pick one element from each such $3$-AP and delete it; this removes only finitely many elements (altering the reciprocal sum by a finite amount), so the reduced set $A'$ still has divergent reciprocal sum. But by construction $A'$ is $3$-AP-free, contradicting the statement just proved. Hence $A$ contains infinitely many nontrivial $3$-APs.
+
+## 3. Why the argument stalls for $k \ge 4$
+
+For $k = 4$, the state of the art (Green–Tao 2017; Leng–Sah–Sawhney 2024) gives
+$$
+r_4(N) \;\ll\; \frac{N}{(\log N)^c}
+$$
+for some $c > 0$, which is **not known** to yield a summable dyadic series; the comparable $\sum_m m^{-c}$ diverges when $c \le 1$. For $k \ge 5$ the known bounds (from Gowers' proof of Szemerédi's theorem and subsequent refinements) are even weaker:
+$$
+r_k(N) \;\ll\; \frac{N}{(\log\log N)^{c_k}}.
+$$
+Neither bound suffices for the Lemma, and no alternative route is known.
+
+Moreover, **Behrend's construction** (1946) gives $r_3(N) \gtrsim N \exp(-c\sqrt{\log N})$, so one cannot hope for dramatically better polynomial-in-$\log$ savings; the Bloom–Sisask / Kelley–Meka bound is close to optimal in shape. For larger $k$, Behrend-type constructions by Rankin and O'Bryant give $r_k(N) \gtrsim N \exp(-c_k (\log N)^{1/(k-1)})$, showing that strictly stronger than power-of-log savings are genuinely required.
+
+## 4. Known partial results supporting the conjecture
+
+While the full statement is open, the following evidence should be recorded:
+
+- **Szemerédi's theorem (1975):** if $A$ has positive upper density, $A$ contains arbitrarily long APs. Divergent reciprocal sum is *strictly weaker* than positive density — the primes are the canonical example — so Szemerédi's theorem does not settle the conjecture.
+- **Green–Tao (2008):** the primes contain arbitrarily long APs. This confirms the conjecture for the specific divergent-reciprocal-sum set $A = \mathbb{P}$.
+- **Random-like sets:** for a random $A$ with $\Pr[n \in A] = 1/\log n$ (which has divergent reciprocal sum almost surely, mimicking the density of primes), Szemerédi-type statements in random models give arbitrarily long APs a.s.
+
+No counterexample is known; the conjecture is widely believed, and a proof would likely constitute a major advance in additive combinatorics.
+
+---
+
+## Final Verdict
+
+VERDICT: PARTIALLY_PROVED — The Erdős conjecture for $k \ge 4$ remains open as of April 2026, but the dyadic reduction combined with the Bloom–Sisask/Kelley–Meka theorem rigorously proves the $k = 3$ case: any $A \subseteq \mathbb{N}$ with $\sum_{a\in A}1/a = \infty$ contains infinitely many nontrivial 3-term arithmetic progressions.

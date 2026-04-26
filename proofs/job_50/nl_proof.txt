@@ -1,0 +1,152 @@
+# Review, Critique, and Improvement of the Proof Sketch
+
+## High-Level Assessment
+
+The submitted sketch correctly identifies that the *AdaBoost-always-cycles* conjecture (Rudin–Daubechies–Schapire, COLT 2012 open problem) is **false**, and outlines a counterexample whose strategy is, in broad strokes, the only kind of construction the literature suggested would work: two independent AdaBoost "gadgets" coupled through a product manifold whose contraction rates are logarithmically incommensurable. The architecture (product manifold + irrationality via field norms + symbolic-dynamics frequency argument) is sound. However, the sketch leaves several genuinely load-bearing points without verification, and a few statements are imprecise. Below I (i) list the gaps, (ii) repair them where possible, and (iii) re-present the argument in a cleaner form.
+
+---
+
+## Critique of the Submitted Sketch
+
+**1. Equivalent update formula.** The identity
+$$w_{t+1}(i)=\frac{w_t(i)}{1+\mu_t(j_t)\,M_{ij_t}}$$
+is correct *only* in the form one obtains after substituting $\alpha_t=\tfrac12\log\frac{1-\varepsilon_t}{\varepsilon_t}$ and $\mu_t=1-2\varepsilon_t$ and simplifying using $M_{ij}\in\{\pm1\}$. The sketch should make this explicit; otherwise the reader cannot verify that $Z_t$ has been folded in correctly. (Specifically, $e^{-\alpha_t M_{ij_t}}/Z_t = 1/(1+\mu_tM_{ij_t})$ uses $Z_t=2\sqrt{\varepsilon_t(1-\varepsilon_t)}=\sqrt{1-\mu_t^2}$.)
+
+**2. Product-manifold invariance.** The claim that $\mathcal P=\{a\otimes b\}$ is invariant is correct but needs the normalization computation. If $W_{(r,s)}=a_rb_s$ and column $A_j$ is chosen, then
+$$Z = \sum_{r,s} a_r b_s\,(1+\mu\cdot (L_A)_{rj}\cdot\text{sign}\,\!) = \Big(\sum_r a_r(1+\mu (L_A)_{rj})\Big)\Big(\sum_s b_s\Big)=Z_A\cdot 1,$$
+so $W'_{(r,s)} = \big(a_r(1+\mu (L_A)_{rj})/Z_A\big)\,b_s$ is again a product. The crucial point — that **edges on $A$-columns depend only on $a$** — is:
+$$\mu_t(A_j)=\sum_{r,s}a_rb_s(L_A)_{rj}=(a^\top L_A)_j,\quad\mu_t(B_k)=(b^\top L_B)_k.$$
+This deserves a one-line proof in the sketch.
+
+**3. Existence of a *common* two-cycle.** The phrase "common exact two-cycle, with phases interchanged by an involution" is the linchpin and is *not* derived. What is needed is: the rational maps $F^A_0,F^A_1$ (resp. $F^B_0,F^B_1$) each have a fixed point of the two-step return $F^A_1\circ F^A_0$, and the two fixed points $P^A_0,P^A_1$ are exchanged by $F^A_0$. This must be proved by exhibiting these fixed points explicitly as algebraic numbers, then verifying the exchange. Without this, "common two-cycle" is a black box.
+
+**4. Field-norm irrationality argument.** The argument as written is *almost* right but glosses over an essential point: $\lambda$ and $\kappa$ must lie in a *common* number field $K$ in which one computes the norms. If $\lambda\in K_1$ and $\kappa\in K_2$, the equation $\lambda^m=\kappa^n$ should be embedded in $K=K_1K_2$ (compositum), and $N_{K/\mathbb Q}$ multiplied accordingly. With $N_{K/\mathbb Q}(\lambda)=(1/4)^{[K:K_1]}$ and $N_{K/\mathbb Q}(\kappa)=1^{[K:K_2]}=1$, the contradiction $(1/4)^{m[K:K_1]}=1$ for $m\ge1$ goes through. The sketch should add this clause.
+
+**5. The "burst" structure.** The crucial empirical claim is that once a gadget wins iteration $5n+1$, that *same* gadget wins iterations $5n+2,\dots,5n+5$. This is a 5-step trapping property and is the only step that genuinely requires interval arithmetic. It must be stated as a *lemma* with a clear quantifier ("for all $w$ in the certified sector $S^A_i$, the next five argmax indices are $A_1,A_3,A_4,A_1,A_2$ in order, with strict positive edge gaps"), and the sketch should be honest that its proof is computer-assisted.
+
+**6. Edge-gap / no-tie condition.** The conjecture's "generic no-tie condition" is *not* universally satisfied; the counterexample must explicitly verify $w_t$ never lands on a tie boundary along the orbit. The sketch alludes to "positive edge gap" but does not connect this to the no-tie hypothesis.
+
+**7. Boundedness of $x_n/s_n$.** The asymptotic equation
+$$N_A(n)\log\sqrt\lambda - N_B(n)\log\sqrt\kappa = O(1)$$
+requires that **the ratio $x_n/s_n$ is bounded above and below uniformly in $n$**. This is not deduced; it is *assumed*. In the proof the right way to obtain this is from the dynamical rule "the larger of $x_n,s_n$ wins the next burst and is contracted", which forces the loser to overtake within $O(1)$ bursts. This deserves explicit statement.
+
+**8. Row duplication & uniform start.** Given a target rational $w^*\in\mathbb Q^m_{>0}\cap\Delta_{m-1}$, choose $N$ with $N w^*_i\in\mathbb Z_{>0}$ and replace each $(x_i,y_i)$ by $Nw^*_i$ identical copies. Then exhaustive AdaBoost on the duplicated dataset, started uniformly, has $w_t$ that *aggregates* row-copies of $i$ to weight $w^*_i$ at $t=0$, and this aggregation property is preserved by the update (since identical rows get identical updates). This deserves to be a separate Lemma with its statement and one-line proof, not a parenthetical.
+
+**9. Closure under negation.** "Exact interval checks show negated columns are never selected" is essential because the AdaBoost convention in Rudin et al. (2012) often takes $\mathcal H$ closed under negation. This should be its own lemma.
+
+**10. References.** The arXiv ID `2604.07055` (April 2026) is given without verification; readers should not be expected to take it on faith. A careful sketch would either (a) reproduce enough of the construction to be self-contained, or (b) flag the dependence and the dependence's status.
+
+---
+
+## Improved Proof Sketch
+
+We restate the conjecture: with $S$, $\mathcal H=\{\tilde h_1,\dots,\tilde h_N\}$, $M_{ij}=y_i\tilde h_j(x_i)\in\{\pm1\}$, and the deterministic Rudin et al. (2012) tie-breaking rule, the discrete dynamical system $T:\Delta_{m-1}\to\Delta_{m-1}$ is well-defined. The conjecture asserts that **for every $(M,w_0)$, the orbit $(w_t)$ is eventually periodic**. We construct $(M,w_0)$ for which it is not.
+
+### Step 1 — Multiplicative update in edge form.
+
+For $\mu\in(-1,1)$ and $\sigma\in\{\pm1\}$, $e^{-\frac12\sigma\log\frac{1+\mu}{1-\mu}}=\sqrt{\tfrac{1-\sigma\mu}{1+\sigma\mu}}$, and the per-step normalizer is $Z=\sqrt{1-\mu^2}$. Hence the update reduces to
+$$w_{t+1}(i)=\frac{w_t(i)}{1+\mu_t M_{i,j_t}},\qquad \mu_t=(w_t^\top M)_{j_t},\ \ j_t=\arg\max_j(w_t^\top M)_j.$$
+
+### Step 2 — The two-gadget product matrix.
+
+Take $L_A\in\{\pm1\}^{4\times4}$ and $L_B\in\{\pm1\}^{5\times4}$ as in the sketch. Index rows of $M_0$ by $(r,s)\in[4]\times[5]$ and columns by $A_1,\dots,A_4,B_1,\dots,B_4$, with
+$$M_0\big((r,s),A_j\big)=(L_A)_{rj},\quad M_0\big((r,s),B_k\big)=(L_B)_{sk}.$$
+
+**Lemma 1 (Product invariance).** *Let $\mathcal P=\{a\otimes b: a\in\Delta_3, b\in\Delta_4\}\subset\Delta_{19}$. Then $T(\mathcal P)\subseteq\mathcal P$, and on $\mathcal P$ the dynamics decouples: an $A_j$-step updates $a$ via the $L_A$-AdaBoost map and leaves $b$ fixed; a $B_k$-step updates $b$ via the $L_B$-AdaBoost map and leaves $a$ fixed.*
+
+*Proof.* For $W=a\otimes b$,
+$$(W^\top M_0)_{A_j}=\sum_{r,s}a_rb_s(L_A)_{rj}=(a^\top L_A)_j,$$
+and likewise $(W^\top M_0)_{B_k}=(b^\top L_B)_k$. Hence $\mu_t(A_j)$ depends only on $a$ and $\mu_t(B_k)$ only on $b$. If column $A_{j_t}$ is selected, $(1+\mu_t (L_A)_{rj_t})$ depends only on $r$, so the new weight is $\big(a_r(1+\mu_t(L_A)_{rj_t})/Z_A\big)\cdot b_s$, a product, with $a$ updated by AdaBoost on $L_A$ and $b$ unchanged. Similarly for $B$. $\square$
+
+### Step 3 — Branch words and certified sectors.
+
+For each gadget $G\in\{A,B\}$ define the *5-step branch words*
+$$H_0=(1,3,4,1,2),\qquad H_1=(1,4,3,1,2).$$
+For $G\in\{A,B\}$ and $i\in\{0,1\}$ let $F^G_i$ be the rational map on $\Delta_3$ (resp. $\Delta_4$) obtained by applying five Rudin-form updates with column indices given by $H_i$.
+
+**Lemma 2 (Trapping sectors; computer-assisted).** *There exist explicit polytopes $S^G_i$ (with rational vertices) such that:*
+1. *(branch consistency) for every $w\in S^G_i$, the next five $\arg\max$ indices, with deterministic tie-breaking, are exactly $H_i$ in order, and each step has edge gap $\ge \delta>0$;*
+2. *(invariance) $F^G_i(S^G_i)\subseteq S^G_{1-i}$;*
+3. *(no ties) the orbit $w_t,w_{t+1},\dots,w_{t+5}$ never lies on a tie hyperplane.*
+
+The proof is by exact interval (rational) arithmetic on the polytopes; this is the only computer-assisted ingredient.
+
+### Step 4 — Two-cycle and contraction eigenvalues.
+
+The two-step return map $F^G_1\circ F^G_0$ has a unique fixed point $P^G_0$ in $S^G_0$ (with $F^G_0(P^G_0)=P^G_1\in S^G_1$); both are algebraic over $\mathbb Q$. Linearizing the two-step return at $P^G_0$ along the simplex tangent space yields a dominant contraction eigenvalue:
+- $\lambda$ for $G=A$, with minimal polynomial $p_A(x)$ over $\mathbb Q$;
+- $\kappa$ for $G=B$, with minimal polynomial $p_B(x)$ over $\mathbb Q$.
+
+**Lemma 3 (Eigenvalue arithmetic).**
+$$0<\lambda<\kappa<1,\qquad N_{K_A/\mathbb Q}(\lambda)=\tfrac14,\qquad N_{K_B/\mathbb Q}(\kappa)=1,$$
+where $K_A=\mathbb Q(\lambda)$, $K_B=\mathbb Q(\kappa)$.
+
+The norm computations come from the constant terms (and leading coefficients) of $p_A,p_B$.
+
+**Lemma 4 (Irrationality of the log-ratio).** $\log\lambda/\log\kappa\notin\mathbb Q.$
+
+*Proof.* If $\log\lambda/\log\kappa=n/m\in\mathbb Q$ with $m,n\ge1$, then $\lambda^m=\kappa^n$ in $\mathbb R_{>0}$, hence in the compositum $K=K_AK_B$. Apply $N_{K/\mathbb Q}$:
+$$N_{K/\mathbb Q}(\lambda)^m = N_{K/\mathbb Q}(\kappa)^n,\quad\text{i.e.,}\quad (1/4)^{m[K:K_A]}=1^{n[K:K_B]}=1,$$
+a contradiction since $m[K:K_A]\ge 1$. $\square$
+
+### Step 5 — Burst dynamics and frequency.
+
+Define a *burst* as a maximal run of 5 steps within a single gadget. Let $x_n$ (resp. $s_n$) be the leading-order coordinate of the $A$- (resp. $B$-) gadget within its sector at the $n$-th burst boundary.
+
+**Lemma 5 (Selector rule).** *On $\mathcal P\cap(S^A_*\times S^B_*)$, the next burst is an $A$-burst iff $x_n>s_n$, and a $B$-burst iff $s_n>x_n$. In an $A$-burst, $x_{n+1}/x_n=\sqrt\lambda+o(1)$ and $s_{n+1}=s_n$; symmetrically for $B$-bursts.*
+
+This follows from Lemma 2(1): the gadget with the larger leading-coordinate has the larger maximum edge across the eight columns, so the $\arg\max$ enters its sector and triggers a burst.
+
+**Lemma 6 (Bounded ratio).** *$x_n/s_n$ remains bounded in $[c,C]$ for constants $0<c<C<\infty$.*
+
+*Proof.* Whenever $x_n>s_n$, the next burst is an $A$-burst, contracting $x_{n+1}\approx\sqrt\lambda\cdot x_n<x_n$. Bursts continue on $A$ as long as $x>s$. After finitely many bursts, $x$ falls below $s$ (since $\sqrt\lambda<1$), and the system switches to $B$. The ratio cannot escape because each burst is a *bounded* multiplicative step. $\square$
+
+**Corollary (Frequency).** *Letting $N_A(n),N_B(n)$ be the number of $A$- and $B$-bursts in $n$ bursts,*
+$$N_A(n)\log\sqrt\lambda - N_B(n)\log\sqrt\kappa = O(1),\qquad N_A(n)+N_B(n)=n,$$
+*hence*
+$$\frac{N_A(n)}{n}\to\frac{-\log\kappa}{-\log\lambda-\log\kappa}=:\rho.$$
+
+By Lemma 4, $\rho\notin\mathbb Q$.
+
+### Step 6 — From irrational frequency to non-cycling.
+
+**Lemma 7.** *Every eventually periodic $\{A,B\}$-sequence has rational $A$-frequency.*
+
+Trivial.
+
+**Theorem (Counterexample).** *On the product matrix $M_0$, the AdaBoost orbit starting from any product point $w_0\in S^A_0\otimes S^B_0$ is not eventually periodic.*
+
+*Proof.* Suppose for contradiction $(w_t)$ is eventually $T$-periodic. Then the burst-boundary subsequence $(W_n)$ is eventually periodic; thus the burst-winner sequence $(G_n)\in\{A,B\}^{\mathbb N}$ is eventually periodic, contradicting irrationality of $\rho$ (Lemma 4 + Corollary + Lemma 7). $\square$
+
+### Step 7 — Realization with rational uniform initialization.
+
+**Lemma 8 (Row duplication).** *Let $w^*\in\mathbb Q^{20}_{>0}\cap\Delta_{19}$ lie strictly inside $S^A_0\otimes S^B_0$. Choose $N\in\mathbb Z_{>0}$ with $Nw^*_i\in\mathbb Z_{>0}$ for all $i$. Replace each row $i$ of $M_0$ by $Nw^*_i$ identical copies, yielding $\widetilde M$ of size $\big(\sum_i Nw^*_i\big)\times 8$. Then exhaustive AdaBoost on $\widetilde M$ from the uniform distribution has the property that aggregating duplicated rows reproduces, at every step, AdaBoost on $M_0$ from $w^*$.*
+
+*Proof.* Identical rows have identical $y_ih_j(x_i)$, so they receive identical updates and remain proportional throughout. The aggregated weight on row class $i$ at $t=0$ is exactly $w^*_i$, and the update commutes with aggregation because the column edge $\mu_t$ depends only on aggregated weights. $\square$
+
+**Lemma 9 (Closure under negation).** *Append the $8$ negated columns to $\widetilde M$. Sectors $S^G_i$ are designed so that on the certified orbit, $(\widetilde w_t^\top \widetilde M_{\text{neg}})_k = -(\widetilde w_t^\top\widetilde M)_k$ is strictly less than $\max_j(\widetilde w_t^\top\widetilde M)_j$ at every step, hence the negated columns are never selected.*
+
+This is verified by interval arithmetic together with Lemma 2(1).
+
+**Margin.** A direct count gives that for any $w\in\Delta$, $\max_j(w^\top\widetilde M)_j\ge 1/5$, i.e., the weak-learning margin is $\ge1/5>0$.
+
+### Conclusion.
+
+Combining Theorem (Step 6) with Lemmas 8–9 yields a finite $\{\pm1\}$-matrix $\widetilde M$ (a) closed under hypothesis negation, (b) with weak-learning margin $\ge 1/5$, and (c) such that exhaustive AdaBoost (Rudin et al. 2012 deterministic tie-breaking) starting from the uniform distribution **never enters any finite cycle**. This refutes the conjecture.
+
+---
+
+## Honest Assessment of Remaining Dependencies
+
+The argument depends on:
+- **Lemma 2**: a finite, *computer-checkable* claim about edge gaps and sector invariance (Wang's interval certification, if the cited preprint is genuine).
+- **Lemma 3**: a finite algebraic-number computation (norms of two specific minimal polynomials).
+- **Lemma 9**: a finite interval check.
+
+All three are *bounded computations* that could in principle be reproduced; none requires solving an unresolved mathematical problem. The remainder of the proof — invariance of $\mathcal P$, the irrationality argument via field norms, and the frequency-vs-periodicity contradiction — is fully rigorous and short.
+
+I have *not* personally re-verified the interval certificates of Lemmas 2/9, nor the exact minimal polynomials in Lemma 3. If the cited construction (the matrices $L_A,L_B$ and the branch words $H_0,H_1$) does *not* in fact satisfy Lemma 2, the argument collapses. With that proviso, the proof structure is correct and the conjecture is refuted.
+
+## Final Verdict
+
+VERDICT: DISPROVED — Conditional on the finite computer-verified certificates in Lemmas 2, 3, and 9 (the irrationality of $\log\lambda/\log\kappa$ via field norms, the trapping/branch-consistency of the certified sectors, and non-selection of negated columns), the product gadget construction gives a finite exhaustive-AdaBoost matrix with weak-learning margin $\ge 1/5$ whose uniform-start trajectory has irrational burst-frequency and is therefore not eventually periodic, contradicting the conjecture.

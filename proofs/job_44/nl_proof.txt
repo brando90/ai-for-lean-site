@@ -1,0 +1,115 @@
+# Review and Improvement of the Disproof
+
+I agree with the bottom-line verdict of the submitted sketch: **the conjecture is false as stated**. The construction via isolated stars is correct, but the argument can be tightened in several places. Below I (i) reproduce the disproof more carefully, (ii) close two genuine gaps in the original sketch, and (iii) comment on possible repairs of the conjecture.
+
+---
+
+## 1. Setup and a structural observation
+
+Fix $c>1$ and $0<\beta<1/c$. Since $c>1$ we have $\beta<1$, and therefore
+$$
+d:=\bigl\lceil \beta^{-2}\bigr\rceil-1\ \ge\ \lceil c^{2}\rceil-1\ \ge\ 1,
+\qquad
+\beta^{2}d<1\ \le\ \beta^{2}(d+1).
+$$
+The star $K_{1,m}$ has spectral radius $\sqrt{m}$, so the resolvent $(I-\beta A_{K_{1,m}})^{-1}$ exists iff $\beta\sqrt m<1$, i.e. iff $m\le d$. The full star $K_{1,d+1}$ is **inadmissible**: $\rho(A_{K_{1,d+1}})=\sqrt{d+1}\ge \beta^{-1}$, so the geometric series $\sum_k \beta^k A^k\mathbf 1$ does not converge.
+
+For an admissible star $K_{1,m}$ (with $1\le m\le d$), the linear system
+$$
+x_m=1+\beta m\, y_m,\qquad y_m=1+\beta x_m
+$$
+gives
+$$
+y_m=\frac{1+\beta}{1-\beta^{2}m},\qquad x_m=\frac{1+\beta m}{1-\beta^{2}m}.
+$$
+Both are increasing in $m$ on $\{1,\dots,d\}$, and the smallest centrality occurs at $m=1$:
+$$
+\min(x_1,y_1)=\frac{1+\beta}{1-\beta^{2}}=\frac{1}{1-\beta}>1.
+$$
+
+**Choice of threshold.** Pick any $u$ with
+$$
+1<u<\frac{1}{1-\beta}. \tag{$\ast$}
+$$
+Then *every* admissible star $K_{1,m}$ with $1\le m\le d$ satisfies the Bonacich $u$-core condition: each of its vertices has centrality $\ge 1/(1-\beta)>u$. A single isolated vertex has centrality $1<u$, so singletons never qualify.
+
+---
+
+## 2. Local non-uniqueness on an isolated $K_{1,d+1}$
+
+Let $C\cong K_{1,d+1}$ be an isolated component of $G$, with center $v_{0}$ and leaves $v_{1},\dots,v_{d+1}$. Because $C$ is isolated, for any candidate core $S\subseteq[n]$, the induced subgraph on $S\cap C$ is uncoupled from the rest of $G$, and for $i\in S\cap C$,
+$$
+b_{i}(\beta,S)\;=\;b_{i}\bigl(\beta,\,S\cap C\bigr)
+$$
+**provided** $S\cap C$ is admissible. (If $S\cap C$ is inadmissible — e.g. equals all of $C$ — then $b_{i}(\beta,S)$ itself is undefined, since $\rho(A_{S})\ge \rho(A_{S\cap C})=\sqrt{d+1}\ge \beta^{-1}$.)
+
+The admissible subsets of $V(C)$ are exactly:
+
+| Subset of $V(C)$ | Induced graph | Admissible? | $b_i\ge u$? |
+|---|---|---|---|
+| $\emptyset$ | $\emptyset$ | trivially | vacuous |
+| singleton $\{v_i\}$ | $K_1$ | yes | no, $b=1<u$ |
+| $k\ge 2$ leaves only | $kK_1$ | yes | no, $b=1<u$ |
+| center $+\,m$ leaves, $0\le m\le d$ | $K_{1,m}$ | yes | yes for $1\le m\le d$ |
+| center $+\,(d+1)$ leaves $=V(C)$ | $K_{1,d+1}$ | **no** | $b$ undefined |
+
+Hence the **maximal admissible Bonacich $u$-cores inside $C$** are precisely the $d+1$ substars
+$$
+S_{j}:=V(C)\setminus\{v_{j}\}\cong K_{1,d},\qquad j=1,\dots,d+1,
+$$
+each obtained by deleting one leaf. They are pairwise *incomparable* under inclusion, and their pairwise unions are $V(C)$, which is inadmissible. There is no largest admissible $u$-core supported in $C$.
+
+This refutes the conjecture's *first sentence* (existence of "the largest subset $S^{*}(u)$") — the entire critical-exponent program is moot if $S^{*}(u)$ is not even well-defined.
+
+---
+
+## 3. Why the "monotone operator" reformulation does not save the conjecture
+
+The conjecture also offers an "equivalent" formulation: $S^{*}(u)$ is the maximal fixed point of
+$$
+T_{u}(S)=\{i\in S:\ b_{i}(\beta,S)\ge u\}.
+$$
+This reformulation **is not actually equivalent**, and indeed not even well-posed:
+
+1. **$T_u$ is not defined on $2^{[n]}$.** The expression $b_{i}(\beta,S)$ requires $\beta<\rho(A_{S})^{-1}$. For $G(n,c/n)$ with $c>1$, the giant component has spectral radius $\rho(A)=\Theta(\sqrt{\Delta(G)})=\Theta\bigl(\sqrt{\log n/\log\log n}\bigr)\to\infty$, so for any fixed $\beta>0$ the *full graph* is itself inadmissible for all large $n$. The natural domain of $T_{u}$ is the (downward-closed but not upward-closed) family $\mathcal A=\{S:\beta<\rho(A_S)^{-1}\}$.
+
+2. **Any extension of $T_u$ off $\mathcal A$ destroys monotonicity (or correctness).** If we extend by declaring $T_{u}(S)=\emptyset$ on inadmissible $S$, monotonicity fails at $K_{1,d}\subset K_{1,d+1}$. If we extend by $T_{u}(S)=S$, monotonicity holds but inadmissible sets become spurious fixed points — and the fixed-point lattice no longer characterizes Bonacich cores.
+
+3. **Knaster–Tarski does not apply on $\mathcal A$ alone**, because $\mathcal A$ is not closed under union: $S_{1}, S_{2}\in\mathcal A$ does not imply $S_{1}\cup S_{2}\in\mathcal A$ (witness: $S_{1},S_{2}$ are two of the substars $S_j$ above, whose union is $V(C)\notin\mathcal A$). Hence one cannot form "the union of all fixed points," and the maximal-fixed-point characterization fails.
+
+So the operator-theoretic reformulation neither rescues nor matches the literal "largest subset" definition; both founder on the same obstruction.
+
+---
+
+## 4. Probabilistic conclusion: this happens w.h.p.
+
+Let $N_{d+1}$ be the number of isolated components of $G(n,c/n)$ isomorphic to $K_{1,d+1}$. With $p=c/n$,
+$$
+\mathbb E[N_{d+1}] \;=\; \binom{n}{d+2}(d+2)\, p^{d+1}(1-p)^{\binom{d+1}{2}+(d+2)(n-d-2)}
+\;\sim\; \frac{c^{d+1}\,e^{-c(d+2)}}{(d+1)!}\,n.
+$$
+The standard second-moment computation for fixed-tree component counts in $G(n,c/n)$ (e.g. Bollobás, *Random Graphs*, Ch. 5) gives
+$$
+\frac{N_{d+1}}{n}\ \xrightarrow{\ \mathbb P\ }\ \frac{c^{d+1}e^{-c(d+2)}}{(d+1)!}\;>\;0,
+$$
+so in particular $N_{d+1}\to\infty$ in probability and $\mathbb P(N_{d+1}\ge 1)\to 1$.
+
+Combining §2 and §4: for $u$ chosen as in $(\ast)$, with high probability $G$ contains an isolated $K_{1,d+1}$, the local maximal admissible $u$-cores on that component are pairwise incomparable, no greatest admissible $u$-core exists, and consequently $S^{*}(u)$ is undefined. Statements (i)–(iii) of the conjecture are therefore vacuous (and false) in this regime, regardless of any candidate value of $u_c$.
+
+---
+
+## 5. What might survive of the conjecture
+
+The submitted sketch is right that a *repaired* conjecture is plausible. Two repairs are natural:
+
+* **Maximum-cardinality admissible $u$-core.** Replace "largest subset" by "any admissible $S$ of maximum cardinality with $b_{i}(\beta,S)\ge u$ for all $i\in S$." Then $|S^{\star}(u)|/n$ is well-defined as a random variable, and one can ask whether it concentrates and exhibits a square-root singularity.
+* **Cavity / message-passing $u$-core.** On a locally tree-like graph, replace the global resolvent by the cavity recursion for Katz/Bonacich centrality (Bartolucci–Caccioli–Caravelli–Vivo, *PNAS* 2024). The natural local order parameter $\phi^{*}(u)$ is then the survival probability of the cavity recursion under the threshold $u$, and this is monotone, well-defined on the infinite Galton–Watson tree $\mathrm{GW}(\mathrm{Pois}(c))$, and immune to the star pathology above (because the resolvent is replaced by a fixed-point-of-message map).
+
+For both repaired notions, a square-root critical singularity à la Pittel–Spencer–Wormald (1996) is heuristically reasonable: the cavity fixed point is given by a smooth one-parameter family $\Phi(\phi;u)=0$, and the "fold" generically appears where $\partial_{\phi}\Phi=0$, producing $\phi^{*}(u)-\phi_{c}\sim C\sqrt{u_{c}-u}$. But this is a *different* conjecture, and proving it rigorously would require establishing (a) that the cavity recursion correctly captures the empirical core fraction (a "replica-symmetry" / contiguity statement), (b) absence of higher-order degeneracies at $u_{c}$. Neither is automatic.
+
+---
+
+## Final Verdict
+
+## Final Verdict
+VERDICT: DISPROVED — For every $c>1$ and $0<\beta<1/c$, choosing any $u$ with $1<u<1/(1-\beta)$ makes the isolated $K_{1,d+1}$ components (with $d=\lceil\beta^{-2}\rceil-1$), which appear in $G(n,c/n)$ with probability $\to 1$, force pairwise incomparable maximal admissible Bonacich $u$-cores; thus $S^{*}(u)$ is not well-defined and parts (i)–(iii) cannot hold.

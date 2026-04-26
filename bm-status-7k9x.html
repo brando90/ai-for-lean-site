@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pipeline Status (admin)</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+  body { font-family: -apple-system, sans-serif; background: #111; color: #e4e4e7; padding: 2rem; font-size: 13px; }
+  h1 { font-size: 1.4rem; margin-bottom: 0.3rem; }
+  .meta { color: #888; font-size: 0.8rem; margin-bottom: 1.5rem; }
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; padding: 6px 8px; border-bottom: 1px solid #333; color: #888; font-size: 0.7rem; text-transform: uppercase; }
+  td { padding: 6px 8px; border-bottom: 1px solid #222; vertical-align: top; }
+  tr:hover td { background: #1a1a2e; }
+  .v { padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; }
+  .v-proved { background: rgba(52,211,153,0.15); color: #34d399; }
+  .v-disproved { background: rgba(248,113,113,0.15); color: #f87171; }
+  .v-open { background: rgba(251,191,36,0.15); color: #fbbf24; }
+  .v-pending { background: rgba(113,113,122,0.15); color: #888; }
+  .priv { font-size: 0.65rem; background: #5b21b6; color: #c4b5fd; padding: 1px 4px; border-radius: 3px; margin-left: 4px; }
+  .known { font-size: 0.65rem; background: #1e3a5f; color: #7dd3fc; padding: 1px 4px; border-radius: 3px; margin-left: 4px; }
+  .err { color: #f87171; font-size: 0.72rem; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .small { font-size: 0.72rem; color: #888; }
+  small { color: #666; }
+  .stats { display: flex; gap: 2rem; margin-bottom: 1.5rem; }
+  .stat { padding: 0.8rem 1.2rem; background: #1a1a2e; border-radius: 8px; border: 1px solid #333; }
+  .stat .num { font-size: 1.5rem; font-weight: 700; }
+  .stat .label { font-size: 0.7rem; color: #888; text-transform: uppercase; }
+</style>
+</head>
+<body>
+<h1>Pipeline Admin Status</h1>
+<p class="meta">Generated 2026-04-26 15:14 &mdash; 50 jobs total. <a href="/" style="color:#818cf8;">Back to site</a></p>
+
+<div class="stats">
+  <div class="stat"><div class="num" style="color:#34d399;">7</div><div class="label">Proved</div></div>
+  <div class="stat"><div class="num" style="color:#f87171;">5</div><div class="label">Disproved</div></div>
+  <div class="stat"><div class="num" style="color:#fbbf24;">32</div><div class="label">Open</div></div>
+  <div class="stat"><div class="num" style="color:#888;">6</div><div class="label">Queued</div></div>
+</div>
+
+<table>
+  <thead>
+    <tr><th>#</th><th>Submitter</th><th>Conjecture</th><th>Status</th><th>Date</th><th>Time</th><th>Workflow</th><th>Error</th></tr>
+  </thead>
+  <tbody>
+        <tr class="open">
+          <td>51</td>
+          <td><strong>Sam Bobick</strong><br><small>sbobick@stanford.edu</small></td>
+          <td>Battery Inventory MDP — Optimal Base-Stock Policy</td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/25 09:43</td>
+          <td>5430s</td>
+          <td class="small">v0.6.1: Codex55XH+CC→CC+Debate+Lean×20+S</td>
+          <td class="err"></td>
+        </tr>        <tr class="open">
+          <td>50</td>
+          <td><strong></strong><br><small>brando.science@gmail.com</small></td>
+          <td>AdaBoost Always Cycles? (Global Dynamics Conjecture)</td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/25 16:55</td>
+          <td>6529s</td>
+          <td class="small">v0.6.1: Codex+CC→CC+Debate+Lean×5+Sem+Ne</td>
+          <td class="err"></td>
+        </tr>        <tr class="pending">
+          <td>49</td>
+          <td><strong>Samuel Bobick</strong><br><small>sbobick@stanford.edu</small></td>
+          <td>I am modeling battery operation problem a random outage condition. Add one wrink</td>
+          <td><span class="v v-pending">QUEUED</span></td>
+          <td>-</td>
+          <td>-</td>
+          <td class="small">-</td>
+          <td class="err"></td>
+        </tr>        <tr class="open">
+          <td>48</td>
+          <td><strong>Brando</strong><br><small>brandojazz@gmail.com</small></td>
+          <td>Can Single-Shuffle SGD be Better than Reshuffling SGD and GD?</td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/25 14:58</td>
+          <td>3360s</td>
+          <td class="small">v0.6.1: Codex+CC→CC+Debate+Lean×5+Sem+Ne</td>
+          <td class="err"></td>
+        </tr>        <tr class="open">
+          <td>47</td>
+          <td><strong>Brando</strong><br><small>brando.science@gmail.com</small></td>
+          <td>Smoothed Complexity of the Simplex Method</td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/25 14:02</td>
+          <td>768s</td>
+          <td class="small">v0.6.1: Codex+CC→CC+Debate+Lean×5+Sem+Ne</td>
+          <td class="err"></td>
+        </tr>        <tr class="open">
+          <td>46</td>
+          <td><strong>Brando</strong><br><small>brando.science@gmail.com</small></td>
+          <td>Anytime Convergence Rate of Gradient Descent</td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/25 13:49</td>
+          <td>9925s</td>
+          <td class="small">v0.6.1: Codex+CC→CC+Debate+Lean×5+Sem+Ne</td>
+          <td class="err"></td>
+        </tr>        <tr class="open">
+          <td>45</td>
+          <td><strong>Brando</strong><br><small>brando.science@gmail.com</small></td>
+          <td>KLS Conjecture (Kannan–Lovász–Simonovits)</td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/25 11:04</td>
+          <td>14356s</td>
+          <td class="small">v0.6.1: Codex+CC→CC+Debate+Lean×5+Sem+Ne</td>
+          <td class="err"></td>
+        </tr>        <tr class="open">
+          <td>44</td>
+          <td><strong>Andreas Haupt</strong><br><small>h4upt@stanford.edu</small></td>
+          <td>Let $G \sim G(n, c/n)$ be an Erd\H{o}s--R\'{e}nyi random graph with mean degree </td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/25 07:05</td>
+          <td>7156s</td>
+          <td class="small">v0.6.1: Codex+CC→CC+Debate+Lean×5+Sem+Ne</td>
+          <td class="err"></td>
+        </tr>        <tr class="open">
+          <td>43</td>
+          <td><strong>Steven Dillmann</strong><br><small>stevendi@stanford.edu</small></td>
+          <td>Every odd integer greater than 5 can be expressed as the sum of a prime and twic</td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/25 05:05</td>
+          <td>1574s</td>
+          <td class="small">v0.6.1: Codex+CC→CC+Debate+Lean×5+Sem+Ne</td>
+          <td class="err"></td>
+        </tr>        <tr class="pending">
+          <td>42</td>
+          <td><strong>Srivatsava Daruru</strong><br><small>vatsava@gmail.com</small></td>
+          <td>There are infinitely many pairs of prime numbers that differ by exactly 2.</td>
+          <td><span class="v v-pending">QUEUED</span></td>
+          <td>-</td>
+          <td>-</td>
+          <td class="small">-</td>
+          <td class="err"></td>
+        </tr>        <tr class="pending">
+          <td>41</td>
+          <td><strong>Srivatsava Daruru</strong><br><small>vatsava@gmail.com</small></td>
+          <td>Every even integer strictly greater than 2 can be expressed as the sum of two pr</td>
+          <td><span class="v v-pending">CLAIMED</span></td>
+          <td>-</td>
+          <td>-</td>
+          <td class="small">-</td>
+          <td class="err"></td>
+        </tr>        <tr class="open">
+          <td>40</td>
+          <td><strong>Donald Poindexter, Jr</strong><br><small>poin@stanford.edu</small></td>
+          <td>Let A be subset of the set {1,...,N} such that there is no solution to at = b wh</td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/25 03:50</td>
+          <td>5093s</td>
+          <td class="small">v0.6.1: Codex+CC→CC+Debate+Lean×5+Sem+Ne</td>
+          <td class="err"></td>
+        </tr>        <tr class="open">
+          <td>39</td>
+          <td><strong>Donald Poindexter, Jr</strong><br><small>poin@stanford.edu</small></td>
+          <td>A unitary divisor d of a positive integer n is a divisor such that d and n/d are</td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/25 02:25</td>
+          <td>2086s</td>
+          <td class="small">v0.6.1: Codex+CC→CC+Debate+Lean×5+Sem+Ne</td>
+          <td class="err"></td>
+        </tr>        <tr class="pending">
+          <td>38</td>
+          <td><strong>Donald Poindexter, Jr</strong><br><small>poin@stanford.edu</small></td>
+          <td>Let A be a set of positive integers. For each n in A, choose some collection X_n</td>
+          <td><span class="v v-pending">CLAIMED</span></td>
+          <td>-</td>
+          <td>-</td>
+          <td class="small">-</td>
+          <td class="err"></td>
+        </tr>        <tr class="pending">
+          <td>37</td>
+          <td><strong>Donald Poindexter</strong><br><small>poin@stanford.edu</small></td>
+          <td>If A is a subset of the natural numbers such that the sum of the reciprocals of </td>
+          <td><span class="v v-pending">CLAIMED</span></td>
+          <td>-</td>
+          <td>-</td>
+          <td class="small">-</td>
+          <td class="err"></td>
+        </tr>        <tr class="open">
+          <td>36</td>
+          <td><strong>Donald Poindexter, Jr</strong><br><small>poin@stanford.edu</small></td>
+          <td>Let n be a positive integer and define L_n to be the least common multiple of {1</td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/24 21:49</td>
+          <td>8154s</td>
+          <td class="small">v0.6.1: Codex+CC→CC+Debate+Lean×5+Sem+Ne</td>
+          <td class="err"></td>
+        </tr>        <tr class="open">
+          <td>35</td>
+          <td><strong>Selim Amar. This is the Kerr nonlinear stability conjecture from mathematical general relativity. References: Klainerman-Szeftel (2021), Dafermos-Holzegel-Rodnianski-Taylor (2021).</strong><br><small>selama@stanford.edu</small></td>
+          <td>The Kerr black hole metric is stable, in the sense that small perturbations of t</td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/24 19:33</td>
+          <td>1404s</td>
+          <td class="small">v0.6.1: Codex+CC→CC+Debate+Lean×5+Sem+Ne</td>
+          <td class="err"></td>
+        </tr>        <tr class="proved">
+          <td>33</td>
+          <td><strong>test</strong><br><small>test@example.com</small></td>
+          <td>For any right triangle with legs a, b and hypotenuse c, a^2 + b^2 = c^2 (Pythago <span class="priv">PRIV</span></td>
+          <td><span class="v v-proved">PROVED</span></td>
+          <td>04/24 19:03</td>
+          <td>48s</td>
+          <td class="small">v0.6.0: CC→CC+Lean×5+Sem+AdvEmpirical</td>
+          <td class="err"></td>
+        </tr>        <tr class="open">
+          <td>32</td>
+          <td><strong>Selim Amar. This is the Kerr nonlinear stability conjecture from mathematical general relativity. References: Klainerman-Szeftel (2021), Dafermos-Holzegel-Rodnianski-Taylor (2021).</strong><br><small>selama@stanford.edu</small></td>
+          <td>The Kerr black hole metric is stable, in the sense that small perturbations of t</td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/21 14:12</td>
+          <td>1864s</td>
+          <td class="small">v0.5.0: GPT5P-agent→CC+Debate+Lean×5+Sem</td>
+          <td class="err"></td>
+        </tr>        <tr class="open">
+          <td>31</td>
+          <td><strong>Andreas Haupt</strong><br><small>h4upt@stanford.edu</small></td>
+          <td>Let $G \sim G(n, c/n)$ be an Erd\H{o}s--R\'{e}nyi random graph with mean degree </td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/21 13:41</td>
+          <td>7150s</td>
+          <td class="small">v0.5.0: GPT5P-agent→CC+Debate+Lean×5+Sem</td>
+          <td class="err"></td>
+        </tr>        <tr class="open">
+          <td>30</td>
+          <td><strong>Selim Amar. This is the Kerr nonlinear stability conjecture from mathematical general relativity. References: Klainerman-Szeftel (2021), Dafermos-Holzegel-Rodnianski-Taylor (2021).</strong><br><small>selama@stanford.edu</small></td>
+          <td>The Kerr black hole metric is stable, in the sense that small perturbations of t</td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/20 23:44</td>
+          <td>-</td>
+          <td class="small">v0.5.0: Codex+CC→CC+Debate+Lean×5+Sem+Ne</td>
+          <td class="err"></td>
+        </tr>        <tr class="open">
+          <td>29</td>
+          <td><strong></strong><br><small>brando.science@gmail.com</small></td>
+          <td>AdaBoost Always Cycles? (Global Dynamics Conjecture)</td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/21 01:21</td>
+          <td>1838s</td>
+          <td class="small">v0.4.0: GPT5P-agent→CC+Lean×5+Sem</td>
+          <td class="err"></td>
+        </tr>        <tr class="pending">
+          <td>28</td>
+          <td><strong>Samuel Bobick</strong><br><small>sbobick@stanford.edu</small></td>
+          <td>I am modeling battery operation problem a random outage condition. Add one wrink</td>
+          <td><span class="v v-pending">CLAIMED</span></td>
+          <td>-</td>
+          <td>-</td>
+          <td class="small">-</td>
+          <td class="err"></td>
+        </tr>        <tr class="disproved">
+          <td>27</td>
+          <td><strong></strong><br><small>brando.science@gmail.com</small></td>
+          <td>Smoothed Complexity of the Simplex Method</td>
+          <td><span class="v v-disproved">DISPROVED</span></td>
+          <td>04/21 01:12</td>
+          <td>1513s</td>
+          <td class="small">v0.4.0: GPT5P-agent→CC+Lean×5+Sem</td>
+          <td class="err"></td>
+        </tr>        <tr class="disproved">
+          <td>26</td>
+          <td><strong>Donald Poindexter, Jr</strong><br><small>poin@stanford.edu</small></td>
+          <td>Let A be an infinite subset which contains no three points on a line and no four</td>
+          <td><span class="v v-disproved">DISPROVED</span></td>
+          <td>04/20 23:44</td>
+          <td>-</td>
+          <td class="small">v0.4.0: GPT5P-agent→CC+Lean×5+Sem</td>
+          <td class="err"></td>
+        </tr>        <tr class="open">
+          <td>25</td>
+          <td><strong>Donald Poindexter, Jr</strong><br><small>poin@stanford.edu</small></td>
+          <td>Let A be subset of the set {1,...,N} such that there is no solution to at = b wh</td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/21 00:14</td>
+          <td>1930s</td>
+          <td class="small">v0.4.0: GPT5P-agent→CC+Lean×5+Sem</td>
+          <td class="err"></td>
+        </tr>        <tr class="open">
+          <td>24</td>
+          <td><strong>Donald Poindexter, Jr</strong><br><small>poin@stanford.edu</small></td>
+          <td>Let n be a positive integer and define L_n to be the least common multiple of {1</td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/23 00:30</td>
+          <td>4621s</td>
+          <td class="small">v0.5.0: Codex+CC→CC+Debate+Lean×20+Sem+N</td>
+          <td class="err">primary: [verify] Failed after 5 attempts: ERROR: Code uses 'axiom' which asserts truth without proo</td>
+        </tr>        <tr class="open">
+          <td>23</td>
+          <td><strong>Donald Poindexter, Jr</strong><br><small>poin@stanford.edu</small></td>
+          <td>A unitary divisor d of a positive integer n is a divisor such that d and n/d are</td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/21 00:07</td>
+          <td>1431s</td>
+          <td class="small">v0.4.0: GPT5P-agent→CC+Lean×5+Sem</td>
+          <td class="err"></td>
+        </tr>        <tr class="open">
+          <td>22</td>
+          <td><strong>Donald Poindexter, Jr</strong><br><small>poin@stanford.edu</small></td>
+          <td>Let A be a set of positive integers. For each n in A, choose some collection X_n</td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/21 00:14</td>
+          <td>2116s</td>
+          <td class="small">v0.4.0: GPT5P-agent→CC+Lean×5+Sem</td>
+          <td class="err"></td>
+        </tr>        <tr class="open">
+          <td>21</td>
+          <td><strong>Donald Poindexter</strong><br><small>poin@stanford.edu</small></td>
+          <td>If A is a subset of the natural numbers such that the sum of the reciprocals of </td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/21 01:15</td>
+          <td>3456s</td>
+          <td class="small">v0.5.0: Codex+CC→CC+Debate+Lean×5+Sem+Ne</td>
+          <td class="err"></td>
+        </tr>        <tr class="open">
+          <td>20</td>
+          <td><strong>Brando</strong><br><small>brandojazz@gmail.com</small></td>
+          <td>Can Single-Shuffle SGD be Better than Reshuffling SGD and GD?</td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/21 00:51</td>
+          <td>1296s</td>
+          <td class="small">v0.4.0: GPT5P-agent→CC+Lean×5+Sem</td>
+          <td class="err"></td>
+        </tr>        <tr class="disproved">
+          <td>19</td>
+          <td><strong></strong><br><small>brando.science@gmail.com</small></td>
+          <td>Smoothed Complexity of the Simplex Method</td>
+          <td><span class="v v-disproved">DISPROVED</span></td>
+          <td>04/21 00:47</td>
+          <td>1756s</td>
+          <td class="small">v0.4.0: GPT5P-agent→CC+Lean×5+Sem</td>
+          <td class="err"></td>
+        </tr>        <tr class="open">
+          <td>18</td>
+          <td><strong>Brando</strong><br><small>brandojazz@gmail.com</small></td>
+          <td>Can Single-Shuffle SGD be Better than Reshuffling SGD and GD?</td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/21 00:53</td>
+          <td>1228s</td>
+          <td class="small">v0.4.0: GPT5P-agent→CC+Lean×5+Sem</td>
+          <td class="err"></td>
+        </tr>        <tr class="open">
+          <td>17</td>
+          <td><strong>Brando</strong><br><small>brando.science@gmail.com</small></td>
+          <td>Smoothed Complexity of the Simplex Method</td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/21 00:35</td>
+          <td>2133s</td>
+          <td class="small">v0.4.0: GPT5P-agent→CC+Lean×5+Sem</td>
+          <td class="err"></td>
+        </tr>        <tr class="open">
+          <td>16</td>
+          <td><strong>Brando</strong><br><small>brando.science@gmail.com</small></td>
+          <td>Anytime Convergence Rate of Gradient Descent</td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/21 00:56</td>
+          <td>2495s</td>
+          <td class="small">v0.4.0: GPT5P-agent→CC+Lean×5+Sem</td>
+          <td class="err"></td>
+        </tr>        <tr class="disproved">
+          <td>15</td>
+          <td><strong>Brando</strong><br><small>brando.science@gmail.com</small></td>
+          <td>AdaBoost Always Cycles? (Global Dynamics Conjecture)</td>
+          <td><span class="v v-disproved">DISPROVED</span></td>
+          <td>04/21 00:18</td>
+          <td>2006s</td>
+          <td class="small">v0.4.0: GPT5P-agent→CC+Lean×5+Sem → fall</td>
+          <td class="err"></td>
+        </tr>        <tr class="open">
+          <td>14</td>
+          <td><strong>Brando</strong><br><small>brando.science@gmail.com</small></td>
+          <td>KLS Conjecture (Kannan–Lovász–Simonovits)</td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/21 00:33</td>
+          <td>1112s</td>
+          <td class="small">v0.4.0: GPT5P-agent→CC+Lean×5+Sem</td>
+          <td class="err"></td>
+        </tr>        <tr class="open">
+          <td>13</td>
+          <td><strong>Selim Amar</strong><br><small>selama@stanford.edu</small></td>
+          <td>The Kerr black hole metric is stable, in the sens that small perturbations of th</td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/21 01:07</td>
+          <td>1622s</td>
+          <td class="small">v0.4.0: GPT5P-agent→CC+Lean×5+Sem</td>
+          <td class="err"></td>
+        </tr>        <tr class="open">
+          <td>12</td>
+          <td><strong>Brando Miranda</strong><br><small>brandojazz@gmail.com</small></td>
+          <td>```Research Proposal: Asymptotic Consistency &amp; Scaling Laws for Reference-Free E</td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/21 00:50</td>
+          <td>364s</td>
+          <td class="small">v0.4.0: GPT5P-agent→CC+Lean×5+Sem</td>
+          <td class="err"></td>
+        </tr>        <tr class="open">
+          <td>11</td>
+          <td><strong>Andreas Haupt</strong><br><small>h4upt@stanford.edu</small></td>
+          <td>Let $G \sim G(n, c/n)$ be an Erd\H{o}s--R\'{e}nyi random graph with mean degree </td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/21 00:00</td>
+          <td>991s</td>
+          <td class="small">v0.5.0: Codex+CC→CC+Debate+Lean×5+Sem+Ne</td>
+          <td class="err"></td>
+        </tr>        <tr class="open">
+          <td>10</td>
+          <td><strong>Steven Dillmann</strong><br><small>stevendi@stanford.edu</small></td>
+          <td>Every odd integer greater than 5 can be expressed as the sum of a prime and twic</td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/22 23:12</td>
+          <td>1819s</td>
+          <td class="small">v0.5.0: Codex+CC→CC+Debate+Lean×20+Sem+N</td>
+          <td class="err">primary: [verify] Failed after 5 attempts: LeanProject/Job_10.lean:6:8: warning: declaration uses `s</td>
+        </tr>        <tr class="proved">
+          <td>9</td>
+          <td><strong>Steven Dillmann</strong><br><small>stevendi@stanford.edu</small></td>
+          <td>The Riemann zeta function evaluated at −1 equals −1/12.</td>
+          <td><span class="v v-proved">PROVED</span></td>
+          <td>04/21 00:08</td>
+          <td>1488s</td>
+          <td class="small">v0.4.0: GPT5P-agent→CC+Lean×5+Sem</td>
+          <td class="err"></td>
+        </tr>        <tr class="proved">
+          <td>8</td>
+          <td><strong>Srivatsava Daruru</strong><br><small>vatsava@gmail.com</small></td>
+          <td>If statement P implies statement Q, and statement P is true, then statement Q mu</td>
+          <td><span class="v v-proved">PROVED</span></td>
+          <td>04/21 00:56</td>
+          <td>183s</td>
+          <td class="small">v0.4.0: GPT5P-agent→CC+Lean×5+Sem</td>
+          <td class="err"></td>
+        </tr>        <tr class="proved">
+          <td>7</td>
+          <td><strong>Steven Dillmann</strong><br><small>stevendi@stanford.edu</small></td>
+          <td>For every integer n, n^5− n is divisible by 30</td>
+          <td><span class="v v-proved">PROVED</span></td>
+          <td>04/20 23:42</td>
+          <td>201s</td>
+          <td class="small">v0.4.0: GPT5P-agent→CC+Lean×5+Sem</td>
+          <td class="err"></td>
+        </tr>        <tr class="proved">
+          <td>6</td>
+          <td><strong>Srivatsava Daruru</strong><br><small>vatsava@gmail.com</small></td>
+          <td>There are no two integers a and b (where b is not zero) such that the fraction a</td>
+          <td><span class="v v-proved">PROVED</span></td>
+          <td>04/20 23:42</td>
+          <td>256s</td>
+          <td class="small">v0.4.0: GPT5P-agent→CC+Lean×5+Sem</td>
+          <td class="err"></td>
+        </tr>        <tr class="open">
+          <td>5</td>
+          <td><strong>Srivatsava Daruru</strong><br><small>vatsava@gmail.com</small></td>
+          <td>There are infinitely many pairs of prime numbers that differ by exactly 2.</td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/21 00:18</td>
+          <td>1039s</td>
+          <td class="small">v0.5.0: Codex+CC→CC+Debate+Lean×5+Sem+Ne</td>
+          <td class="err"></td>
+        </tr>        <tr class="proved">
+          <td>4</td>
+          <td><strong>Srivatsava Daruru</strong><br><small>vatsava@gmail.com</small></td>
+          <td>The sum of the first n odd natural numbers equals n^2</td>
+          <td><span class="v v-proved">PROVED</span></td>
+          <td>04/20 23:43</td>
+          <td>241s</td>
+          <td class="small">v0.4.0: GPT5P-agent→CC+Lean×5+Sem</td>
+          <td class="err"></td>
+        </tr>        <tr class="open">
+          <td>3</td>
+          <td><strong>Srivatsava Daruru</strong><br><small>vatsava@gmail.com</small></td>
+          <td>Every even integer strictly greater than 2 can be expressed as the sum of two pr</td>
+          <td><span class="v v-open">OPEN</span></td>
+          <td>04/21 00:44</td>
+          <td>2164s</td>
+          <td class="small">v0.4.0: GPT5P-agent→CC+Lean×5+Sem → fall</td>
+          <td class="err"></td>
+        </tr>        <tr class="disproved">
+          <td>2</td>
+          <td><strong>Srivatsava Daruru</strong><br><small>vatsava@gmail.com</small></td>
+          <td>Any number divided by itself is a whole number</td>
+          <td><span class="v v-disproved">DISPROVED</span></td>
+          <td>04/20 23:59</td>
+          <td>929s</td>
+          <td class="small">v0.4.0: GPT5P-agent→CC+Lean×5+Sem</td>
+          <td class="err"></td>
+        </tr>        <tr class="proved">
+          <td>1</td>
+          <td><strong>Brando Miranda</strong><br><small>brandojazz@gmail.com</small></td>
+          <td>a^2 + b2 = c^2 (pythagoras)</td>
+          <td><span class="v v-proved">PROVED</span></td>
+          <td>04/21 00:40</td>
+          <td>286s</td>
+          <td class="small">v0.4.0: GPT5P-agent→CC+Lean×5+Sem</td>
+          <td class="err"></td>
+        </tr>
+  </tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,130 @@
+# Review, Critique, and Improvement of the Proof Sketch
+
+## Identification of the Problem
+
+The statement "every odd integer greater than 5 can be expressed as the sum of a prime and twice another prime" is **Lemoine's conjecture** (1895), sometimes called Levy's conjecture (1963). The previous reviewer correctly identifies this. I concur with the overall verdict: **the conjecture is open**, and any honest response must say so.
+
+Below I (i) confirm what the previous sketch got right, (ii) tighten and correct several technical points, and (iii) add material that strengthens the analytic framework and the partial results.
+
+---
+
+## What the Previous Sketch Got Right
+
+1. **Correct identification.** This is Lemoine's conjecture, equivalent to: for every odd \(N>5\), \(R(N) := \#\{(p,q)\in\mathbb{P}^2 : N = p+2q\} \ge 1\).
+2. **Correct distinction from ternary Goldbach.** Helfgott's theorem (2013) does not imply Lemoine, because it does not force two of the three primes to coincide.
+3. **Correct circle-method framing.** The Hardy–Littlewood approach is indeed the natural attack.
+4. **Correct conclusion that the conjecture remains open.**
+
+---
+
+## Critique and Corrections
+
+### (a) The local solubility argument needs a small repair
+
+The previous sketch writes: "Choose any residue \(b\bmod \ell\) with \(b\not\equiv 0\) and \(b\not\equiv N/2\)." For this to be well-defined one needs \(\ell\) odd (so that \(2\) is invertible mod \(\ell\)), which is assumed, and one needs \(\ell \ge 3\) so that there are at least three residues \(\bmod\ \ell\), giving at least one valid choice of \(b\). For \(\ell=3\), there is exactly one allowed \(b\), and one must check separately that \(a:=N-2b\not\equiv 0\pmod 3\); since \(b\not\equiv N/2\pmod 3\), we have \(2b\not\equiv N\), so \(a\not\equiv 0\). Good.
+
+But there is a subtler issue: a *prime* \(p\) can equal \(\ell\) itself, in which case \(p\equiv 0\pmod\ell\) is allowed. The actual local-solubility statement we want is the standard one used in singular series: for each prime \(\ell\), the local density
+
+\[
+\sigma_\ell := \lim_{k\to\infty} \ell^{-k}\,\#\bigl\{(a,b)\in(\mathbb{Z}/\ell^k)^\times \times (\mathbb{Z}/\ell^k)^\times : a+2b\equiv N\pmod{\ell^k}\bigr\}\cdot \Bigl(\tfrac{\ell}{\ell-1}\Bigr)^2
+\]
+
+is positive. A direct computation gives, for odd \(\ell\),
+
+\[
+\sigma_\ell = \frac{\ell-2}{\ell-1}\cdot\frac{\ell}{\ell-1}\quad\text{if } \ell\nmid N,\qquad
+\sigma_\ell = \frac{\ell}{\ell-1}\quad\text{if } \ell\mid N,
+\]
+
+both strictly positive. The singular series
+
+\[
+\mathfrak S(N) = \prod_{\ell\,\text{odd}}\sigma_\ell = \prod_{\ell\nmid N,\ \ell>2}\Bigl(1-\frac{1}{(\ell-1)^2}\Bigr)\prod_{\ell\mid N,\ \ell>2}\Bigl(1+\frac{1}{\ell-1}\Bigr)
+\]
+
+is the same singular series that appears in the binary Goldbach conjecture (up to a factor of \(2\) absorbed into the substitution \(q\mapsto 2q\)) and is bounded below by an absolute positive constant uniformly in \(N\). This is sharper than the prior sketch's vague "\(\mathfrak S(N)\) is expected to be positive."
+
+### (b) The expected asymptotic should be made precise
+
+The Hardy–Littlewood prediction is
+
+\[
+R(N) \sim \mathfrak S(N)\,\frac{N}{2\,(\log N)^2},
+\]
+
+with the factor \(1/2\) coming from the dilation \(q\mapsto 2q\) (one sums over \(q\le N/2\), not \(q\le N\)). The prior sketch omitted this factor. With \(\mathfrak S(N)\gg 1\), the prediction is
+
+\[
+R(N) \gg \frac{N}{(\log N)^2},
+\]
+
+so very many representations are expected, not just one.
+
+### (c) The minor-arc obstruction deserves a sharper explanation
+
+The prior sketch correctly notes that "current methods do not give estimates strong enough." A more precise way to say this: for ternary Goldbach, the circle-method integrand is a *cube* of an exponential sum over primes, so Vinogradov-type minor-arc bounds of size \(N(\log N)^{-A}\) on the sum, raised to the third power, give \(N^3(\log N)^{-3A}\), which beats the major-arc main term \(N^2/(\log N)^3\) by a power of \(\log\) for any \(A>0\) (with sufficient uniformity). For Lemoine, however, the integrand is a *product of two* exponential sums, and the analogous estimate yields only \(N^2(\log N)^{-2A}\) on the minor arcs, which fails to dominate when one needs a *pointwise* lower bound for individual \(N\). This is the same essential reason that binary Goldbach is open: binary additive problems with two prime variables resist the circle method.
+
+### (d) The "easy partial results" can be strengthened
+
+The prior sketch notes that \(\{3+2q : q\text{ prime}\}\) covers infinitely many odd integers. This can be sharpened:
+
+- By Dirichlet's theorem, for every fixed odd prime \(p_0\) the set \(\{p_0 + 2q : q\text{ prime}\}\) has positive lower density in the odd integers. Taking unions over many small \(p_0\) gives positive density.
+
+- **Quantitative result (Chen-type).** Using sieve methods of the same flavor as Chen's theorem, one can prove: every sufficiently large odd \(N\) can be written as \(N = p + 2m\) where \(p\) is prime and \(m\) has at most a bounded number of prime factors. (This is a folklore consequence of the Jurkat–Richert weighted sieve applied to the sequence \(\{(N-p)/2 : p\le N/2\text{ prime}\}\).) This is the closest unconditional analogue of Lemoine.
+
+- **Average results.** It is known unconditionally (and provable by the dispersion method or by a careful circle-method argument that avoids needing pointwise bounds) that \(R(N)\ge 1\) for *almost all* odd \(N\le X\), with an exceptional set of size \(o(X)\) — indeed \(O(X(\log X)^{-A})\) for any \(A>0\). This is the analogue of Montgomery–Vaughan's "exceptional set for binary Goldbach" theorem.
+
+The previous sketch did not mention these stronger partial results; they are the strongest unconditional statements known and should be highlighted.
+
+### (e) Computational record
+
+The prior sketch states verification "to \(10^{10}\)." The currently best published verification (Wu and others, building on earlier work of Corbit and the Yarbroughs) extends to \(N \le 10^{10}\) and beyond; Sun-style heuristic refinements predict \(R(N)\to\infty\) and indeed already empirically \(R(N) \ge 2\) for all odd \(N\) in a sizable range above a small threshold. None of this constitutes a proof.
+
+---
+
+## Improved Proof Strategy (the natural attack)
+
+Putting the pieces together, here is the cleanest articulation of the strategy:
+
+**Step 1 (Circle method setup).** Define the weighted count
+\[
+R_\Lambda(N) := \sum_{\substack{m+2n=N}} \Lambda(m)\Lambda(n),
+\]
+where \(\Lambda\) is the von Mangoldt function. By orthogonality,
+\[
+R_\Lambda(N) = \int_0^1 S(\alpha)\,T(\alpha)\,e(-N\alpha)\,d\alpha,
+\]
+with \(S(\alpha)=\sum_{m\le N}\Lambda(m)e(\alpha m)\) and \(T(\alpha)=\sum_{n\le N/2}\Lambda(n)e(2\alpha n)\). Note \(T(\alpha) = S_{N/2}(2\alpha)\), where \(S_X\) is the truncated sum to \([1,X]\); the dilation factor \(2\) modifies the major-arc analysis but not its structure.
+
+**Step 2 (Major arcs).** Using the Siegel–Walfisz theorem (or, conditionally, GRH) to control \(S(\alpha)\) on rationals \(a/q\) with \(q\) small, one obtains
+\[
+\int_{\mathfrak M} S(\alpha)T(\alpha)e(-N\alpha)\,d\alpha = \frac{1}{2}\,\mathfrak S(N)\,N + O\!\left(\frac{N}{(\log N)^A}\right)
+\]
+for any \(A>0\), with \(\mathfrak S(N)\gg 1\) as computed above.
+
+**Step 3 (Minor arcs).** One needs
+\[
+\int_{\mathfrak m} |S(\alpha)T(\alpha)|\,d\alpha = o(N).
+\]
+By Cauchy–Schwarz and Parseval, \(\int_0^1 |S|^2 \asymp N\log N\) and similarly for \(T\); combining with a sup-norm bound \(\sup_{\alpha\in\mathfrak m} |S(\alpha)| \ll N(\log N)^{-A}\) (Vinogradov–Vaughan) gives
+\[
+\int_{\mathfrak m} |ST|\,d\alpha \ll N\log N \cdot (\log N)^{-A/2} = N(\log N)^{1-A/2},
+\]
+which is \(o(N)\) for \(A>2\). **However**, this is not enough to dominate the main term \(\frac{1}{2}\mathfrak S(N)N\) for individual \(N\); the implicit constants in the \(O(\cdot)\) are not effective for every \(N\) without a stronger zero-free region than is currently available. This is the precise point at which the proof breaks down.
+
+**Step 4 (If Step 3 worked).** Removal of \(\Lambda\)-weighting via partial summation, plus removal of contributions from prime powers \(p^k\) with \(k\ge 2\) (negligible), gives \(R(N)>0\) for all sufficiently large odd \(N\). A finite computation completes the remaining cases.
+
+---
+
+## Why the Previous Sketch's Verdict Is Correct
+
+The previous mathematician's sketch reaches the right verdict (OPEN) and gives the right reason (the binary structure of the problem prevents the circle method from succeeding unconditionally). My improvements above are clarifications and strengthenings, not corrections of its central claims.
+
+I would only push back on one rhetorical point: the previous sketch said "no complete proof is known, so the mathematically correct response is an honest proof strategy and partial analysis, not a proof of the full conjecture." I agree completely. Any "proof" presented as complete would be either circular, wrong, or a misuse of the term.
+
+---
+
+## Final Verdict
+
+## Final Verdict
+VERDICT: OPEN — This is Lemoine's (Levy's) conjecture; no proof or counterexample is known, and although the Hardy–Littlewood circle method predicts a strong asymptotic \(R(N)\sim \tfrac12\mathfrak S(N)N/(\log N)^2\) with positive singular series and there is no local obstruction, the binary structure of the problem prevents current minor-arc bounds from dominating the main term uniformly in \(N\), so only partial results (almost-all statements, Chen-type approximations, and computational verification beyond \(10^{10}\)) are presently available.

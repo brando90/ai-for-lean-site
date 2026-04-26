@@ -1,0 +1,53 @@
+I'll interpret "b2" as b² and make the missing hypothesis explicit: this is the Pythagorean theorem for a Euclidean right triangle, with a,b the legs and c the hypotenuse.
+
+Theorem. Let ABC be a Euclidean right triangle with right angle at C. Let BC=a, AC=b, AB=c, so that a and b are the legs and c is the hypotenuse. Then a²+b²=c².
+
+The statement needs this right-triangle hypothesis. For arbitrary numbers a,b,c, the equation is false; for example, a=b=c=1 gives 1²+1²≠1².
+
+Proof Sketch
+
+We prove the theorem using similar triangles, one of the classical Euclidean proofs of Pythagoras.
+
+Let ABC be a right triangle with ∠C=90°. Drop the altitude from C to the hypotenuse AB. Let this altitude meet AB at D.
+
+Thus D lies on AB, and CD⊥AB.
+
+Let AD=x, DB=y. Since AB=c, we have x+y=c.
+
+The key idea is that the altitude to the hypotenuse decomposes the original right triangle into two smaller right triangles, each similar to the original triangle.
+
+Step 1: Show △ACD∼△ABC
+
+Both triangles have a right angle: ∠ADC=90°, ∠ACB=90°. They also share the angle at A: ∠CAD=∠CAB. Therefore, by the AA similarity criterion, △ACD∼△ABC.
+
+Now compare corresponding sides. In the similarity △ACD∼△ABC, the side AC=b corresponds to AB=c, and the side AD=x corresponds to AC=b. Hence AC/AD = AB/AC. Substituting the side lengths gives b/x = c/b. Multiplying both sides by bc, we obtain b²=cx.
+
+So the square on the leg b equals the product of the hypotenuse c and the hypotenuse segment x=AD.
+
+Step 2: Show △BCD∼△ABC
+
+Similarly, both triangles have a right angle: ∠BDC=90°, ∠ACB=90°. They also share the angle at B: ∠CBD=∠CBA. Thus, again by AA similarity, △BCD∼△ABC.
+
+In this similarity, BC=a corresponds to AB=c, and DB=y corresponds to BC=a. Therefore, BC/DB = AB/BC. Substituting the side lengths gives a/y = c/a. Multiplying both sides by ac, we get a²=cy.
+
+So the square on the leg a equals the product of the hypotenuse c and the hypotenuse segment y=DB.
+
+Step 3: Add the two identities
+
+We have proved a²=cy and b²=cx. Adding these equations yields a²+b²=cy+cx. Factor out c: a²+b²=c(x+y). But x+y=AD+DB=AB=c. Hence a²+b²=c·c=c².
+
+Therefore, a²+b²=c².
+
+This proves the Pythagorean theorem.
+
+Key Lemmas and Techniques Used
+
+The proof relies on two standard Euclidean facts:
+1. AA similarity criterion: If two triangles have two equal angles, then they are similar.
+2. Altitude-to-hypotenuse similarity: In a right triangle, the altitude from the right angle to the hypotenuse creates two smaller right triangles, each similar to the original triangle.
+
+The main proof strategy is to convert geometric similarity into algebraic identities: a²=cy, b²=cx, then add them and use x+y=c.
+
+## Final Verdict
+
+VERDICT: PROVED — Under the standard Pythagorean interpretation—that a and b are the legs of a Euclidean right triangle and c is its hypotenuse—the conjecture a²+b²=c² is proved.

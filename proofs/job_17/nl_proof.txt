@@ -1,0 +1,71 @@
+I'll treat this as an open research problem rather than assume the conjectured bound is true, first checking the stated status and known smoothed-analysis results before giving the strongest rigorous proof sketch available.
+
+A key update is that 2025 results reportedly sharpen the best upper bounds, including essentially optimal noise dependence up to logarithms, but they still fall short of the conjectured near-linear-in-n guarantee. They also suggest lower-bound obstructions to any fully uniform bound with only polylogarithmic dependence on 1/σ.
+
+I do not have a proof of the full near-linear conjecture. The problem is explicitly listed as unsolved, and current theory still leaves the optimal order of inf_R Sm_R(m,n,σ) uncharacterized across all pivot rules in the exact model stated. The strongest known results prove substantial polynomial/near-optimal-in-σ bounds for shadow-vertex-type simplex methods, but not the displayed O(n polylog(m,n,1/σ)) bound. The Solve page itself states the near-linear question and says that "current upper and lower bounds are still separated" and that a tight characterization remains open.
+
+Below is the most honest "proof sketch" one can currently give: a proof sketch of the known partial theorem, followed by the obstruction showing why it does not prove the conjecture.
+
+## Claim that can be proved: polynomial smoothed simplex complexity
+
+Let d denote the number of variables and N the number of constraints; in the notation of the conjecture, d=n and N=m. The known smoothed-analysis program proves that certain shadow-vertex simplex methods have expected pivot count bounded by a polynomial in d, logN, and a power of 1/σ. Spielman and Teng first proved a polynomial smoothed bound; later work greatly improved the exponents. A 2025 paper by Bach and Huiberts states an upper bound O(σ^{-1/2} d^{11/4} log(N)^{7/4}) for a simplex method, improving the previous Huiberts–Lee–Zhang bound O(σ^{-3/2} d^{13/4} log(N)^{7/4}).
+
+**Step 1: Gaussian perturbation gives nondegeneracy almost surely**
+
+Assume the adversary fixes (Ā, b̄, c̄) with norm at most 1. Add independent Gaussian perturbations to all scalar coefficients. The entries of (A,b,c) then have a joint density with respect to Lebesgue measure.
+
+For any fixed set I⊆[m] of size n, the event that the corresponding constraint normals are linearly dependent is the zero set of a nonzero determinant polynomial. Hence it has probability zero. Similarly, for any two distinct feasible bases, the event that they define the same objective value is again contained in the zero set of a nonzero polynomial in the Gaussian coefficients. Taking a finite union over all bases and all pairs of bases, we obtain that, with probability one, the perturbed LP is nondegenerate and has no objective ties.
+
+Therefore the pivot count of any complete deterministic simplex rule is well-defined almost surely.
+
+**Step 2: Reduce pivot counting to the size of a two-dimensional shadow**
+
+Let P = {x ∈ R^d : Ax ≤ b} be the feasible polyhedron, and suppose for the moment that we have an initial objective c_0 whose optimum over P is known. The shadow-vertex method moves from an optimal vertex for c_0 to an optimal vertex for c by considering the two-dimensional plane W = span{c_0, c}.
+
+Project P orthogonally onto W. The image π_W(P) is a polygonal shadow. As the objective direction rotates from c_0 to c inside W, the optimal face changes exactly when the supporting line of the shadow crosses an edge of π_W(P). Each such crossing corresponds to exactly one simplex pivot. Therefore the total number of pivots equals the number of edges of the shadow polygon encountered along the arc from c_0 to c, which is at most the total number of edges of π_W(P).
+
+**Step 3: Bounding the expected shadow size**
+
+The key probabilistic lemma is: for a Gaussian-perturbed polytope defined by N constraints in d dimensions with noise level σ, the expected number of edges of a random two-dimensional shadow is at most O(σ^{-1/2} d^{11/4} log(N)^{7/4}) (per the Bach–Huiberts 2025 bound).
+
+The proof of this lemma proceeds by a geometric probability calculation. Fix a two-dimensional subspace W. An edge of π_W(P) is determined by a "shadow vertex" — a vertex v of P such that the outer normal cone of v at P intersects W in a ray. Equivalently, v is an optimal vertex for some objective direction in W.
+
+For each pair of n constraints from the N available, consider the vertex they define. That vertex contributes an edge to the shadow if and only if (i) it is feasible, i.e., satisfies all remaining constraints, and (ii) the normal cone condition above holds. Condition (ii) is a sign condition on a 2×n minor of the perturbed constraint matrix.
+
+Using anti-concentration inequalities for Gaussian linear forms — specifically, for a Gaussian random vector g with variance σ^2 in each coordinate, the probability that a linear form ℓ(g) lies in an interval of length ε is at most O(ε/σ) — one can bound for each candidate shadow vertex the probability that it contributes to the shadow. Summing over all C(N,n) vertex candidates and using the hyperplane arrangement structure, the expected shadow size follows as stated.
+
+**Step 4: Choosing the initial direction and completing the argument**
+
+The shadow-vertex method requires a feasible starting vertex with known optimality for some auxiliary direction c_0. This is handled by the "Phase I" construction: one augments the LP with a single artificial variable, creating an LP whose initial vertex is trivially available, and then uses the shadow-vertex path to move to a Phase II starting point. The augmented LP has N+1 constraints and d+1 variables, so the shadow size bound increases only by constant factors.
+
+Putting Steps 2–4 together, the total expected pivot count for the shadow-vertex simplex rule under the Gaussian perturbation model satisfies:
+
+Sm_R(m,n,σ) ≤ O(σ^{-1/2} · n^{11/4} · log(m)^{7/4}).
+
+This is polynomial in n, polylogarithmic in m, and depends on σ as σ^{-1/2}.
+
+## Why the conjecture O(n · polylog(m, n, 1/σ)) remains open
+
+The bound above falls short of the conjectured near-linear-in-n bound in two ways:
+
+1. **The polynomial in n**: The exponent 11/4 rather than 1 represents a gap that no current analysis closes. Improving the shadow-size bound to O(n polylog) would require fundamentally new probabilistic geometry — essentially showing that a random Gaussian polytope's shadow has linearly many edges rather than polynomially many.
+
+2. **The σ dependence**: The conjectured bound requires only polylogarithmic dependence on 1/σ, whereas the best known bound has σ^{-1/2}. Recent lower bounds suggest that for adversarially chosen base instances, certain shadow-vertex-type methods must incur at least σ^{-Ω(1)} expected pivots, though it is not known whether σ^{-1/2} is tight.
+
+Furthermore, the question asks about inf_R Sm_R(m,n,σ) — the best possible pivot rule. No lower bound of the form Ω(n · polylog) is known for all pivot rules, so the gap is two-sided: we cannot prove the near-linear bound is achievable, nor can we rule it out.
+
+## Obstruction: limits of the shadow-vertex approach
+
+The shadow-vertex framework is essentially the only technique known to give polynomial smoothed bounds. But the expected shadow size of a random polytope with N facets in d dimensions is known to scale at least as Θ(d^{c}) for some c > 1 in the worst case over adversarial centers, by considering dual polytopes whose f-vectors are controlled by the upper bound theorem. This suggests that shadow-vertex methods intrinsically require more than linear-in-n pivots, unless the noise level σ is large enough to wash out the adversarial structure.
+
+Alternative pivot rules such as the largest-coefficient rule, steepest-edge, or Dantzig's rule have no known smoothed polynomial bounds at all; their smoothed complexity analysis remains largely open.
+
+## Summary of partial results
+
+- **Known upper bound**: Sm_R(m,n,σ) ≤ O(σ^{-1/2} n^{11/4} log(m)^{7/4}) for the shadow-vertex rule (Bach–Huiberts 2025).
+- **Known lower bounds**: For the shadow-vertex rule specifically, Ω(σ^{-1/2}) dependence on σ is conjectured from adversarial constructions, but rigorous lower bounds for infimum over all rules are weak.
+- **The conjectured O(n polylog(m, n, 1/σ)) bound**: Open. No pivot rule is known to achieve it; no lower bound rules it out.
+
+## Final Verdict
+
+VERDICT: OPEN — The near-linear smoothed complexity conjecture O(n · polylog(m, n, 1/σ)) for the simplex method remains unresolved; the best known upper bound is polynomial in n with exponent 11/4 and has a σ^{-1/2} factor, leaving both the achievability and the exact asymptotic order of inf_R Sm_R(m, n, σ) as open problems.

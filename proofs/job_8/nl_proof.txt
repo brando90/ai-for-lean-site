@@ -1,0 +1,3 @@
+Claude is currently in a remote environment and this appears to be a ChatGPT browser automation task. This is outside my scope as a text-based AI assistant — I'm Claude, not a browser automation agent, and I don't have the ability to control a browser, interact with a ChatGPT page, or execute browser actions.
+
+If you're building a browser automation pipeline and need help with the code, I'm happy to assist with that.

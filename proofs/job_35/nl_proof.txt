@@ -1,0 +1,135 @@
+# Proof Sketch: Nonlinear Stability of the Kerr Black Hole
+
+## Preliminary Critique of the Reviewed Sketch
+
+The reviewed sketch is, in my judgment, mathematically honest and largely correct. Its principal virtues are:
+
+- It correctly distinguishes the *full* conjecture (arbitrary subextremal Kerr, $|a|<m$) from the *theorem actually proved* (slowly rotating Kerr, $|a|/m \ll 1$).
+- It correctly identifies the GCM (generally covariant modulated) framework, the dual-gauge strategy, and the Teukolsky-to-Regge–Wheeler reduction as the conceptual core.
+- It correctly notes that the Dafermos–Holzegel–Rodnianski–Taylor result concerns Schwarzschild, not Kerr.
+
+However, several improvements are warranted:
+
+1. **The role of the Hawking–Penrose causal structure** and the precise statement of "global closeness" are under-articulated. One should make explicit that the conclusion is about the *exterior* region $J^-(\mathcal I^+)\cap J^+(\Sigma)$, not the maximal Cauchy development (which generically contains a singularity).
+2. **The Chandrasekhar/Teukolsky–Starobinsky reduction** in Kerr is more subtle than in Schwarzschild because of the non-integrability of the principal null distribution; this point deserves elaboration via Giorgi–Klainerman–Szeftel's tensorial wave system.
+3. **The "second-order Teukolsky"** quantities $\mathfrak{q}$ and $\mathfrak{p}$ (rank-2 horizontal traceless tensors) are essential and were merely alluded to.
+4. The reviewed sketch under-states *why* the smallness $|a|/m\ll 1$ is needed: the obstruction is the *trapping* on the Kerr photon shell, where superradiance and trapping interact, and where the Carter operator's positivity in the Morawetz estimate degenerates as $|a|/m\to 1$.
+5. The literature update should mention that as of 2024–2026, the *linear* stability for the full subextremal range $|a|<m$ has been essentially established (Shlapentokh-Rothman–Teixeira da Costa; Dafermos–Rodnianski–Shlapentokh-Rothman), while *nonlinear* stability beyond slow rotation remains open.
+
+I now give an improved proof sketch.
+
+---
+
+## Precise Statement (Slowly Rotating Case)
+
+**Theorem (Klainerman–Szeftel, with Giorgi–Klainerman–Szeftel for the linear part).** *Fix $m_0>0$ and $a_0\in\mathbb R$ with $|a_0|/m_0$ sufficiently small. There exist $\varepsilon_0>0$ and an integer $N$ such that for any vacuum asymptotically flat initial data set $(\Sigma,g,k)$ with*
+$$\|(g,k) - (g_{Kerr(a_0,m_0)},k_{Kerr(a_0,m_0)})\|_{H^N_{\mathrm{wt}}(\Sigma)} < \varepsilon < \varepsilon_0,$$
+*the future maximal globally hyperbolic development $(\mathcal M,\mathbf g)$ has the following properties:*
+
+(i) *$\mathcal M$ contains a complete future null infinity $\mathcal I^+$ and a regular future event horizon $\mathcal H^+$;*
+
+(ii) *In the exterior $\mathcal E := J^-(\mathcal I^+)\cap J^+(\Sigma)$, $\mathbf g$ is globally close to $g_{Kerr(a_0,m_0)}$;*
+
+(iii) *There exist final parameters $(a_\infty,m_\infty)$ with $|a_\infty-a_0|+|m_\infty-m_0|\lesssim\varepsilon$ such that on each outgoing null cone $\mathbf g - g_{Kerr(a_\infty,m_\infty)}$ decays at quantitative polynomial rates as one approaches $\mathcal I^+$ and $\mathcal H^+$.*
+
+The unrestricted *Kerr nonlinear stability conjecture* asserts the same for any $|a_0|<m_0$.
+
+---
+
+## Proof Sketch
+
+### Step 1. Why one cannot prove convergence to the *original* Kerr.
+
+The Einstein vacuum equations $\mathrm{Ric}(\mathbf g)=0$ admit, around any Kerr background, exact infinitesimal deformations corresponding to: changes of mass $\delta m$, changes of angular momentum vector $\delta\vec J\in\mathbb R^3$, boosts/translations of the center of mass, and infinitesimal diffeomorphisms (pure gauge). These are *non-decaying* solutions of the linearized system. Consequently the only meaningful nonlinear statement is *orbital* stability: $\mathbf g$ converges to *some* nearby Kerr along the moduli space $\{Kerr(a,m): |a|<m, m>0\}$, modulo gauge.
+
+### Step 2. Modulation: the GCM construction.
+
+Tracking the moduli requires defining, at every "instant" along the evolution, a Kerr reference $Kerr(\tilde a(\cdot),\tilde m(\cdot))$ and a gauge identifying our spacetime with a perturbation of it. Klainerman–Szeftel achieve this via *generally covariant modulated* spheres: codimension-two spacelike spheres $S$ on which one imposes:
+
+- The Hawking mass and angular momentum aspect take prescribed values $(\tilde m,\tilde a)$.
+- Specific spherical-harmonic ($\ell=0,1$) components of the Ricci coefficients $\mathrm{tr}\chi$, $\mathrm{tr}\underline\chi$, and the mass aspect $\mu$ vanish.
+- The frame is normalized to be "as close as possible" to the Kerr principal null frame.
+
+These conditions are *geometric* (frame-independent up to the residual finite-dimensional ambiguity), and an implicit-function argument shows they uniquely determine $(\tilde a,\tilde m)$ and the GCM sphere within a small family.
+
+### Step 3. The teleological GCM hypersurface $\Sigma_*$.
+
+Rather than evolve from $\Sigma$ forward, one constructs a *future* spacelike hypersurface $\Sigma_*$ as follows. Start from a far-future GCM sphere $S_*$. Let $\Sigma_*$ be the spacelike hypersurface foliated by GCM spheres obtained by sliding $S_*$ along an inward-pointing null direction. This teleological choice, inspired by Christodoulou–Klainerman, ensures that the dangerous low modes are "killed at the future end," after which they cannot reappear by causality.
+
+The bootstrap region $\mathcal R(u_*,r_*)$ is bounded in the past by (a portion of) $\Sigma$, on the right by $\Sigma_*$, on the left by a portion of $\mathcal H^+$, and is foliated by an outgoing null function $u$ and an ingoing null function $\underline u$ adapted to the GCM structure.
+
+### Step 4. Renormalization against modulated Kerr.
+
+Choose a null frame $(e_3,e_4,e_A)$ that, on exact $Kerr(\tilde a,\tilde m)$, reduces to (a smooth perturbation of) the principal null frame of Carter. Decompose the Weyl curvature into its scalar–tensorial components $(\alpha,\beta,\rho,{}^*\rho,\underline\beta,\underline\alpha)$ and the Ricci coefficients into $(\chi,\underline\chi,\zeta,\eta,\underline\eta,\omega,\underline\omega)$. Subtract from each its value on the modulated Kerr: $\check\Gamma := \Gamma - \Gamma^{Kerr}$, $\check R := R - R^{Kerr}$. All checked quantities vanish identically on Kerr.
+
+### Step 5. Two gauges.
+
+The principal null distribution of Kerr is *non-integrable* for $a\neq 0$. This is the fundamental obstacle distinguishing Kerr from Schwarzschild. Klainerman–Szeftel handle it by working in two complementary gauges:
+
+- **Principal geodesic (PG) gauge:** the outgoing null vector $e_4$ is geodesic and $\omega=0$. This gauge is well-suited to wave estimates because $r$ is well-behaved as an affine parameter.
+- **Principal temporal (PT) gauge:** built from a timelike vectorfield close to the Hawking–Killing field; well-suited to transport equations and to the construction of GCM spheres.
+
+The two gauges are compared by a small diffeomorphism whose smallness is bootstrapped.
+
+### Step 6. The hyperbolic core: Teukolsky and the second-order Chandrasekhar transformation.
+
+The extreme curvature components $\alpha$ and $\underline\alpha$ are *gauge-invariant* (Bianchi-isolated) and satisfy nonlinear Teukolsky-type wave equations. Following the strategy initiated by Chandrasekhar in the linear theory and made tensorial by Dafermos–Holzegel–Rodnianski (Schwarzschild) and Giorgi–Klainerman–Szeftel (Kerr, slow rotation), one introduces second-order tensorial quantities
+$$\mathfrak q := r^4\big[\nabla_3\nabla_3\alpha + \text{lower order}\big], \qquad \mathfrak p := r^4\big[\nabla_4\nabla_4\underline\alpha + \text{l.o.t.}\big],$$
+which satisfy *generalized Regge–Wheeler equations*
+$$\Box_{\mathbf g}\mathfrak q - V(r,\theta)\mathfrak q = \mathcal N(\mathfrak q,\mathfrak p,\check\Gamma,\check R)$$
+with potentials $V$ that are *non-negative* on the trapping set in the slowly rotating regime. This positivity is what allows a Morawetz multiplier argument to close.
+
+### Step 7. Vectorfield estimates.
+
+Apply the vectorfield method to the Regge–Wheeler equation:
+
+- **Red-shift (Dafermos–Rodnianski):** A vectorfield $Y$ transverse to $\mathcal H^+$ provides a positive bulk near the horizon, exploiting the surface gravity $\kappa>0$.
+- **$r^p$-hierarchy (Dafermos–Rodnianski):** For $0\le p\le 2$, multipliers of the form $r^p e_4$ yield a hierarchy of weighted energy estimates that, via a pigeonhole argument, give pointwise polynomial decay $\sim u^{-1}$ along $\mathcal I^+$.
+- **Morawetz/integrated local energy decay (ILED):** A vectorfield $X = f(r)e_*$ tuned to vanish at the photon sphere yields, after commutation with the Carter tensorial operator $\mathcal Q$ (which captures the hidden symmetry of Kerr), an estimate
+$$\int_{\mathcal R}\frac{1}{r^{1+\delta}}|\nabla\mathfrak q|^2 + \frac{1}{r^{3+\delta}}|\mathfrak q|^2 \lesssim \mathcal E[\mathfrak q](0).$$
+The Carter operator's commutator with $\Box_{\mathbf g}$ produces an error $O(a^2)$; this is *the* place where smallness of $|a|/m$ enters in an essential, currently irreducible way.
+
+- **Commutation with Killing fields:** $T = \partial_t$ and $\Phi = \partial_\phi$ commute with Kerr; commutator errors with the *true* metric are nonlinear and bootstrap-controlled.
+
+### Step 8. Recovery of the full geometry.
+
+From boundedness and decay of $\mathfrak q,\mathfrak p$:
+
+(a) Invert the Chandrasekhar transformation by a transport–elliptic system to recover decay for $\check\alpha,\check{\underline\alpha}$.
+
+(b) The Bianchi identities $\nabla_3\beta + \cdots = \nabla\rho + \cdots$ etc. are first-order transport equations that propagate decay from $(\check\alpha,\check{\underline\alpha})$ to $(\check\beta,\check{\underline\beta},\check\rho,\check{}^*\rho)$.
+
+(c) The null structure equations $\nabla_4\chi + \cdots = R$ etc. then give decay for the Ricci coefficients, *modulo* their projections onto the spherical harmonics $\ell=0,1$.
+
+(d) The dangerous $\ell=0,1$ projections are *exactly* the modes pinned down by the GCM conditions on $\Sigma_*$. Hence they are controlled.
+
+### Step 9. The bootstrap closure.
+
+Assume on $\mathcal R(u_*)$ all renormalized quantities satisfy the bootstrap norm $\|\cdot\|_{\mathfrak{B}} \le C_B\varepsilon$. The estimates of Steps 7–8 *improve* this to $\le \tfrac12 C_B\varepsilon$ provided $\varepsilon$ and $|a|/m$ are sufficiently small. By a continuity argument in $u_*$, the GCM region extends beyond its presumed terminal slice. Iterating and passing to the limit $u_*\to\infty$ produces the global exterior solution.
+
+### Step 10. The final state and asymptotic completeness.
+
+The modulated mass and angular momentum $(\tilde m(u_*), \tilde a(u_*))$ are Cauchy in $u_*$ (because $\check R\to 0$ at quantitative rates), with limits $(m_\infty,a_\infty)$. Decay of all checked quantities then gives that $\mathbf g \to g_{Kerr(a_\infty,m_\infty)}$ uniformly on each truncated outgoing null cone as $u\to\infty$. Completeness of $\mathcal I^+$ follows from the affine completeness of $e_4$-geodesics, itself a consequence of the $r^p$-hierarchy. Regularity of $\mathcal H^+$ follows from the red-shift estimate.
+
+---
+
+## Why the Full Conjecture Remains Open
+
+The bottleneck is **trapping in the rapidly rotating regime.** On Kerr, null geodesics that neither escape to $\mathcal I^+$ nor cross $\mathcal H^+$ form a 3-dimensional submanifold ("trapping set," generalizing Schwarzschild's photon sphere at $r=3m$). For $a=0$, this is a single sphere, and a single Morawetz multiplier vanishing there suffices. For $0<|a|/m\ll 1$, trapping spreads to a thin shell whose location depends on the constants of motion, but the Carter integral provides a *positive* commutator allowing ILED. For $|a|/m\to 1$, the trapping shell thickens and superradiance (energy extraction from the ergoregion) intensifies. The crucial coercivity $V(r,\theta)\ge 0$ that underlies the Regge–Wheeler estimate degenerates.
+
+At the *linear* level, this difficulty has been overcome:
+- Dafermos–Rodnianski–Shlapentokh-Rothman (2014, scalar wave equation, full subextremal).
+- Shlapentokh-Rothman–Teixeira da Costa (2020–2023, Teukolsky equation, full subextremal).
+- Andersson–Bäckdahl–Blue–Ma (2019/2025) reducing the full linearized gravity problem on Kerr to integrated Teukolsky estimates.
+
+But translating these *linear* estimates to the *nonlinear* setting requires uniform-in-$a$ Morawetz bounds compatible with the GCM bootstrap, which as of April 2026 remains unestablished. The technical obstruction is that the second-order Chandrasekhar transformation in the full subextremal range produces potentials that change sign and require a frequency-localized analysis incompatible with current physical-space GCM techniques.
+
+---
+
+## Final Verdict
+
+## Final Verdict
+
+VERDICT: PARTIALLY_PROVED
+
+The conjecture is established by Klainerman–Szeftel and Giorgi–Klainerman–Szeftel for asymptotically flat vacuum perturbations of slowly rotating Kerr ($|a|/m \ll 1$); the full subextremal range $|a|<m$ remains open at the nonlinear level despite recent decisive progress on the linear problem.

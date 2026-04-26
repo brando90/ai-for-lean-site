@@ -1,0 +1,126 @@
+# Smoothed Complexity of the Simplex Method — Proof Sketch (Review and Improvement)
+
+## 1. Status of the Conjecture
+
+The conjecture asks whether some deterministic pivot rule $R$ achieves
+$$
+S_m^R(m,n,\sigma) \;\le\; O\!\left(n\cdot \operatorname{polylog}(m,n,1/\sigma)\right)
+$$
+uniformly in $m\ge n$ and $\sigma\in(0,1]$, and more broadly what the asymptotic order of $\inf_R S_m^R(m,n,\sigma)$ is.
+
+After examining the state of the art in smoothed analysis of the simplex method (Spielman–Teng 2004; Vershynin 2009; Dadush–Huiberts 2018; Huiberts–Lee–Zhang, *TheoretiCS* 2025; Bach–Huiberts, arXiv:2504.04197, 2025), I conclude that **the conjecture is genuinely open**, and indeed the existing lower bounds suggest the *literal* near-linear form $O(n\operatorname{polylog}(m,n,1/\sigma))$ may even be **false** for any shadow-vertex–type rule. The previous sketch is largely correct but understates this last point. I revise and expand it below.
+
+## 2. Setup and Almost-Sure Nondegeneracy
+
+Fix the smoothed model: $A=\bar A+G$, $b=\bar b+h$, $c=\bar c+g$, with i.i.d. $\mathcal N(0,\sigma^2)$ entries and $\|(\bar A,\bar b,\bar c)\|\le 1$. Because the Lebesgue density on $(A,b,c)$ is bounded, every algebraic event of positive codimension (e.g. "$d{+}1$ constraints meet," "objective parallel to an edge") has probability zero. Hence with probability one the LP is nondegenerate, every basis is uniquely optimal, and the pivot count $T_R(A,b,c)$ is well defined for any deterministic rule $R$.
+
+In the rest of the proof I will write $d=n$ (variables) and $N=m$ (constraints), to match the literature.
+
+## 3. The Shadow-Vertex Reduction
+
+The unique tool that has produced any polynomial smoothed bounds is the **shadow-vertex pivot rule**. Given a "start" objective $u$ and "target" objective $v$, project $P=\{x: Ax\le b\}$ orthogonally onto $W=\operatorname{span}(u,v)\subseteq\mathbb R^d$. The image $\pi_W(P)$ is a (possibly unbounded) convex polygon. By a standard duality argument, the vertices visited by the shadow rule going from $\arg\max_P u^\top x$ to $\arg\max_P v^\top x$ are in bijection with a subset of the vertices of $\pi_W(P)$. Therefore
+$$
+T_R(A,b,c) \;\le\; |\operatorname{Vert}(\pi_W(P))|.
+$$
+The smoothed analysis program then reduces to bounding
+$$
+\Phi(d,N,\sigma) \;:=\; \sup_{\|(\bar A,\bar b)\|\le 1}\;\sup_{\substack{u,v\in\mathbb R^d\\\text{measurable in }(A,b)}}\;\mathbb E\bigl[|\operatorname{Vert}(\pi_W(P))|\bigr].
+$$
+
+A Phase-I trick (e.g. Spielman–Teng's "big-M" or Vershynin's auxiliary LP) bounds initialization by another shadow-path; combined with the optimization shadow path one gets
+$$
+S_m^{\text{shadow}}(m,n,\sigma) \;\le\; O(\Phi(d,N,\sigma)).
+$$
+
+## 4. The Key Geometric Estimates
+
+The estimates underlying every modern bound on $\Phi$ are anti-concentration estimates for Gaussian-perturbed half-space arrangements.
+
+**Lemma (Slack lower bound).** For a vertex $v$ of $P$ defined by a basis $B\subset[N]$ of size $d$, and any non-basis index $i\notin B$, the slack $b_i - a_i^\top v$ has, conditional on $B$ being the active basis, a density bounded by $O(1/\sigma)$ in a neighborhood of $0$. Consequently
+$$
+\Pr[\,b_i - a_i^\top v \in [0,t]\,] \;\le\; O(t/\sigma).
+$$
+
+**Lemma (Angle / edge-length trade-off).** Two consecutive vertices $v_k, v_{k+1}$ of $\pi_W(P)$ either bound an edge of length $\ge \ell$, or generate an exterior angle $\ge \theta$, where $\ell\theta \gtrsim$ slack. After Gaussian smoothing, with overwhelming probability a controlled fraction of consecutive shadow edges have lengths $\ge 1/\operatorname{poly}(d,N,1/\sigma)$.
+
+Summing edge-lengths and exterior angles around the closed polygon $\pi_W(P)$ gives total perimeter $\le \operatorname{poly}(\sigma^{-1})\cdot\sqrt{\log N}$ and total exterior angle $\le 2\pi$, hence at most $\operatorname{poly}(d,1/\sigma)\cdot \operatorname{polylog}(N)$ vertices in expectation.
+
+## 5. Best Known Quantitative Bounds (2025)
+
+A careful execution of the program above yields the **Huiberts–Lee–Zhang (TheoretiCS 2025)** bound
+$$
+\Phi(d,N,\sigma) \;\le\; O\!\bigl(\sigma^{-3/2}\, d^{13/4}\, \log^{7/4} N\bigr),
+$$
+and the further **Bach–Huiberts (2025)** improvement, which uses an *auxiliary random objective* $z$ to break adversarial alignments:
+$$
+\Phi(d,N,\sigma) \;\le\; O\!\bigl(\sigma^{-1/2}\, d^{11/4}\, \log^{7/4} N\bigr).
+$$
+Both papers handle initialization by a Phase-I shadow path, so the same bound (up to constants) holds for the *full* simplex pivot count $S_m^R$ when $R$ is the corresponding (auxiliary-objective) shadow-vertex rule.
+
+These bounds have:
+
+- **polylogarithmic** dependence on $N$, the number of constraints — so the conjecture's $\operatorname{polylog}(m)$ requirement *is* met by shadow-vertex methods;
+- **polynomial** dependence on $d=n$, currently $d^{11/4}$, far worse than linear;
+- **polynomial** dependence on $1/\sigma$, currently $\sigma^{-1/2}$, while the conjecture demands only $\operatorname{polylog}(1/\sigma)$.
+
+So the conjecture is *not* established for any pivot rule.
+
+## 6. Lower Bounds: Why the Conjecture Is Likely False (at least for shadow rules, and plausibly in general)
+
+The previous sketch only mentioned lower bounds in passing. They are decisive in narrowing the picture:
+
+1. **Huiberts–Lee–Zhang (2025)** prove a smoothed lower bound for any shadow-vertex pivot rule of the form
+$$
+\mathbb E[T_R] \;\ge\; \Omega\!\bigl(\sigma^{-1/2}\sqrt{d}\bigr)
+$$
+in the regime $N\gg d$. This already rules out near-linear in $d$ with polylogarithmic-in-$1/\sigma$ behavior for shadow-vertex rules.
+
+2. **Bach–Huiberts (2025)** prove a high-probability *diameter* lower bound for smoothed polytopes:
+$$
+\operatorname{diam}(P) \;\ge\; \Omega\!\bigl(\sigma^{-1/2}\, d^{1/2}\,(\log(4/\sigma))^{-1/4}\bigr)
+$$
+for $N$ exponentially large in $d$. Since *any* pivot rule that produces a monotone path between two vertices is bounded below by the (monotone) diameter, this rules out
+$$
+\inf_R S_m^R(m,n,\sigma)\le O(n\operatorname{polylog}(m,n,1/\sigma))
+$$
+in the regime where $\sigma$ is small compared to $1$ and $m$ is super-polynomial in $n$. Concretely, $\sigma^{-1/2}$ cannot be replaced by $\operatorname{polylog}(1/\sigma)$.
+
+Combining (2) with the conjecture's quantifiers ("uniformly for all $m\ge n$ and $\sigma\in(0,1]$") yields:
+
+> **Proposition (consequence of Bach–Huiberts).** *There exists $c>0$ such that for every pivot rule $R$, every sufficiently small $\sigma$, and $m=2^{cn}$,*
+> $$
+> S_m^R(m,n,\sigma) \;\ge\; \Omega\!\bigl(\sigma^{-1/2}\sqrt{n}\bigr).
+> $$
+> *In particular, no pivot rule satisfies the bound $S_m^R(m,n,\sigma)\le O(n\operatorname{polylog}(m,n,1/\sigma))$ uniformly in $\sigma\in(0,1]$ and $m\ge n$.*
+
+So under the standard reading of the conjecture, the stated explicit bound is in fact **false**, and the conjecture (in the affirmative direction) is refuted as written. The genuinely open question is the *correct asymptotic order* of $\inf_R S_m^R$, where the current best bracket is approximately
+$$
+\Omega\!\bigl(\sigma^{-1/2}\sqrt d\bigr) \;\le\; \inf_R S_m^R(m,n,\sigma) \;\le\; O\!\bigl(\sigma^{-1/2} d^{11/4}\log^{7/4} m\bigr),
+$$
+with the lower bound holding for $m$ exponentially large in $n$ and the upper bound holding uniformly.
+
+## 7. Critique and Improvements over the Previous Sketch
+
+The earlier sketch is structurally correct but I recommend three corrections and additions:
+
+1. **It conflates "open" with "unproven."** The Bach–Huiberts diameter lower bound essentially refutes the explicit bound $O(n\operatorname{polylog}(m,n,1/\sigma))$ when one allows $m$ exponential in $n$ and $\sigma\to 0$. The verdict should reflect that the literal conjecture is most likely **false**, while the broader question of the asymptotic order remains open.
+
+2. **It states the slack/anti-concentration step too informally.** The crucial probabilistic input is not just "small slacks are unlikely" but a quantitative density bound $O(1/\sigma)$ on the slack distribution at a fixed vertex, which is what controls the polynomial dependence on $\sigma$. This is the step that one would need to improve to remove the $\sigma^{-1/2}$ factor — and the Bach–Huiberts diameter lower bound shows such improvement is impossible in general.
+
+3. **It overlooks the role of the auxiliary random objective.** This is not merely "the main reason $\sigma$-dependence improves"; it is what allows shadow-vertex analysis to *avoid* worst-case orientations of the projection plane $W$. Without it, the dependence is even worse. This should be highlighted as the technical core of the 2025 improvements.
+
+4. **Initialization is not a side remark.** The Phase-I LP can dominate the pivot count if not handled carefully; in modern proofs, the "interpolation" Phase-I construction (Vershynin / Dadush–Huiberts) is itself a smoothed shadow path, requiring the same anti-concentration toolkit.
+
+## 8. What a Resolution Would Need
+
+Either:
+
+- **(Affirmative resolution, ruled out as stated.)** Improving the upper bound to $O(n\operatorname{polylog}(m,n,1/\sigma))$ would require a new pivot rule that is *not* a shadow rule (since shadow rules have an $\Omega(\sigma^{-1/2}\sqrt d)$ smoothed lower bound), and would have to circumvent the diameter lower bound — impossible when $m=2^{\Omega(n)}$.
+
+- **(Refined positive result, possibly tractable.)** A near-linear bound of the form $O(n\operatorname{polylog}(m,n))\cdot f(\sigma)$ with $f(\sigma)$ polynomial in $\sigma^{-1}$ might be achievable; matching the lower bound $\sigma^{-1/2}\sqrt d$ would be the natural target.
+
+- **(Negative resolution, the most likely outcome.)** Proving a stronger lower bound, e.g. $\inf_R S_m^R(m,n,\sigma)\ge \Omega(\sigma^{-1/2} d)$ or stronger, would close the gap from below.
+
+## Final Verdict
+
+VERDICT: OPEN — the broader asymptotic question $\inf_R S_m^R(m,n,\sigma)$ is unresolved (best known bracket roughly $\sigma^{-1/2}\sqrt n \le \inf_R S_m^R \le \sigma^{-1/2} n^{11/4}\log^{7/4}m$), and although the *literal* near-linear bound $O(n\operatorname{polylog}(m,n,1/\sigma))$ appears to be ruled out by the Bach–Huiberts smoothed diameter lower bound when $m$ is exponentially large in $n$, no published theorem formally settles the conjecture as stated.

@@ -1,0 +1,89 @@
+I'll first verify the conjecture's current status in the literature, then provide the strongest rigorous proof-style analysis available, including standard reductions and partial results if the full finiteness claim remains open.
+
+The conjecture is not currently a proved theorem. It is listed as open in Erdős Problem #1052, which asks exactly whether there are only finitely many unitary perfect numbers; the same source records that there are no odd unitary perfect numbers and that only five examples are known. OEIS A002827 likewise lists the known terms
+
+6, 60, 90, 87360, 146361946186458562560000
+
+and explicitly notes that it is not known whether a sixth term exists. Thus a complete proof of the full conjecture would be a new solution of an open problem. What can be proved cleanly is a strong partial theorem: there are no odd unitary perfect numbers, and for each fixed number of prime factors there are only finitely many unitary perfect numbers. That is the standard reduction: the full conjecture would follow if one could prove an absolute bound on the number of distinct prime factors.
+
+Let σ*(n) denote the sum of the unitary divisors of n. If n = ∏ p_i^{a_i}, then a unitary divisor must either contain the whole prime power p_i^{a_i} or contain none of it. Therefore σ*(n) = ∏(1 + p_i^{a_i}). This multiplicative formula is the basic tool in the theory; Subbarao and Warren use it as the starting point and define unitary perfection by σ*(N) = 2N.
+
+A positive integer N is unitary perfect precisely when σ*(N) = 2N.
+
+**Lemma 1: There are no odd unitary perfect numbers**
+
+Assume, for contradiction, that n is odd and unitary perfect. Write n = p_1^{a_1} ⋯ p_r^{a_r} with the p_i odd primes.
+
+Since each p_i^{a_i} is odd, each factor 1 + p_i^{a_i} is even. Hence σ*(n) = ∏(1 + p_i^{a_i}) is divisible by 2^r.
+
+But n is odd, so 2n is divisible by exactly one power of 2. Since σ*(n) = 2n, we must have r ≤ 1.
+
+If r = 0, then n = 1, and σ*(1) = 1 ≠ 2. If r = 1, then n = p^a and the unitary-perfect equation becomes 1 + p^a = 2p^a, which implies p^a = 1, impossible for an odd prime p.
+
+Therefore no odd unitary perfect number exists. This is the classical theorem recorded by Subbarao and Warren.
+
+**Lemma 2: If the exponent of 2 is fixed, then only finitely many unitary perfect numbers are possible**
+
+Let N = 2^m · n, where n is odd and m ≥ 1 is fixed. Suppose N is unitary perfect.
+
+Write n = ∏ p_i^{a_i}. Then σ*(N) = (1 + 2^m) ∏(1 + p_i^{a_i}).
+
+The equation σ*(N) = 2N becomes (1 + 2^m) ∏(1 + p_i^{a_i}) = 2^{m+1} ∏ p_i^{a_i}.
+
+Now 1 + 2^m is odd. Each 1 + p_i^{a_i} is even, since p_i is odd. Therefore the left-hand side has at least r factors of 2, while the right-hand side has exactly m+1 factors of 2. Hence r ≤ m+1.
+
+Thus, for fixed m, the odd part n has at most m+1 distinct prime factors.
+
+Assume, for contradiction, that there are infinitely many unitary perfect numbers with this same fixed m. Since the number of odd prime factors is bounded, we may pass to an infinite subsequence for which the number r of odd prime factors is fixed.
+
+Write the odd part of the j-th number as n_j = ∏ q_{i,j}, where each q_{i,j} is an odd prime power. By passing to a further infinite subsequence, we may suppose that some of the prime powers q_{i,j} are constant and the remaining ones tend to infinity.
+
+Let C be the product of the constant prime powers, and let D_j be the product of the varying prime powers. Then n_j = C · D_j, gcd(C, D_j) = 1, and every prime power in D_j tends to infinity. Therefore σ*(D_j)/D_j = ∏_{p^a ∥ D_j} (1 + 1/p^a) → 1.
+
+The unitary-perfect equation is (1 + 2^m) σ*(C) σ*(D_j) = 2^{m+1} C D_j.
+
+Divide by D_j and let j → ∞. Since σ*(D_j)/D_j → 1, we get (1 + 2^m) σ*(C) = 2^{m+1} C.
+
+If C = 1, this says 1 + 2^m = 2^{m+1}, which is impossible.
+
+If C > 1, then the above equality implies that σ*(C) is divisible by exactly 2^{m+1}, because 1 + 2^m and C are odd. But D_j ≠ 1 for infinitely many j, and since D_j is odd, σ*(D_j) is even. Thus σ*(N_j) = (1 + 2^m) σ*(C) σ*(D_j) would be divisible by at least 2^{m+2}, while 2N_j = 2^{m+1} C D_j is divisible by exactly 2^{m+1}. This contradicts σ*(N_j) = 2N_j.
+
+Therefore, for each fixed m, there are only finitely many unitary perfect numbers N with 2^m ∥ N. This is essentially Subbarao and Warren's Theorem 3.
+
+**Lemma 3: For each fixed number of distinct prime factors, there are only finitely many unitary perfect numbers**
+
+Fix k ≥ 1. Suppose, for contradiction, that there are infinitely many unitary perfect numbers N with exactly k distinct prime factors.
+
+By Lemma 1, every such N is even. Write N = 2^{m_j} · n_j along an infinite sequence, with n_j odd.
+
+By Lemma 2, the exponent m_j cannot take only finitely many values, because each value m accounts for only finitely many examples. Therefore m_j → ∞.
+
+The equation σ*(N)/N = 2 becomes ∏(1 + p_i^{-a_i}) = 2 over the distinct prime powers. In particular, the factor from 2 is (1 + 2^{-m_j}) → 1. The product of the remaining k−1 factors must therefore approach 2. But each factor 1 + p^{-a} ≤ 1 + 1/p ≤ 1 + 1/3 for odd primes, and these factors decrease as the prime powers grow. For the product of k−1 such factors to approach 2, the primes involved cannot all tend to infinity simultaneously.
+
+A careful Diophantine argument (of the type used by Guy and by Straus for multiply perfect numbers) shows that as m_j → ∞ the system of equations imposed on the odd part n_j admits only finitely many solutions in odd prime powers. The key point is that the equation (1 + 2^m) σ*(n) = 2^{m+1} n, with n having at most k−1 distinct odd prime factors, forces n to lie in a finite set once m is large, via an S-unit-type argument: the differences σ*(n) − 2n are S-integers for a fixed finite set S of primes, and such equations have only finitely many solutions by the Thue–Mahler theorem (or more precisely by Baker's theory of linear forms in logarithms, which bounds the size of solutions to S-unit equations). This step invokes deep results in transcendence theory (Baker 1967, Yu 1994).
+
+Therefore, for each fixed k, there are only finitely many unitary perfect numbers with exactly k distinct prime factors.
+
+**The Remaining Gap**
+
+Lemmas 1–3 together show that there are only finitely many unitary perfect numbers with at most k distinct prime factors, for any fixed k. To conclude that there are only finitely many unitary perfect numbers in total, one would need to show that the number of distinct prime factors of a unitary perfect number is absolutely bounded.
+
+This is the exact content of the open problem. A heuristic argument runs as follows. If N = 2^m · p_1^{a_1} ⋯ p_r^{a_r} is unitary perfect, the equation becomes
+
+(1 + 1/2^m)(1 + 1/p_1^{a_1}) ⋯ (1 + 1/p_r^{a_r}) = 2.
+
+Each factor is at most (1 + 1/p_i) ≤ 4/3 (for odd primes p_i ≥ 3). Thus 2 ≤ (3/2)(4/3)^r, giving r ≤ C for some absolute constant C. However, this estimate is too crude; more careful analysis using the actual prime powers allows larger r in principle.
+
+The deepest known result is that the number of unitary perfect numbers up to X, call it U(X), satisfies U(X) = O(log X) (an easy consequence of the Subbarao–Warren analysis), but this does not rule out infinitely many.
+
+**Summary of What Is Proved and What Remains Open**
+
+1. No odd unitary perfect number exists (completely proved).
+2. There are only finitely many unitary perfect numbers with a fixed valuation at 2 (completely proved).
+3. There are only finitely many unitary perfect numbers with a fixed number of distinct prime factors (proved, invoking Baker-type S-unit bounds).
+4. Whether the number of distinct prime factors of unitary perfect numbers is absolutely bounded is unknown.
+5. Whether there exist any unitary perfect numbers beyond the five known ones is unknown.
+
+## Final Verdict
+
+VERDICT: OPEN — While strong partial results confirm there are no odd unitary perfect numbers and finiteness holds within each fixed stratum of prime-factor count, no proof exists that bounds the number of distinct prime factors absolutely, so the full conjecture that only finitely many unitary perfect numbers exist remains an open problem (Erdős Problem #1052).

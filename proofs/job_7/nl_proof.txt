@@ -1,0 +1,71 @@
+We prove the conjecture:
+
+For every integer n, 30∣(n^5−n).
+
+Equivalently, we must show that n^5−n is divisible by 2, by 3, and by 5, since
+
+30=2⋅3⋅5
+
+and the integers 2,3,5 are pairwise relatively prime.
+
+Key Lemma
+
+We will use the following standard consequence of Fermat's little theorem.
+
+Lemma. Let p be a prime. If p−1∣4, then for every integer n,
+
+n^5≡n(mod p).
+
+Proof of the lemma. If p∣n, then n≡0(mod p), so immediately
+
+n^5≡0≡n(mod p).
+
+Now assume p∤n. By Fermat's little theorem,
+
+n^(p−1)≡1(mod p).
+
+Since p−1∣4, we may write 4=k(p−1) for some integer k. Therefore,
+
+n^4=n^(k(p−1))≡1^k≡1(mod p).
+
+Multiplying by n, we get
+
+n^5≡n(mod p).
+
+Thus n^5−n≡0(mod p), as claimed. □
+
+Now we apply this lemma to the primes 2,3,5.
+
+For p=2, we have p−1=1, and 1∣4. Hence
+
+n^5≡n(mod 2),
+
+so
+
+2∣(n^5−n).
+
+For p=3, we have p−1=2, and 2∣4. Hence
+
+n^5≡n(mod 3),
+
+so
+
+3∣(n^5−n).
+
+For p=5, we have p−1=4, and 4∣4. Hence
+
+n^5≡n(mod 5),
+
+so
+
+5∣(n^5−n).
+
+Therefore n^5−n is divisible by each of 2,3,5. Since these three primes are pairwise coprime, their product also divides n^5−n. Hence
+
+2⋅3⋅5=30∣(n^5−n).
+
+This proves that for every integer n, n^5−n is divisible by 30.
+
+## Final Verdict
+
+VERDICT: PROVED — Fermat's little theorem shows that n^5≡n modulo 2, 3, and 5, and since these primes are pairwise coprime, 30∣n^5−n.

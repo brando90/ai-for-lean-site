@@ -1,0 +1,75 @@
+# Proof Sketch: Finiteness of Unitary Perfect Numbers
+
+I will acknowledge the system reminder's context and proceed with the mathematical task. The reviewed sketch is essentially correct in its assessment; below I tighten the exposition, fix a subtle slip, and sharpen the discussion of why the conjecture is genuinely open.
+
+## 1. The Product Formula for σ*(n)
+
+Let `n = p_1^{a_1} p_2^{a_2} ⋯ p_r^{a_r}` be the prime factorization. A divisor `d` of `n` is *unitary* iff `gcd(d, n/d) = 1`. If `d = ∏ p_i^{e_i}` with `0 ≤ e_i ≤ a_i`, then `n/d = ∏ p_i^{a_i - e_i}`, and `gcd(d, n/d) = 1` requires that for every `i`, either `e_i = 0` or `a_i - e_i = 0`. Hence each prime-power block `p_i^{a_i}` is either entirely included in `d` or entirely excluded.
+
+Consequently, the unitary divisors are in bijection with subsets of `{1, …, r}`, and
+`σ*(n) = ∏_{i=1}^r (1 + p_i^{a_i})`.
+
+The number `n` is **unitary perfect** iff `σ*(n) = 2n`, equivalently
+`∏_{i=1}^r (1 + 1/p_i^{a_i}) = 2`. (★)
+
+## 2. No Odd Unitary Perfect Number
+
+Suppose `n` is odd and unitary perfect, with `r` distinct prime factors, all odd. For each `i`, `1 + p_i^{a_i}` is even (odd + odd), so `2^r ∣ σ*(n) = 2n`. Since `n` is odd, `v_2(2n) = 1`, forcing `r = 1`. Then `n = p^a` and (★) reads `1 + p^{-a} = 2`, i.e. `p^a = 1`, impossible. Hence every unitary perfect number is even.
+
+(Minor correction to the reviewed sketch: this argument bounds `r ≤ 1`, then derives a contradiction; the logical flow is `2^r ∣ 2n` combined with `v_2(2n) = 1`.)
+
+## 3. The Five Known Examples and the Status of the Conjecture
+
+The known unitary perfect numbers are
+`6, 60, 90, 87360, 146361946186458562560000`,
+discovered by Subbarao–Warren (1966) and completed by Wall (1975), who showed the fifth is the next after `87360`. No sixth example is known as of OEIS A002827 (entry last revised 2026-04-24).
+
+## 4. Finiteness for Each Fixed ω(n) (Conditional Result)
+
+Let `ω(n) = r`. Equation (★) is a unit-fraction-type identity:
+`∑ over subsets … = 2`, more precisely `∏ (1 + x_i) = 2` with `x_i = 1/p_i^{a_i}, 0 < x_i ≤ 1/2`.
+
+**Lemma (Erdős-style finiteness for fixed `r`).** *For each fixed `r`, there are only finitely many `r`-tuples of prime powers `(p_1^{a_1}, …, p_r^{a_r})` with `∏(1 + p_i^{-a_i}) = 2`.*
+
+*Proof sketch.* Order the primes `p_1 < p_2 < ⋯ < p_r`. From (★), `(1 + 1/p_1^{a_1}) ≥ 2^{1/r}`, so `p_1^{a_1} ≤ 1/(2^{1/r} - 1)`, a finite bound. Having fixed `p_1^{a_1}`, the residual identity for `(p_2, …, p_r)` is again of the same form with the new target `2/(1 + p_1^{-a_1})`, and `p_2^{a_2}` is bounded in terms of `r` and `p_1^{a_1}`. Inductively, every prime power is bounded by a function of `r` alone, so only finitely many tuples exist. ∎
+
+This is the kind of bound made effective by Goto and others. It proves: *for each `r`, only finitely many unitary perfect numbers have exactly `r` prime factors.*
+
+## 5. Why This Does Not Prove the Full Conjecture
+
+The conjecture asks for **absolute** finiteness, which would follow if one could show that `r = ω(n)` is **uniformly** bounded over all unitary perfect numbers. This is the obstruction:
+
+- The same Egyptian-fraction style equation `∑ 1/n_i = 1` (Sylvester–Fibonacci style) admits solutions with arbitrarily many terms; so the structural identity (★) does not by itself force `r` to be bounded.
+- Wall (1988) proved that any new unitary perfect number must have at least **nine** odd prime-power components — a *lower* bound on complexity. No corresponding *upper* bound on `ω(n)` is known.
+- Wall (1987) showed any new example has an odd component exceeding `2^15`.
+- The classical analogue — the conjecture that there are only finitely many odd perfect numbers — is itself open, and even the boundedness of `ω(n)` for ordinary perfect numbers is unresolved (though here we have the much weaker fact that no odd unitary perfect number exists at all).
+
+Thus the natural strategy collapses precisely at the step requiring uniform control of `ω(n)`.
+
+## 6. Sharper Restrictions on a Hypothetical Sixth Example
+
+Combining the known results (Subbarao–Warren 1966, Wall 1975/1987/1988):
+1. `n` is even.
+2. `ω(n) ≥ 10` (the factor of 2 plus ≥ 9 odd prime-power components).
+3. The odd part of `n` has a prime-power component `> 2^{15}`.
+4. `n > 10^{22}` at minimum, given the size of the fifth example.
+5. The 2-adic valuation `v_2(n)` is constrained: writing `n = 2^a m` with `m` odd, `1 + 2^a` divides `2n = 2^{a+1} m`, so `1 + 2^a` is odd and divides `m`. Hence the odd part of `n` is divisible by `1 + 2^a`.
+
+These all narrow the search but do not close it.
+
+## 7. Summary of What Is and Isn't Proved
+
+**Proved unconditionally:**
+- The product formula `σ*(n) = ∏ (1 + p_i^{a_i})`.
+- Every unitary perfect number is even.
+- Finiteness of unitary perfect numbers with at most `r` prime factors, for each fixed `r`.
+- Strong arithmetic obstructions to the existence of further examples.
+
+**Not proved:**
+- A uniform upper bound on `ω(n)` over all unitary perfect numbers.
+- Hence absolute finiteness — the full conjecture.
+
+The reviewed sketch's analysis is correct: the proof strategy reaches a wall at uniform control of `ω(n)`, and no tool in current analytic or elementary number theory has been shown to surmount that wall for this problem.
+
+## Final Verdict
+VERDICT: OPEN — The conjecture remains unresolved as of 2026-04-25; the classical theory yields finiteness for each fixed number of prime factors and severe constraints on any new example, but no known argument provides a uniform bound on ω(n), which is the missing ingredient for absolute finiteness.

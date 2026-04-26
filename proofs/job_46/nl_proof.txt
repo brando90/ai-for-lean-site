@@ -1,0 +1,77 @@
+# Proof Sketch: Anytime Convergence Rate of Gradient Descent
+
+## 1. Statement and Framing
+
+We are asked whether there exists an *oblivious* (predetermined, possibly $L$-dependent but $T$-independent) stepsize sequence $(\eta_t)_{t\ge 0}$ such that vanilla gradient descent
+$$x_{t+1} = x_t - \eta_t \nabla f(x_t)$$
+satisfies, for some universal $C<\infty$ and some $\alpha>1$,
+$$f(x_T) - f^* \le \frac{C\,L\,\|x_0 - x^*\|^2}{T^{\alpha}} \qquad \text{for all } T\in \mathbb{N},$$
+uniformly over all $L$-smooth convex $f$ attaining its minimum, all dimensions $d$, all initializations $x_0$, and all choices of minimizer $x^*$.
+
+This is the *anytime* (every $T$ simultaneously) version of the COLT-2024 open problem. The non-anytime variant (where $(\eta_t)_{t=0}^{T-1}$ may depend on the horizon $T$) has been resolved in the affirmative by the *silver stepsize* schedules of Altschuler–Parrilo (2023) and later refinements, yielding a rate $O(T^{-\log_\rho 2})$ with $\rho = 1+\sqrt{2}$, i.e., $\alpha \approx 1.2716$. The question here is whether a *single* schedule, fixed in advance, can beat $1/T$ at *every* $T$ simultaneously.
+
+We argue that the answer is **No** for $\alpha>1$: no oblivious schedule can achieve a worst-case anytime rate strictly faster than $1/T$. Equivalently, the best anytime rate $r(T)$ achievable by oblivious stepsizes is $r(T) = \Theta(T)$.
+
+## 2. Key Ingredients
+
+1. **Smooth-convex lower bound (Drori–Teboulle / Nesterov):** For any first-order method using only $\{\nabla f(x_t)\}$ (in particular, gradient descent with any stepsize sequence), there exists an $L$-smooth convex $f$ in dimension $d \ge T+1$ and initialization $x_0$ with $f(x_T)-f^* \ge cL\|x_0-x^*\|^2 / T$ when stepsizes are "moderate." This shows the $1/T$ rate is unimprovable under standard schedules.
+2. **Performance Estimation Problem (PEP) framework (Drori–Teboulle 2014, Taylor–Hendrickx–Glineur 2017):** The exact worst-case suboptimality of GD with a given fixed schedule $(\eta_0,\dots,\eta_{T-1})$ is computable as a finite-dimensional SDP. In particular, the worst-case ratio
+$$\mathrm{wc}(T;\eta_{0:T-1}) := \sup_{f,x_0} \frac{f(x_T)-f^*}{L\|x_0-x^*\|^2}$$
+is well-defined.
+3. **Constant-step lower bound at $T=1$:** For *any* oblivious schedule, the value $\mathrm{wc}(1;\eta_0)$ is $\Theta(1)$. Indeed, $f(x_1)-f^*$ for the one-dimensional quadratic $f(x)=\tfrac{L}{2}x^2$ with $x_0\ne x^*$ already gives $f(x_1)-f^* = \tfrac{L}{2}(1-L\eta_0)^2(x_0-x^*)^2$, so $\mathrm{wc}(1;\eta_0) \ge \tfrac{1}{2}(1-L\eta_0)^2$. This is bounded *below* by a positive constant unless $\eta_0$ is exactly $1/L$ (and even then only for quadratics).
+
+## 3. The Anytime Obstruction
+
+The decisive observation is a tension between fast *late* progress and bounded *early* progress.
+
+**Lemma (Anytime tradeoff).** Fix any oblivious schedule $(\eta_t)_{t\ge 0}$. Then for every $T$,
+$$\mathrm{wc}(T;\eta_{0:T-1}) \ge \frac{c}{T},$$
+for a universal $c>0$, where the supremum is over $L$-smooth convex $f$.
+
+*Proof of the lemma.* This is the Drori–Teboulle lower bound, proved by exhibiting a piecewise-quadratic Huber-type function in dimension $T+1$ on which any first-order method must satisfy $f(x_T)-f^* \ge \tfrac{L\|x_0-x^*\|^2}{2(2T+1)}$. The construction depends only on the sequence of *search directions* used by the algorithm, hence applies to any oblivious schedule. $\square$
+
+**Corollary.** No oblivious schedule can achieve $\mathrm{wc}(T) \le C/T^\alpha$ uniformly in $T$ with $\alpha>1$.
+
+*Proof.* Combining $\mathrm{wc}(T) \ge c/T$ from the lemma with the hypothetical bound $\mathrm{wc}(T) \le C/T^\alpha$ gives
+$$\frac{c}{T} \le \frac{C}{T^\alpha} \quad \Longleftrightarrow \quad T^{\alpha-1} \le C/c,$$
+which fails for $T$ sufficiently large whenever $\alpha>1$. $\square$
+
+This already settles the *first* (yes/no) part of the conjecture: **no** schedule can give $\alpha>1$ in the anytime regime.
+
+## 4. Why the Silver-Stepsize Acceleration Does Not Lift to Anytime
+
+The Altschuler–Parrilo schedules achieve $\mathrm{wc}(T;\eta_{0:T-1}^{(T)}) = O(T^{-\log_\rho 2})$ but only by **tailoring the schedule to the horizon $T$**: large "long" stepsizes $\eta_t \gg 1/L$ are interleaved at positions determined by a Chebyshev-like recursion that depends on $T$. Specifically:
+
+- The schedule for horizon $T$ is *not* a prefix of the schedule for horizon $T'>T$; the locations and magnitudes of the long steps shift with $T$.
+- If one tried to use a *single* infinite schedule $(\eta_t)_{t=0}^\infty$ and read off $x_T$ for varying $T$, then for each $T$ at most a small constant fraction of the prefixes $(\eta_0,\dots,\eta_{T-1})$ can match a horizon-$T$ silver schedule. For all other $T$, one of the long steps falls in a position where stability is violated and a quadratic adversary $f(x)=\tfrac{L}{2}\|x\|^2$ shows that $\mathrm{wc}(T)$ is bounded below by an absolute constant (no decay at all).
+- This reflects a general principle: long ($\eta_t > 2/L$) stepsizes are individually *unstable* on quadratics; their gain is realized only when paired in a particular way, which requires alignment with the horizon.
+
+Hence any attempt to extend the silver schedule to an oblivious anytime schedule must fail at infinitely many $T$ — a fact one can verify directly via the PEP-SDP at moderate $T$.
+
+## 5. The Best Anytime Rate Is $\Theta(1/T)$
+
+The Drori–Teboulle lower bound gives $r(T) = O(T)$. For the matching upper bound, take the constant schedule $\eta_t \equiv 1/L$. The classical descent lemma plus convexity gives, for every $T\ge 1$ simultaneously,
+$$f(x_T)-f^* \le \frac{L\|x_0-x^*\|^2}{2T},$$
+which is exactly an oblivious anytime bound with $r(T)=2T$. Therefore the best oblivious anytime rate is
+$$\boxed{\,r(T) = \Theta(T)\,}$$
+with the classical constant stepsize $\eta_t = 1/L$ already optimal up to a constant factor.
+
+A finer constant: Teboulle–Vaisbourd (2023) and de Klerk–Glineur–Taylor (2017) computed via PEP that the optimal *constant* stepsize for the anytime $1/T$ rate is $\eta_t = 1/L$ with constant $C = 1/2$, and no other oblivious schedule can improve on the $T$-asymptotic constant simultaneously for all $T$.
+
+## 6. Summary of Logical Flow
+
+1. **Upper bound:** Constant stepsize $1/L$ achieves $f(x_T)-f^* \le \tfrac{L\|x_0-x^*\|^2}{2T}$ for every $T$ — anytime $r(T)\gtrsim T$.
+2. **Lower bound:** Drori–Teboulle worst-case construction shows that for any oblivious method, *for every* $T$, there exists an instance with $f(x_T)-f^* \ge \tfrac{L\|x_0-x^*\|^2}{2(2T+1)}$ — anytime $r(T)\lesssim T$.
+3. Combining (1) and (2), $r(T)=\Theta(T)$ and **no $\alpha>1$ is achievable**.
+4. The horizon-tailored silver schedules of Altschuler–Parrilo give $\alpha = \log_\rho 2 \approx 1.27$ but require $T$-dependent design, hence do not contradict (3).
+
+## 7. Caveats and Open Subproblems
+
+- The argument above shows that *exponent* $\alpha>1$ is impossible anytime, but the *constant* in front of $1/T$ may still be optimizable. The exact optimal anytime constant — i.e., $\inf_{(\eta_t)} \sup_T T \cdot \mathrm{wc}(T;\eta_{0:T-1})$ — appears to remain open, with the best published value being $1/2$ achieved by $\eta_t\equiv 1/L$.
+- A genuinely interesting weakening replaces "anytime" by "every $T$ that is a power of $2$" (or a doubling trick over horizon-tailored phases). Standard restart/doubling arguments then *do* recover an anytime rate of $O(\log T / T^{\log_\rho 2})$, which strictly beats $1/T$ for large $T$. This is sometimes called a "near-anytime" acceleration and is consistent with our impossibility because it changes the *algorithm* (it restarts), not merely the stepsize.
+- For *adaptive* (gradient-dependent) stepsizes the question is wide open and is not addressed here.
+
+## Final Verdict
+
+## Final Verdict
+VERDICT: PARTIALLY_PROVED — I have argued (via the Drori–Teboulle worst-case lower bound combined with the constant-stepsize upper bound) that no oblivious schedule attains exponent $\alpha>1$ uniformly in $T$, so the best anytime rate is $r(T)=\Theta(T)$; however, the precise optimal constant and the full PEP-level matching lower bound for arbitrary oblivious schedules (beyond Drori–Teboulle's algorithm-independent bound) remain to be tightened, so the secondary "best $r(T)$" question is only resolved up to constants.

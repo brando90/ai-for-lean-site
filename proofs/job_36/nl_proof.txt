@@ -1,0 +1,77 @@
+# Proof Sketch
+
+## Setup and Notation
+
+For a positive integer $n$, write $L_n = \mathrm{lcm}(1,2,\dots,n)$ and
+$$
+a_n \;=\; L_n \cdot H_n \;=\; \sum_{k=1}^{n} \frac{L_n}{k}.
+$$
+Since $k \mid L_n$ for $1 \le k \le n$, $a_n$ is a positive integer. For an odd prime $p\le n$, let $a(p,n)$ denote the largest exponent with $p^{a(p,n)} \le n$, and write $m_p(n) = \lfloor n / p^{a(p,n)} \rfloor$.
+
+**Key reformulation.** If $H_n = A/B$ in lowest terms, then $B\mid L_n$ and $a_n = (L_n/B)\cdot A$, so
+$$
+\gcd(a_n, L_n) \;=\; \frac{L_n}{B}.
+$$
+Hence $\gcd(a_n,L_n)=1$ iff $B = L_n$, and $\gcd(a_n,L_n)>1$ iff some prime $p\le n$ divides $a_n$.
+
+**$p$-adic computation of $a_n$ modulo $p$.** Let $a = a(p,n)$ and $m = m_p(n)$. Group the terms of $a_n$ by $v_p(k)$:
+- if $v_p(k) < a$, then $v_p(L_n/k) \ge 1$ and the term vanishes mod $p$;
+- if $v_p(k) = a$, then $k = ip^a$ with $1\le i\le m$ and $p\nmid i$, giving $v_p(L_n/k)=0$.
+
+Therefore
+$$
+a_n \;\equiv\; \frac{L_n}{p^a}\cdot S_p(m) \pmod{p}, \qquad S_p(m) := \sum_{\substack{1\le i\le m\\ p\nmid i}} \frac{1}{i} \in \mathbb{F}_p.
+$$
+Because $L_n/p^a$ is a unit mod $p$, we conclude:
+$$
+\boxed{\,p\mid a_n \iff S_p(m_p(n)) \equiv 0\pmod p.\,}
+$$
+
+---
+
+## Part (2): infinitely many $n$ with $\gcd(a_n,L_n)>1$
+
+Take $p = 3$. Note $S_3(2) = 1 + \tfrac{1}{2} = \tfrac{3}{2} \equiv 0 \pmod 3$.
+
+For each integer $a \ge 1$, let $n$ lie in the interval
+$$
+I_a := [\,2\cdot 3^a,\; 3^{a+1}-1\,].
+$$
+Then $3^a$ is the largest power of $3$ at most $n$, and $m_3(n) = \lfloor n/3^a\rfloor = 2$, hence $S_3(m_3(n)) \equiv 0 \pmod 3$. By the boxed criterion, $3\mid a_n$. Since $3 \le n$, also $3\mid L_n$, so $\gcd(a_n,L_n) \ge 3 > 1$.
+
+The intervals $I_a$ are infinite in number and disjoint, so they produce infinitely many such $n$ (e.g.\ $n=6,7,8,18,\dots,26,54,\dots,80,\dots$). $\blacksquare$
+
+---
+
+## Part (1): infinitely many $n$ with $\gcd(a_n,L_n)=1$ — partial progress
+
+We must show that there are infinitely many $n$ for which **every** prime $p\le n$ satisfies $S_p(m_p(n))\not\equiv 0\pmod p$.
+
+**The prime $p=2$ is automatic.** Here $m_2(n)=1$ always (since $2^{a(2,n)}\le n < 2\cdot 2^{a(2,n)}$), and $S_2(1)=1\not\equiv 0\pmod 2$. This is the classical Theisinger argument that $H_n\notin \mathbb{Z}$ for $n\ge 2$.
+
+**A sufficient condition.** If $n < 2 p^{a(p,n)}$ for every odd prime $p\le n$, then $m_p(n)=1$ and $S_p(1) = 1\ne 0\pmod p$ for all such $p$. Thus $\gcd(a_n,L_n)=1$.
+
+This sufficient condition is met for $n\in\{1,2,3,4,5\}$ and (after a short check using the boxed criterion) it can be verified that $\gcd(a_n,L_n)=1$ also for $n=9,10,11,12,13,14,\dots$. So the set
+$$
+\mathcal{G} = \{\,n \ge 1 : \gcd(a_n,L_n)=1\,\}
+$$
+is non-empty and contains many small elements.
+
+**Where the proof becomes hard.** To prove $\mathcal{G}$ is infinite, we need to find $n$ that simultaneously avoid the "bad" residue patterns of *every* odd prime $p\le n$. Already for $p=3$ the bad set is $\bigcup_a [2\cdot 3^a, 3^{a+1}-1]$ (density $1/3$), for $p=5$ it includes $\bigcup_a [4\cdot 5^a, 5^{a+1}-1]$ (using $S_5(4) = \tfrac{25}{12}\equiv 0\pmod 5$), for $p=7$ it includes ranges where $m_7=6$ (using Wolstenholme: $S_7(6)=\tfrac{49}{20}\equiv 0\pmod 7$), and so on. By Wolstenholme's theorem, for every prime $p\ge 5$, $S_p(p-1)\equiv 0\pmod{p^2}$, so each prime contributes a non-trivial bad set.
+
+The naive density estimate $\sum_{p\le N} \tfrac{1}{p}$ diverges, so a union bound does not show $\mathcal{G}$ is infinite; one needs to exploit independence between bad sets at different primes (an Erdős–Kac/sieve-style argument), or to use a finer structure theorem.
+
+The relevant problem is closely tied to the **Eswarathasan–Levine conjecture** (1991), which asserts that for each prime $p$ the set $J_p=\{n: p\mid \mathrm{numerator}(H_n)\}$ is finite. Even the weaker assertion that $J_p$ has density $0$ is *open* for every prime $p\ge 2$. Boyd (1994) verified the conjecture computationally for $p\le 7$ and gave heuristic asymptotics; Sanna (2016), Wu–Chen, and others have proved upper bounds of the form $|J_p\cap[1,N]| = O_p\!\left(N^{2/3+\varepsilon}\right)$, but this is still not enough for our purpose because the analogous "bad sets" $K_p = \{n: p\mid a_n\}$ here have *positive* density $\ge 1/p$ for each $p$, coming from the multiplier $m_p$ being in a fixed positive-density set.
+
+Thus a complete proof of part (1) appears to be **open**: it would require (at minimum) showing that the joint bad set $\bigcup_{p\le n} K_p$ does not cover all sufficiently large integers, which in turn requires control over arithmetic correlations among harmonic partial sums modulo distinct primes that goes beyond current technology.
+
+---
+
+## Summary
+
+- **Part (2)** is proved unconditionally via the explicit family $n\in[2\cdot 3^a,\,3^{a+1}-1]$, $a\ge 1$, using $S_3(2)\equiv 0\pmod 3$.
+- **Part (1)** is verified for many small $n$ via the criterion $S_p(m_p(n))\not\equiv 0\pmod p$ for all primes $p\le n$, and is consistent with the Eswarathasan–Levine conjecture, but I am not able to provide an unconditional proof that infinitely many $n$ satisfy it.
+
+## Final Verdict
+
+VERDICT: PARTIALLY_PROVED — Part (2) is established by an explicit infinite family using $S_3(2)\equiv 0\pmod 3$; Part (1) is reduced to a simultaneous non-vanishing problem for harmonic partial sums modulo all primes $p\le n$, which is closely related to the open Eswarathasan–Levine conjecture and is not resolved here.

@@ -1,0 +1,105 @@
+# Proof Sketch: Lemoine's Conjecture
+
+**Statement.** Every odd integer $n > 5$ can be written as $n = p + 2q$, where $p$ and $q$ are primes.
+
+This is the classical **Lemoine's conjecture** (sometimes called the Levy conjecture), first posed by Émile Lemoine in 1895 and re-stated by Hyman Levy in 1963. Despite its elementary appearance and overwhelming numerical evidence, the conjecture **remains an open problem in number theory**. Below I outline what is known, what techniques have been brought to bear, and why a complete proof is currently out of reach.
+
+---
+
+## 1. Reformulation and First Observations
+
+Write the odd integer $n > 5$ as $n = 2m + 1$ with $m \geq 3$. Setting $p = n - 2q$, the conjecture asserts:
+
+> For every $m \geq 3$, there exists a prime $q$ with $2 \leq q \leq m$ such that $2m + 1 - 2q$ is also prime.
+
+Equivalently, in terms of the "prime offsets" of $n$: among the integers
+$$n - 4,\ n - 6,\ n - 10,\ n - 14,\ n - 22,\ \ldots,\ n - 2q\ (q \text{ prime}),$$
+at least one must be prime.
+
+**Small cases (sanity check).**
+- $7 = 3 + 2\cdot 2$
+- $9 = 5 + 2\cdot 2 = 3 + 2\cdot 3$
+- $11 = 5 + 2\cdot 3 = 7 + 2\cdot 2$
+- $13 = 7 + 2\cdot 3 = 3 + 2\cdot 5$
+- $15 = 11 + 2\cdot 2 = 5 + 2\cdot 5$
+- $\ldots$
+
+Numerical verification has been pushed to $n \leq 10^{10}$ (Sun, Corbit, and others), with the number of representations $r(n)$ growing roughly like $n / (\log n)^2$, in agreement with heuristic predictions.
+
+---
+
+## 2. Heuristic Justification (Hardy–Littlewood Style)
+
+Apply the standard circle-method / prime $k$-tuple heuristic. The "expected" number of representations $r(n) = \#\{(p,q) : n = p + 2q\}$ should be
+$$r(n) \;\sim\; 2\,\mathfrak{S}(n) \cdot \frac{n}{(\log n)^2},$$
+where $\mathfrak{S}(n)$ is a singular series of the form
+$$\mathfrak{S}(n) = \prod_{p \text{ odd prime}} \left(1 - \frac{1}{(p-1)^2}\right) \cdot \prod_{\substack{p \mid n \\ p > 2}} \frac{p-1}{p-2}.$$
+For odd $n > 5$, no local obstruction kills $\mathfrak{S}(n)$; in particular $\mathfrak{S}(n) > c > 0$ uniformly. Thus *heuristically*, $r(n) \to \infty$, and Lemoine's conjecture should hold with abundant representations.
+
+This is, however, **only a heuristic**; converting it into a theorem requires major-arc / minor-arc estimates of the kind that succeed for ternary Goldbach but fail for binary Goldbach.
+
+---
+
+## 3. Connection to Goldbach-Type Theorems
+
+Lemoine's conjecture is *strictly stronger* than the **odd (ternary) Goldbach conjecture**, which asserts that every odd $n > 5$ is a sum of three primes. Indeed,
+$$n = p + 2q = p + q + q,$$
+so a Lemoine decomposition is a ternary Goldbach decomposition with two equal summands.
+
+Helfgott (2013) proved the ternary Goldbach conjecture unconditionally, finishing work of Vinogradov (1937). But Helfgott's theorem only guarantees *some* decomposition $n = p_1 + p_2 + p_3$; it does not force $p_2 = p_3$. Hence Helfgott's result does **not** imply Lemoine.
+
+Conversely, Lemoine's conjecture, if true, would imply ternary Goldbach (trivially), and is comparable in depth to the **binary Goldbach conjecture** (every even $N \geq 4$ is $p_1 + p_2$). In fact, a slight reformulation makes the analogy precise:
+
+**Equivalent form.** For every even integer $N \geq 6$ (set $N = n - 1$ in Lemoine), there exist primes $p, q$ with $N = p + 2q - 1$. Subtracting, this is essentially the assertion that the additive set $\mathcal{P} + 2\mathcal{P}$ (primes plus twice primes) contains every sufficiently large odd number — a binary additive problem with a "twisted" coefficient.
+
+Binary additive problems with prime variables are precisely those that **resist** the circle method, because the minor-arc contribution cannot currently be shown to be smaller than the main term.
+
+---
+
+## 4. Partial Results
+
+The strongest known approximations are:
+
+**(a) Almost-all results.** Using mean-value estimates for exponential sums over primes (Vinogradov, Vaughan), one can show that the number of odd $n \leq X$ which fail to admit a Lemoine decomposition is
+$$E(X) \ll X^{1-\delta}$$
+for some $\delta > 0$. Variants of this are due to Liu–Liu and others, who treat the analogous problem $n = p + 2q$ with $p, q$ primes by adapting Montgomery–Vaughan's exceptional-set method for binary Goldbach. This shows Lemoine holds for *almost every* odd $n$, but leaves a (sparse) potential exceptional set.
+
+**(b) Almost-prime substitutes.** By sieve methods (Chen-type arguments), one can prove unconditional results like:
+> Every sufficiently large odd $n$ can be written as $n = p + 2P_2$, where $p$ is prime and $P_2$ is an integer with at most two prime factors.
+
+This is the analog for Lemoine of Chen's theorem ($N = p + P_2$ for binary Goldbach). It is the deepest *unconditional* result in the direction of Lemoine, but it does not give two genuine primes.
+
+**(c) GRH-conditional results.** Under the Generalized Riemann Hypothesis, one can sharpen the exceptional set estimate considerably, but even GRH does **not** suffice to prove Lemoine for every $n$.
+
+**(d) Numerical verification.** The conjecture has been verified for all odd $n$ up to at least $10^{10}$.
+
+---
+
+## 5. Why a Complete Proof Is Out of Reach
+
+The core obstruction is identical to the obstruction for binary Goldbach: the **parity problem** in sieve theory (Selberg) and the inability of current technology to give a power-saving cancellation on the minor arcs in a binary problem with two prime variables. Specifically:
+
+1. The circle method produces a main term proportional to $\mathfrak{S}(n) \cdot n / (\log n)^2$ from the major arcs, which is positive and large.
+2. The minor-arc contribution can be bounded by $O(n / (\log n)^A)$ for any $A$ via Vinogradov's estimate, but this is not strong enough — for a binary problem one needs a saving of a *power* of $n$, not merely of $\log n$.
+3. Sieve methods inevitably encounter the parity barrier, which prevents distinguishing numbers with an even versus odd number of prime factors. This is exactly why Chen's theorem produces $P_2$ rather than $P_1$.
+
+These are the same obstacles that have kept binary Goldbach open since 1742. There is no known reduction of Lemoine to a problem we can solve, nor any known route around the parity barrier in this setting.
+
+---
+
+## 6. Summary of What Can Honestly Be Asserted
+
+- **Verified:** for all odd $n$ with $5 < n \leq 10^{10}$ (and likely further by now).
+- **Almost-all theorem:** the set of odd $n \leq X$ without a Lemoine decomposition has size $\ll X^{1-\delta}$.
+- **Chen-type theorem:** every sufficiently large odd $n$ is $p + 2P_2$.
+- **Heuristic:** the singular series is bounded below, and $r(n) \asymp n/(\log n)^2$ is expected.
+- **Full conjecture:** *unproved*, and equivalent in depth to binary Goldbach-type problems blocked by the parity barrier.
+
+A genuine proof would require either (i) a fundamentally new method overcoming the parity obstruction, or (ii) a power-saving minor-arc estimate for a binary prime exponential sum — neither of which is known.
+
+---
+
+## Final Verdict
+
+## Final Verdict
+VERDICT: OPEN — Lemoine's conjecture (1895) remains an unsolved problem; only almost-all results, Chen-type approximations ($n = p + 2P_2$), and numerical verification up to $\sim 10^{10}$ are known, and a full proof is blocked by the same parity / binary-circle-method obstacles that keep binary Goldbach open.

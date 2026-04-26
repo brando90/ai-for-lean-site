@@ -1,0 +1,33 @@
+I'll first verify the conjecture against the known smoothed-analysis literature, then give the strongest rigorous proof sketch available and state clearly which parts remain open.
+
+The available results do not establish the near-linear claim; they give polynomial smoothed upper bounds for certain shadow-vertex/simplex-type algorithms instead.
+
+Thought for 6m 33s
+
+The requested near-linear bound is not currently a proved theorem. The problem statement itself is listed as unsolved, and the known results still leave a gap between current upper bounds, lower bounds, deterministic pivot-rule requirements, and the exact perturbation model in the question. The strongest honest "proof sketch" is therefore a proof of the best-known surrogate theorem, followed by an explanation of why it does not prove the full conjecture. The problem page summarizes this status: Spielman–Teng established polynomial smoothed complexity, later work improved the bounds, but the optimal dependence on (m,n,σ) across pivot rules remains open.
+
+I will write d for the number of variables and M for the number of constraints, so d=n and M=m in the notation of the conjecture.
+
+What can be proved
+Theorem: known smoothed shadow-simplex upper bounds
+
+In the standard Gaussian smoothed model used in the simplex literature, there are shadow-vertex based simplex methods whose expected number of pivots is polynomial, and recent analyses give bounds of the form
+
+O(σ^{-1/2} d^{11/4} log(M)^{7/4})
+
+for a semi-random shadow-vertex method, up to lower-order terms and model conventions. Bach and Huiberts state this as an improvement over the 2023 bound O(σ^{-3/2} d^{13/4} log(M)^{7/4}), and also prove a matching noise-dependence lower bound for the relevant diameter/shadow-path geometry.
+
+This theorem is far from the conjectural example O(d·polylog(M,d,1/σ)), because it still contains d^{11/4} rather than d, and a polynomial factor σ^{-1/2} rather than merely polylog(1/σ).
+
+Proof sketch of the known upper-bound mechanism
+
+Assume first that the perturbed instance is nondegenerate. This holds with probability one under independent Gaussian perturbations: degeneracy of a basis, equality of two competing ratio-test values, or nonunique optimality is described by the vanishing of a nonzero polynomial in the input coefficients, and a continuous Gaussian distribution assigns probability zero to such algebraic hypersurfaces. In the shadow-vertex analyses, this nondegeneracy is used to identify simplex pivots with vertices of a two-dimensional shadow polygon; Bach and Huiberts state the corresponding nondegeneracy fact for Gaussian matrices explicitly.
+
+Let P = {x ∈ R^d : Ax ≤ b}.
+
+The shadow-vertex rule is defined using two objective vectors y_0, y_1. It follows the path of vertices that are optimal for objectives of the form y_λ = (1-λ)y_0 + λy_1, 0 ≤ λ ≤ 1. Equivalently, one projects P orthogonally onto the two-dimensional subspace span(y_0, y_1). Each visited vertex of P projects to a vertex of the planar "shadow" polygon, so the number of pivots is bounded by the number of edges or vertices of that shadow polygon. This is the central reduction in the shadow-vertex method.
+
+The analytic core is therefore a shadow-size bound. One must show that after Gaussian perturbation, no fixed or suitably independent two-dimensional projection can have too many vertices in expectation. The estimates proceed by controlling the probability that a given basis appears on the shadow path. Geometrically, a basis can be on the path only if its normal cone intersects the two-dimensional objective plane. Gaussian perturbation makes these normal cones unlikely to align pathologically with the plane. The modern proofs refine this idea using separation arguments for normal cones, Gaussian anti-concentration inequalities, and careful counting of bases that can simultaneously lie on the shadow boundary.
+
+## Final Verdict
+VERDICT: OPEN — The near-linear smoothed complexity bound O(n·polylog(m,n,1/σ)) for any pivot rule remains unproved; the best known upper bounds are polynomial in n (of order n^{11/4}) and the exact optimal dependence on m, n, σ is an active open problem in the theory of linear programming.

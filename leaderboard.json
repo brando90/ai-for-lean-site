@@ -6,16 +6,7 @@
     "verdict": "open",
     "is_open_conjecture": true,
     "date": "2026-04-25T16:55:29.303827-07:00",
-    "proof_path": "lean_project/LeanProject/Job_50.lean"
-  },
-  {
-    "id": 49,
-    "name": "I am modeling battery operation problem a random outage condition. Add one wr...",
-    "statement": "Yes. This problem has a strong inventory-theoretic structure. The battery state of charge is the inventory, charging is ordering, discharge during outage is demand fulfillment from inventory, and VOLL",
-    "verdict": "open",
-    "is_open_conjecture": true,
-    "date": "2026-04-25T15:06:39.759737-07:00",
-    "proof_path": ""
+    "proof_path": "proofs/job_50/paper.pdf"
   },
   {
     "id": 48,
@@ -24,7 +15,7 @@
     "verdict": "open",
     "is_open_conjecture": true,
     "date": "2026-04-25T14:58:43.256777-07:00",
-    "proof_path": "lean_project/LeanProject/Job_48.lean"
+    "proof_path": "proofs/job_48/paper.pdf"
   },
   {
     "id": 47,
@@ -33,7 +24,7 @@
     "verdict": "open",
     "is_open_conjecture": true,
     "date": "2026-04-25T14:02:43.057758-07:00",
-    "proof_path": ""
+    "proof_path": "proofs/job_47/paper.pdf"
   },
   {
     "id": 46,
@@ -42,7 +33,7 @@
     "verdict": "open",
     "is_open_conjecture": true,
     "date": "2026-04-25T13:49:54.725341-07:00",
-    "proof_path": "lean_project/LeanProject/Job_46.lean"
+    "proof_path": "proofs/job_46/paper.pdf"
   },
   {
     "id": 45,
@@ -51,7 +42,7 @@
     "verdict": "open",
     "is_open_conjecture": true,
     "date": "2026-04-25T11:04:29.540464-07:00",
-    "proof_path": "lean_project/LeanProject/Job_45.lean"
+    "proof_path": "proofs/job_45/paper.pdf"
   },
   {
     "id": 51,
@@ -60,7 +51,7 @@
     "verdict": "open",
     "is_open_conjecture": true,
     "date": "2026-04-25T09:43:45.745148-07:00",
-    "proof_path": "lean_project/LeanProject/Job_51.lean"
+    "proof_path": "proofs/job_51/paper.pdf"
   },
   {
     "id": 44,
@@ -69,7 +60,7 @@
     "verdict": "open",
     "is_open_conjecture": true,
     "date": "2026-04-25T07:05:13.436213-07:00",
-    "proof_path": "lean_project/LeanProject/Job_44.lean"
+    "proof_path": "proofs/job_44/paper.pdf"
   },
   {
     "id": 43,
@@ -78,25 +69,7 @@
     "verdict": "open",
     "is_open_conjecture": true,
     "date": "2026-04-25T05:05:56.614534-07:00",
-    "proof_path": "lean_project/LeanProject/Job_43.lean"
-  },
-  {
-    "id": 42,
-    "name": "There are infinitely many pairs of prime numbers that differ by exactly 2.",
-    "statement": "There are infinitely many pairs of prime numbers that differ by exactly 2.",
-    "verdict": "open",
-    "is_open_conjecture": true,
-    "date": "2026-04-25T04:39:42.546601-07:00",
-    "proof_path": "lean_project/LeanProject/Job_42.lean"
-  },
-  {
-    "id": 41,
-    "name": "Every even integer strictly greater than 2 can be expressed as the sum of two...",
-    "statement": "Every even integer strictly greater than 2 can be expressed as the sum of two prime numbers.",
-    "verdict": "open",
-    "is_open_conjecture": true,
-    "date": "2026-04-25T04:18:05.499959-07:00",
-    "proof_path": "lean_project/LeanProject/Job_41.lean"
+    "proof_path": "proofs/job_43/paper.pdf"
   },
   {
     "id": 40,
@@ -105,7 +78,7 @@
     "verdict": "open",
     "is_open_conjecture": true,
     "date": "2026-04-25T03:50:19.272026-07:00",
-    "proof_path": "lean_project/LeanProject/Job_40.lean"
+    "proof_path": "proofs/job_40/paper.pdf"
   },
   {
     "id": 39,
@@ -114,25 +87,7 @@
     "verdict": "open",
     "is_open_conjecture": true,
     "date": "2026-04-25T02:25:25.633839-07:00",
-    "proof_path": "lean_project/LeanProject/Job_39.lean"
-  },
-  {
-    "id": 38,
-    "name": "Let A be a set of positive integers. For each n in A, choose some collection ...",
-    "statement": "Let A be a set of positive integers. For each n in A, choose some collection X_n  of forbidden residue classes modulo n. Define B to be the set of positive integers m such that, for every n in A with ",
-    "verdict": "open",
-    "is_open_conjecture": true,
-    "date": "2026-04-25T01:50:39.397289-07:00",
-    "proof_path": "lean_project/LeanProject/Job_38.lean"
-  },
-  {
-    "id": 37,
-    "name": "If A is a subset of the natural numbers such that the sum of the reciprocals ...",
-    "statement": "If A is a subset of the natural numbers such that the sum of the reciprocals of the elements in A is infinite, then A must contain arbitrarily long arithmetic progressions.",
-    "verdict": "open",
-    "is_open_conjecture": true,
-    "date": "2026-04-24T23:08:01.154586-07:00",
-    "proof_path": "lean_project/LeanProject/Job_37.lean"
+    "proof_path": "proofs/job_39/paper.pdf"
   },
   {
     "id": 36,
@@ -141,16 +96,7 @@
     "verdict": "open",
     "is_open_conjecture": true,
     "date": "2026-04-24T21:49:17.211773-07:00",
-    "proof_path": "lean_project/LeanProject/Job_36.lean"
-  },
-  {
-    "id": 28,
-    "name": "I am modeling battery operation problem a random outage condition. Add one wr...",
-    "statement": "Yes. This problem has a strong inventory-theoretic structure. The battery state of charge is the inventory, charging is ordering, discharge during outage is demand fulfillment from inventory, and VOLL",
-    "verdict": "open",
-    "is_open_conjecture": true,
-    "date": "2026-04-23T00:36:23.052381-07:00",
-    "proof_path": ""
+    "proof_path": "proofs/job_36/paper.pdf"
   },
   {
     "id": 24,
@@ -159,7 +105,7 @@
     "verdict": "open",
     "is_open_conjecture": true,
     "date": "2026-04-23T00:30:03.261076-07:00",
-    "proof_path": "lean_project/LeanProject/Job_24.lean"
+    "proof_path": "proofs/job_24/paper.pdf"
   },
   {
     "id": 10,
@@ -168,7 +114,7 @@
     "verdict": "open",
     "is_open_conjecture": true,
     "date": "2026-04-22T23:12:55.211616-07:00",
-    "proof_path": "lean_project/LeanProject/Job_10.lean"
+    "proof_path": "proofs/job_10/paper.pdf"
   },
   {
     "id": 31,
@@ -177,7 +123,7 @@
     "verdict": "open",
     "is_open_conjecture": true,
     "date": "2026-04-21T13:41:46.479140-07:00",
-    "proof_path": "lean_project/LeanProject/Job_31.lean"
+    "proof_path": "proofs/job_31/paper.pdf"
   },
   {
     "id": 29,
@@ -186,7 +132,7 @@
     "verdict": "open",
     "is_open_conjecture": true,
     "date": "2026-04-21T01:21:51.591605-07:00",
-    "proof_path": "lean_project/LeanProject/Job_29.lean"
+    "proof_path": "proofs/job_29/paper.pdf"
   },
   {
     "id": 21,
@@ -195,7 +141,7 @@
     "verdict": "open",
     "is_open_conjecture": true,
     "date": "2026-04-21T01:15:59.623378-07:00",
-    "proof_path": "lean_project/LeanProject/Job_21.lean"
+    "proof_path": "proofs/job_21/paper.pdf"
   },
   {
     "id": 27,
@@ -204,7 +150,7 @@
     "verdict": "disproved",
     "is_open_conjecture": true,
     "date": "2026-04-21T01:12:53.186671-07:00",
-    "proof_path": "lean_project/LeanProject/Job_27_neg.lean"
+    "proof_path": "proofs/job_27/paper.pdf"
   },
   {
     "id": 13,
@@ -213,7 +159,7 @@
     "verdict": "open",
     "is_open_conjecture": true,
     "date": "2026-04-21T01:07:36.973168-07:00",
-    "proof_path": "lean_project/LeanProject/Job_13.lean"
+    "proof_path": "proofs/job_13/paper.pdf"
   },
   {
     "id": 8,
@@ -222,7 +168,7 @@
     "verdict": "proved",
     "is_open_conjecture": true,
     "date": "2026-04-21T00:56:56.371170-07:00",
-    "proof_path": "lean_project/LeanProject/Job_8.lean"
+    "proof_path": "proofs/job_8/paper.pdf"
   },
   {
     "id": 16,
@@ -231,7 +177,7 @@
     "verdict": "open",
     "is_open_conjecture": true,
     "date": "2026-04-21T00:56:09.565166-07:00",
-    "proof_path": "lean_project/LeanProject/Job_16.lean"
+    "proof_path": "proofs/job_16/paper.pdf"
   },
   {
     "id": 18,
@@ -240,7 +186,7 @@
     "verdict": "open",
     "is_open_conjecture": true,
     "date": "2026-04-21T00:53:46.950483-07:00",
-    "proof_path": "lean_project/LeanProject/Job_18.lean"
+    "proof_path": "proofs/job_18/paper.pdf"
   },
   {
     "id": 20,
@@ -249,7 +195,7 @@
     "verdict": "open",
     "is_open_conjecture": true,
     "date": "2026-04-21T00:51:06.642995-07:00",
-    "proof_path": "lean_project/LeanProject/Job_20.lean"
+    "proof_path": "proofs/job_20/paper.pdf"
   },
   {
     "id": 12,
@@ -258,7 +204,7 @@
     "verdict": "open",
     "is_open_conjecture": true,
     "date": "2026-04-21T00:50:30.136098-07:00",
-    "proof_path": "lean_project/LeanProject/Job_12.lean"
+    "proof_path": "proofs/job_12/paper.pdf"
   },
   {
     "id": 19,
@@ -267,7 +213,7 @@
     "verdict": "disproved",
     "is_open_conjecture": true,
     "date": "2026-04-21T00:47:32.225538-07:00",
-    "proof_path": "lean_project/LeanProject/Job_19_neg.lean"
+    "proof_path": "proofs/job_19/paper.pdf"
   },
   {
     "id": 3,
@@ -276,7 +222,7 @@
     "verdict": "open",
     "is_open_conjecture": true,
     "date": "2026-04-21T00:44:19.269786-07:00",
-    "proof_path": "lean_project/LeanProject/Job_3.lean"
+    "proof_path": "proofs/job_3/paper.pdf"
   },
   {
     "id": 1,
@@ -285,7 +231,7 @@
     "verdict": "proved",
     "is_open_conjecture": true,
     "date": "2026-04-21T00:40:26.260705-07:00",
-    "proof_path": "lean_project/LeanProject/Job_1.lean"
+    "proof_path": "proofs/job_1/paper.pdf"
   },
   {
     "id": 17,
@@ -294,7 +240,7 @@
     "verdict": "open",
     "is_open_conjecture": true,
     "date": "2026-04-21T00:35:31.853248-07:00",
-    "proof_path": "lean_project/LeanProject/Job_17.lean"
+    "proof_path": "proofs/job_17/paper.pdf"
   },
   {
     "id": 14,
@@ -303,7 +249,7 @@
     "verdict": "open",
     "is_open_conjecture": true,
     "date": "2026-04-21T00:33:10.826897-07:00",
-    "proof_path": "lean_project/LeanProject/Job_14.lean"
+    "proof_path": "proofs/job_14/paper.pdf"
   },
   {
     "id": 5,
@@ -312,7 +258,7 @@
     "verdict": "open",
     "is_open_conjecture": true,
     "date": "2026-04-21T00:18:17.134084-07:00",
-    "proof_path": "lean_project/LeanProject/Job_5.lean"
+    "proof_path": "proofs/job_5/paper.pdf"
   },
   {
     "id": 15,
@@ -321,7 +267,7 @@
     "verdict": "disproved",
     "is_open_conjecture": true,
     "date": "2026-04-21T00:18:06.251674-07:00",
-    "proof_path": "lean_project/LeanProject/Job_15_neg.lean"
+    "proof_path": "proofs/job_15/paper.pdf"
   },
   {
     "id": 25,
@@ -330,7 +276,7 @@
     "verdict": "open",
     "is_open_conjecture": true,
     "date": "2026-04-21T00:14:29.523095-07:00",
-    "proof_path": "lean_project/LeanProject/Job_25.lean"
+    "proof_path": "proofs/job_25/paper.pdf"
   },
   {
     "id": 22,
@@ -339,7 +285,7 @@
     "verdict": "open",
     "is_open_conjecture": true,
     "date": "2026-04-21T00:14:25.505451-07:00",
-    "proof_path": "lean_project/LeanProject/Job_22.lean"
+    "proof_path": "proofs/job_22/paper.pdf"
   },
   {
     "id": 9,
@@ -348,7 +294,7 @@
     "verdict": "proved",
     "is_open_conjecture": true,
     "date": "2026-04-21T00:08:02.291812-07:00",
-    "proof_path": "lean_project/LeanProject/Job_9.lean"
+    "proof_path": "proofs/job_9/paper.pdf"
   },
   {
     "id": 23,
@@ -357,7 +303,7 @@
     "verdict": "open",
     "is_open_conjecture": true,
     "date": "2026-04-21T00:07:00.791683-07:00",
-    "proof_path": "lean_project/LeanProject/Job_23.lean"
+    "proof_path": "proofs/job_23/paper.pdf"
   },
   {
     "id": 11,
@@ -366,7 +312,7 @@
     "verdict": "open",
     "is_open_conjecture": true,
     "date": "2026-04-21T00:00:47.986642-07:00",
-    "proof_path": ""
+    "proof_path": "proofs/job_11/paper.pdf"
   },
   {
     "id": 2,
@@ -375,7 +321,7 @@
     "verdict": "disproved",
     "is_open_conjecture": true,
     "date": "2026-04-20T23:59:47.825616-07:00",
-    "proof_path": "lean_project/LeanProject/Job_2_neg.lean"
+    "proof_path": "proofs/job_2/paper.pdf"
   },
   {
     "id": 26,
@@ -384,7 +330,7 @@
     "verdict": "disproved",
     "is_open_conjecture": true,
     "date": "2026-04-20T23:44:29.575504-07:00",
-    "proof_path": "lean_project/LeanProject/Job_26_neg.lean"
+    "proof_path": "proofs/job_26/paper.pdf"
   },
   {
     "id": 4,
@@ -393,7 +339,7 @@
     "verdict": "proved",
     "is_open_conjecture": true,
     "date": "2026-04-20T23:43:00.209263-07:00",
-    "proof_path": "lean_project/LeanProject/Job_4.lean"
+    "proof_path": "proofs/job_4/paper.pdf"
   },
   {
     "id": 6,
@@ -402,7 +348,7 @@
     "verdict": "proved",
     "is_open_conjecture": true,
     "date": "2026-04-20T23:42:55.079542-07:00",
-    "proof_path": "lean_project/LeanProject/Job_6.lean"
+    "proof_path": "proofs/job_6/paper.pdf"
   },
   {
     "id": 7,
@@ -411,6 +357,6 @@
     "verdict": "proved",
     "is_open_conjecture": true,
     "date": "2026-04-20T23:42:10.508749-07:00",
-    "proof_path": "lean_project/LeanProject/Job_7.lean"
+    "proof_path": "proofs/job_7/paper.pdf"
   }
 ]

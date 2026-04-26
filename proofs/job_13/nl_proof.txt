@@ -1,0 +1,104 @@
+Precise status of the conjecture
+
+The conjecture should be read as the asymptotically flat, vacuum, subextremal Kerr stability conjecture: initial data sufficiently close to a Kerr slice K_{m,a}, with |a|/m < 1, should have a future exterior development with complete future null infinity whose domain of outer communication approaches a nearby Kerr spacetime. This is the standard formulation in the modern literature.
+
+The full nonlinear conjecture for all subextremal angular momenta |a| < m is not presently a completed theorem. What is proved is the full nonlinear stability theorem for slowly rotating Kerr, namely |a|/m ≪ 1, by Klainerman–Szeftel together with the companion work of Giorgi–Klainerman–Szeftel and Shen. A major recent advance is that the linear stability of Kerr has now been proved in the full subextremal range, but this does not by itself close the nonlinear problem.
+
+Accordingly, the proof below is a detailed proof sketch of the proved slowly rotating theorem, together with an explanation of exactly where the full conjecture remains open.
+
+Theorem proved in the slowly rotating regime
+
+Let m_0 > 0, and let K_{m_0,a_0} be a Kerr spacetime with |a_0|/m_0 ≪ 1. Let (Σ, γ, k) be smooth asymptotically flat vacuum initial data satisfying the Einstein constraint equations and sufficiently close, in high-order weighted Sobolev norms, to the initial data induced by K_{m_0,a_0}. Then the maximal future development of (Σ, γ, k) contains an exterior region D with complete future null infinity I^+, a regular future event horizon H^+, and there exist final Kerr parameters (m_f, a_f), close to (m_0, a_0), such that the metric g on D, after a suitable diffeomorphism, remains globally close to and decays toward K_{m_f, a_f}.
+
+This is the nonlinear stability theorem for slowly rotating Kerr. The small-angular-momentum restriction enters mainly through the Morawetz/local-energy estimates used to control trapping and superradiance.
+
+Proof sketch
+
+Step 1: Reduce to the Einstein vacuum Cauchy problem
+
+Assume that (Σ, γ, k) is a vacuum initial data set:
+
+  R(γ) − |k|_γ² + (tr_γ k)² = 0,
+  ∇^j k_{ij} − ∇_i(tr_γ k) = 0.
+
+By the Choquet-Bruhat–Geroch theorem, these data have a unique maximal globally hyperbolic vacuum development (M, g) satisfying Ric(g) = 0. Thus the problem is not local existence. The essential point is to prove that the exterior part of this development exists for all future time, remains quantitatively close to Kerr, and converges to a nearby member of the Kerr family.
+
+The statement is necessarily an exterior stability statement: inside the black hole region, singular behavior is expected and is not part of the stability assertion. The relevant region is the domain of outer communication, namely the causal past of complete future null infinity.
+
+Step 2: Fix the two unavoidable non-decaying freedoms
+
+There are two sources of non-decay which must be removed before any stability estimate can be true.
+
+First, the Kerr family itself is finite-dimensional. The derivatives ∂_m K_{m,a}, ∂_a K_{m,a} solve the linearized Einstein equations. Hence a perturbation of K_{m_0,a_0} need not decay back to exactly K_{m_0,a_0}; it may converge to K_{m_f,a_f} for slightly different parameters.
+
+Second, Einstein's equations are diffeomorphism invariant. If X is a vector field, then L_X K_{m,a} is a pure gauge solution of the linearized equations. Therefore one cannot prove decay of the raw metric perturbation without choosing a gauge and quotienting out pure gauge directions.
+
+The Klainerman–Szeftel proof handles both issues by constructing a GCM-normalized gauge and foliation. One chooses suitable terminal two-spheres and hypersurfaces, imposes geometric normalization conditions on them, and thereby determines the final mass, angular momentum, axis, and residual coordinate freedom. The GCM construction is not a cosmetic choice: it is the mechanism that identifies the final Kerr member and prevents non-decaying Kerr or gauge modes from contaminating the decay estimates.
+
+Thus, after modulation, one writes schematically g = K_{m_f,a_f} + h, where h satisfies gauge conditions eliminating the stationary Kerr and pure gauge obstructions.
+
+Step 3: Set up a bootstrap exterior region
+
+Let Σ_τ be the hypersurfaces of the constructed exterior foliation, and let E_N(τ) denote a high-order energy norm measuring the deviation of the geometry from Kerr up to N derivatives. This norm contains curvature components, Ricci coefficients, metric coefficients, and suitable weighted derivatives.
+
+Let F_N(0,τ) denote the corresponding spacetime decay norm, including integrated local energy norms, red-shift norms near the horizon, and r^p-weighted flux norms toward null infinity.
+
+One assumes, by bootstrap hypothesis, that E_N(τ) ≤ ε for all τ in the maximal existence interval. The goal is to improve this to E_N(τ) ≤ ε/2, thereby closing the bootstrap and proving the solution extends globally.
+
+Step 4: Linear stability and decay estimates for the Teukolsky system
+
+The curvature perturbation is encoded in the extreme Weyl scalars α and α̲, which satisfy the Teukolsky equation — a second-order wave equation on a Kerr background with a long-range potential and an angular momentum coupling. The key quantities are the spin ±2 Teukolsky scalars.
+
+Linear stability — and hence the decay needed for the bootstrap — requires three interlocking estimates:
+
+(a) Mode stability: One must show that there are no mode solutions (i.e., separable solutions of the form e^{-iωt} S(θ) R(r)) with Im(ω) > 0. This was proved by Whiting (1989) for the full subextremal range |a| < m. Mode stability excludes exponentially growing perturbations at the linear level.
+
+(b) Boundedness: The energy of solutions to the Teukolsky equation must remain uniformly bounded. This is nontrivial because of trapping (null geodesics on the photon sphere) and superradiance (the ergoregion, where the Killing field ∂_t becomes spacelike). For |a|/m ≪ 1, superradiance is perturbatively small, so one can treat it as an error term in the energy identity.
+
+(c) Integrated local energy decay (Morawetz estimate): One requires an integrated decay estimate of the form:
+
+  ∫_0^T ∫_Σ_τ (local energy density) dτ ≲ E_N(0).
+
+This estimate is the main place where the slow-rotation hypothesis |a|/m ≪ 1 is used: the trapping and superradiance effects can be controlled perturbatively around Schwarzschild, for which analogous estimates are known by the work of Dafermos–Rodnianski and others.
+
+(d) r^p-hierarchy (Dafermos–Rodnianski): By choosing p ∈ (0,2] and applying the r^p-method of Dafermos–Rodnianski, one deduces quantitative pointwise decay toward I^+. For spin ±2 quantities one obtains inverse polynomial decay rates. These rates are sharp: Price's law predicts precisely inverse polynomial tails.
+
+Step 5: Coupling the Teukolsky estimates to the full nonlinear system via the GCM hierarchy
+
+The Teukolsky equation governs the gauge-invariant part of the perturbation. But the full nonlinear problem involves all Ricci coefficients and metric components, not just the extreme curvature components. One must propagate the decay estimates from the curvature to the full geometry.
+
+This is done via an integration procedure along the null structure. The Bianchi equations and null structure equations form a hierarchical system: given decay for the extreme curvature components, one integrates inward/outward to obtain decay for all connection and metric components. The GCM conditions from Step 2 provide the integration constants (the 'seeds') needed to make this integration well-posed.
+
+At each step one commutes the equations with angular momentum operators O and the scaling vector field S (the Morawetz commutator) to obtain higher-derivative estimates. The commuted equations introduce error terms, which must be absorbed into the bootstrap norm using nonlinear estimates and the smallness of ε.
+
+Step 6: Nonlinear error terms and closing the bootstrap
+
+Once one has decay for all geometric quantities, the nonlinear terms in Einstein's equations — which are quadratic and higher-order in the perturbation h — satisfy:
+
+  |Nonlinear terms| ≲ ε × (decaying factors),
+
+by the bootstrap hypothesis. Integrating these estimates, one finds that the full energy E_N(τ) satisfies an inequality of the form:
+
+  E_N(τ) ≤ C · E_N(0) + C · ε · (lower-order terms).
+
+For ε sufficiently small (depending on the initial data size), the right-hand side is strictly less than ε, improving the bootstrap bound to ε/2 as desired. This closes the bootstrap and proves that the solution exists globally with the desired decay.
+
+Step 7: Identification of final Kerr parameters and asymptotic convergence
+
+The modulated parameters (m_f(τ), a_f(τ)) vary slowly during the evolution. Their rates of change are controlled by the energy flux across the horizon and null infinity (the Bondi mass loss formula and its angular-momentum analog). As τ → ∞, these parameters converge to definite final values (m_f, a_f) because the energy flux is integrable:
+
+  ∫_0^∞ |∂_τ m_f| dτ ≲ ε < ∞.
+
+The final parameters satisfy |m_f − m_0| + |a_f − a_0| ≲ ε. The metric g, expressed in the GCM gauge, then decays to K_{m_f, a_f} at an inverse polynomial rate. This establishes the full nonlinear asymptotic stability in the slowly rotating case.
+
+What remains open for the full conjecture (|a| < m)
+
+Linear stability in the full subextremal range: This was established by Dafermos–Holzegel–Rodnianski–Taylor (2021–2023) and by Andersson–Ma–Paganini–Whiting and related works. At the linear level, the conjecture is therefore resolved.
+
+Nonlinear stability for |a|/m not small: The gap between the linear and nonlinear problems is substantial. The difficulty is that for angular momentum not small, the Morawetz estimates degenerate at the trapped set and the superradiant frequencies in a way that cannot be treated perturbatively. New techniques — possibly combining the pseudodifferential approach to trapping with the GCM modulation theory — are needed. This remains an active and central open problem in mathematical general relativity.
+
+Extremal Kerr (|a| = m): This case is fundamentally different. The horizon geometry degenerates (the surface gravity vanishes), the red-shift effect disappears, and polynomial growth of perturbations near the horizon is known (Aretakis instability). Extremal Kerr stability in the full nonlinear sense is not expected to hold in the same form.
+
+## Final Verdict
+
+VERDICT: PARTIALLY_PROVED — Nonlinear stability is fully proved for slowly rotating Kerr (|a|/m ≪ 1) by Klainerman–Szeftel–Giorgi–Shen, and linear stability is established for all subextremal |a| < m, but the full nonlinear stability conjecture for arbitrary subextremal angular momentum remains open.

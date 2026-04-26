@@ -1,0 +1,85 @@
+I'll first pin down the strongest theorem currently justified by the cited Kerr-stability literature, then outline the corresponding proof architecture and state the correct verdict for the full conjecture.
+
+The standard mathematical formulation of this conjecture is exterior, asymptotic stability: for vacuum, asymptotically flat initial data sufficiently close to a subextremal Kerr slice K(m,a), |a|<m, the future development has complete future null infinity and its domain of outer communication approaches a nearby Kerr metric. That is the formulation stated in modern expositions of the Kerr stability conjecture. It should not be read as a uniform stability statement for the entire black-hole interior, whose behavior is a separate problem connected to strong cosmic censorship. The available complete nonlinear theorem proves this statement for slowly rotating Kerr, |a|/m≪1, while the full arbitrary subextremal range |a|<m is still not completely proved. Klainerman–Szeftel state the conjecture in the full range and explicitly state the theorem for sufficiently small |a|/m; Giorgi–Klainerman–Szeftel identify their 2022 work as completing the proof of the small-angular-momentum Kerr stability theorem.
+
+Theorem proved by current methods: nonlinear stability of slowly rotating Kerr
+
+Let m_0>0, let |a_0|/m_0≪1, and let (Σ,γ,k) be a smooth vacuum asymptotically flat initial data set satisfying the Einstein constraint equations and sufficiently close, in a high-order weighted Sobolev topology, to a Kerr exterior initial data set K(m_0,a_0). Then the future maximal globally hyperbolic development contains an exterior region with complete future null infinity I+, a regular future event horizon H+, and, after a geometrically normalized choice of gauge, the metric remains globally close in the exterior to a member of the Kerr family and converges to a final Kerr metric K(m_f,a_f), with (m_f,a_f) close to (m_0,a_0). This is the known small-angular-momentum version of the conjecture; the Schwarzschild case a=0 and related codimension-normalized formulations are covered by Dafermos–Holzegel–Rodnianski–Taylor.
+
+Proof sketch for the slowly rotating theorem
+
+1. Normalize the problem and choose a geometric gauge
+
+Assume the initial data are ε-close to Kerr K(m_0,a_0), with ε>0 sufficiently small and |a_0|/m_0≪1. By the local well-posedness theorem for the Einstein vacuum equations and the constraint equations, there is a unique maximal globally hyperbolic development solving Ric(g)=0.
+
+The first task is to formulate the exterior region in a gauge that can be maintained globally. One introduces a double-null or outgoing-null foliation adapted to the exterior, together with a null frame (e_3,e_4,e_A), A=1,2, where e_3,e_4 are null and e_A span the horizontal two-dimensional distribution. The curvature tensor is decomposed into the standard null Weyl components α, β, ρ, σ, β-bar, α-bar, and the connection is encoded by the Ricci coefficients χ, χ-bar, η, η-bar, ω, ω-bar, ζ, etc.
+
+For Schwarzschild, the natural horizontal distribution is integrable. For Kerr with a≠0, the principal null directions diagonalize the curvature, but the associated horizontal distribution is non-integrable. A major technical innovation in the proof is therefore to work in a non-integrable null-frame formalism adapted to slowly rotating Kerr. This is essential because the extreme curvature components satisfying Teukolsky-type equations are naturally tied to Kerr's principal null structure.
+
+2. Remove the neutral Kerr directions by modulation
+
+One cannot prove decay to the original Kerr metric K(m_0,a_0), because nearby Kerr metrics are themselves exact stationary solutions. At the linearized level, the perturbations ∂_m g_{m,a}, ∂_a g_{m,a}, and infinitesimal diffeomorphism modes L_X g_{m,a} lie in the non-decaying kernel. Thus the correct target is not the original Kerr metric but a dynamically modulated Kerr metric K(m(t),a(t)), together with a controlled diffeomorphism.
+
+The proof fixes this freedom by constructing general covariant modulated spheres and hypersurfaces. These are preferred two-spheres in the perturbed spacetime, selected by geometric normalization conditions: Hawking mass, angular momentum, center-of-mass or axis conditions, and curvature-normalization conditions are required to match their Kerr analogues. This gives a canonical way to define evolving parameters m(t), a(t), and gauge data. The modulation equations then show that the derivatives of these parameters are controlled by decaying radiation fluxes. Hence m(t) and a(t) converge to limits m_f, a_f.
+
+This step is indispensable: without modulation, the bootstrap would try to force non-decaying Kerr variations to decay, which is false.
+
+3. Set up the bootstrap assumptions
+
+Fix a large time interval [0,T] in the exterior region. Assume, as bootstrap hypotheses, that high-order weighted norms of the metric perturbation, Ricci coefficients, curvature components, and their commuted derivatives are bounded by Cε. The norms are specifically weighted to capture the correct r-decay and u-decay appropriate to peeling and polynomial decay in the exterior. These norms must encode both the asymptotic flatness near null infinity and the near-horizon behavior.
+
+4. Derive linearized stability via Teukolsky analysis
+
+The key observation is that on a Kerr background the linearized gravitational perturbations satisfy the Teukolsky master equation for the extreme curvature components α and α-bar (which correspond to spin-weight ±2 scalars). This equation, derived by Teukolsky (1972), is separable on Kerr in Boyer–Lindquist coordinates. Boundedness and decay for the Teukolsky equation are the central analytic challenge.
+
+The proof proceeds in several stages:
+
+(a) Integrated local energy decay (Morawetz-type estimates) for the Teukolsky equation. This requires identifying hidden symmetry operators commuting with the Teukolsky operator, related to the Carter constant, and constructing positive-definite current multipliers. The presence of the superradiant frequencies (ω near mΩ_H for azimuthal mode m) means that the standard red-shift or positive commutator methods do not apply uniformly, and one must use a physical-space frequency decomposition or a Fourier-in-time decomposition to treat the superradiant sector separately.
+
+(b) Energy boundedness by establishing a positive-definite global energy functional. For slowly rotating Kerr, the ergoregion is small and the conserved energy associated to ∂_t remains positive outside the ergoregion with only a small negative contribution from the ergoregion, which can be controlled by the angular momentum terms at small |a|/m. This is the decisive advantage of the slowly rotating case: for near-extremal Kerr, this argument breaks down.
+
+(c) Pointwise decay via r^p estimates (Dafermos–Rodnianski hierarchy) combined with the integrated decay estimates. One multiplies the Teukolsky equation by r^p-weighted currents and integrates by parts, obtaining decay of fluxes through hyperboloidal foliations. This yields the expected inverse-polynomial decay for α and α-bar in the exterior.
+
+5. Reconstruct the metric perturbation from curvature (Teukolsky-Wald inversion)
+
+Knowing decay of α and α-bar is not sufficient to recover full metric decay; one must also control the intermediate components β, ρ, σ, β-bar and all Ricci coefficients. This requires inverting the Bianchi identities: the so-called Teukolsky–Wald reconstruction procedure. The Bianchi system is a hierarchical first-order system in the curvature components; one integrates it from the decay of the extreme components, propagating decay along outgoing and incoming null directions.
+
+The resulting estimates give decay for all curvature components and Ricci coefficients, completing the linear stability analysis.
+
+6. Control the nonlinear terms via a continuity argument
+
+The Einstein equations Ric(g)=0 are schematically of the form (linear Kerr operator)(Ricci coefficients, curvature) = Γ·Γ (quadratic in connection) + higher. The nonlinear terms are products of quantities that each decay polynomially; by carefully tracking the decay rates (using the r-weights and u-weights in the norms), one verifies that the nonlinear terms are genuinely small compared to the leading linear terms whenever the bootstrap bound Cε holds. Specifically, the product of two quantities each O(ε) in the bootstrap norm is O(ε^2) in the same or a stronger norm, so the nonlinear terms are controlled by ε times the bootstrap constant.
+
+This nonlinear closure requires careful bookkeeping of the hierarchies of equations: one does not attempt to close all estimates simultaneously but works through a structured sequence starting from transport equations for the Ricci coefficients near the null hypersurfaces, then elliptic-type Hodge systems on the two-spheres, then energy estimates for the Teukolsky equation, and finally r^p estimates near null infinity.
+
+7. Improve the bootstrap constant
+
+With the estimates from Steps 4–6, one shows that the actual norms of the solution are bounded by C'ε with C' strictly less than C (for ε sufficiently small). By a standard continuity argument (bootstrap lemma), the interval [0,T] can be extended to all time T=∞, completing the global existence.
+
+8. Convergence to a final Kerr metric
+
+The decay estimates imply that the modulated parameters m(t), a(t) are Cauchy sequences and converge to limits (m_f,a_f). The spacetime metric, in the canonical gauge defined by the modulated foliation, differs from K(m_f,a_f) by a term that decays to zero in the exterior. This establishes asymptotic stability: the solution converges to a nearby Kerr metric as t→∞.
+
+Key lemmas and techniques invoked
+
+1. Local well-posedness and continuation criterion for the Einstein equations in the null gauge (Christodoulou–Klainerman, Klainerman–Nicolo).
+
+2. Boundedness and integrated energy decay for the Teukolsky equation on slowly rotating Kerr backgrounds (Dafermos–Holzegel–Rodnianski, Andersson–Blue, Ma).
+
+3. The r^p-weighted energy method of Dafermos–Rodnianski for polynomial decay in the exterior.
+
+4. The non-integrable null-frame formalism and the GCM (general covariant modulated) sphere and hypersurface construction of Klainerman–Szeftel.
+
+5. The Teukolsky–Wald reconstruction procedure relating metric perturbations to the Teukolsky scalars.
+
+6. The modulation theory for the Kerr family parameter (m(t),a(t)).
+
+7. The nonlinear stability bootstrap and continuity argument for the Einstein equations in a high-order Sobolev topology with polynomial weights.
+
+Status of the full subextremal conjecture |a|<m
+
+For the full subextremal range, the argument sketched above encounters obstacles at steps 4(b) and 4(a): the ergoregion extends to the equatorial plane up to the outer ergosurface, and standard energy methods lose positivity. The integrated local energy decay for the Teukolsky equation in the full subextremal range requires more sophisticated frequency analysis (a careful treatment of the superradiant modes near extremality) and a corresponding improvement of the nonlinear bootstrap. As of the writing of the references cited (2021–2022), the full subextremal problem had not been resolved, though major progress was made in the slowly rotating regime.
+
+## Final Verdict
+
+VERDICT: PARTIALLY_PROVED — The nonlinear stability of slowly rotating Kerr black holes (|a|/m sufficiently small) in the exterior region has been established by Klainerman–Szeftel and Giorgi–Klainerman–Szeftel, but the conjecture in its full generality for all subextremal parameters |a|<m remains open as of the cited references.

@@ -1,0 +1,88 @@
+The full problem is currently open: Erdős Problem #130 asks exactly this question and records it as open. What can be proved cleanly is a sharp cardinal upper bound, the nonexistence of infinite cliques, and a reduction of the remaining question to finite high-chromatic examples.
+
+Let GA be the graph whose vertex set is A⊂R2, with xy an edge exactly when |x−y|∈Z>0.
+
+---
+
+**Theorem: unconditional facts**
+
+For every infinite A⊂R2 with no three collinear points and no four concyclic points:
+
+1. χ(GA)≤ℵ0. Thus the chromatic number is never uncountable.
+2. GA has no infinite complete subgraph.
+3. There are such infinite sets A for which GA contains a K7, hence χ(GA)≥7, ω(GA)≥7.
+
+It remains open whether χ(GA)=ℵ0 can occur. Equivalently, it is open whether finite point sets in this same general-position setting can have unbounded integer-distance chromatic number.
+
+---
+
+**Proof of the countable upper bound**
+
+Partition the plane into half-open squares of side length s=1/3:
+
+Qm,n = [ms,(m+1)s) × [ns,(n+1)s), (m,n)∈Z².
+
+Give every point in Qm,n the color (m,n). There are only countably many such colors.
+
+If two distinct points lie in the same square, their Euclidean distance is strictly less than s√2 = √2/3 < 1. Therefore their distance cannot be a positive integer. Hence no edge of GA is monochromatic under this coloring. Thus χ(GA) ≤ |Z²| = ℵ0.
+
+This argument does not use the no-three-collinear or no-four-concyclic assumptions; it colors the entire integer-distance graph of the plane.
+
+---
+
+**Proof that no infinite clique exists**
+
+Assume for contradiction that C⊆A is an infinite clique. Then every pair of points of C is at integer distance. Since A has no three collinear points, C contains three noncollinear points; call them P1, P2, P3.
+
+Let X∈C. Since C is a clique, the three distances |X−P1|, |X−P2|, |X−P3| are integers. Hence ||X−P1|−|X−P2|| is an integer between 0 and |P1−P2|. Thus X lies on one of finitely many hyperbolas, or degenerate hyperbolas, with foci P1, P2. Similarly, ||X−P2|−|X−P3|| is an integer between 0 and |P2−P3|, so X lies on one of finitely many hyperbolas with foci P2, P3.
+
+Therefore every point X∈C lies in the intersection of one curve from the first finite family and one curve from the second finite family. Since P1, P2, P3 are noncollinear, no curve from the first family coincides with a curve from the second family. By the elementary form of Bézout's theorem, or by direct conic intersection, each such pair of curves has only finitely many intersection points. A finite union of finite sets is finite, so C must be finite, contradicting the assumption that C was infinite.
+
+This is the standard Anning–Erdős hyperbola argument: a noncollinear integer-distance set in the plane must be finite.
+
+Thus GA has no infinite clique.
+
+---
+
+**A lower bound: examples with χ=ω=7**
+
+Kreisel and Kurz constructed seven points in the plane, no three on a line and no four on a circle, with all pairwise distances integral. These seven points therefore form a K7 in the integer-distance graph.
+
+It remains to explain why this finite example can be embedded into an infinite admissible set A. Start with the seven-point set S0. Suppose we have already constructed a finite set Sn satisfying the general-position conditions. To add a new point p, avoid the following forbidden sets:
+
+- every line determined by two points of Sn;
+- every circle determined by three points of Sn;
+- every circle of integer radius centered at a point of Sn.
+
+The first two exclusions ensure that no new collinear triple or concyclic quadruple is created. The third exclusion ensures that the new point is not at integer distance from any old point.
+
+This forbidden set is a countable union of proper algebraic curves, so it cannot cover the plane. Hence one may choose p outside it. By induction, this gives an infinite set A = ⋃_{n≥0} Sn with no three collinear points and no four concyclic points. Moreover, every point added after the initial seven is at non-integer distance from all earlier points, and later points are chosen to avoid integer distance from it as well. Thus the resulting graph is exactly a K7 together with isolated vertices.
+
+Therefore, for some admissible infinite A, χ(GA) = ω(GA) = 7.
+
+---
+
+**Why the infinite chromatic-number question remains open**
+
+By the de Bruijn–Erdős compactness theorem for graph coloring, an infinite graph is k-colorable if and only if every finite subgraph is k-colorable. So χ(GA)=ℵ0 would require that for every k there exist a finite A′⊆A (in general position) such that χ(GA′)>k.
+
+The finite question—can a finite set of points in the plane, no three collinear and no four concyclic, all at mutual integer distances, have chromatic number k for every k—amounts to asking whether arbitrarily large finite integer-distance sets in general position exist. This is the finite Erdős general-position integer-distance problem, which is wide open. A positive answer would yield χ(GA)=ℵ0 for a suitable infinite A; a negative answer with a universal bound on finite sizes would yield χ(GA)<∞ uniformly.
+
+Current state of the art records only the Kreisel–Kurz examples with 7 points; no 8-point example in general position with all mutual integer distances is known.
+
+---
+
+**Summary table**
+
+| Fact | Status |
+|------|--------|
+| χ(GA) ≤ ℵ0 | Proved (grid coloring) |
+| ω(GA) < ∞ for every admissible A | Proved (Anning–Erdős) |
+| χ(GA) ≥ 7, ω(GA) ≥ 7 for some A | Proved (Kreisel–Kurz K7) |
+| χ(GA) = ℵ0 for some admissible A? | Open (equivalent to arbitrarily large general-position integer-distance sets) |
+
+---
+
+## Final Verdict
+
+**VERDICT: OPEN** — the question of whether the chromatic number can be infinite (or even arbitrarily large) for admissible A remains an open problem recorded as Erdős Problem #130; only the countable upper bound and the finite non-existence of infinite cliques can be established unconditionally, while the lower-bound construction via Kreisel–Kurz shows the chromatic number can reach at least 7.

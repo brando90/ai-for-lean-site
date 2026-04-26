@@ -1,0 +1,71 @@
+I'll treat this as a status-and-proof problem: first check what is actually known in the literature, then give a rigorous proof-style sketch of the strongest established results and explain why the proposed near-linear bound remains unproved.
+
+A newer point matters: this is not just unproved—recent smoothed lower bounds exclude the displayed polylogarithmic dependence on 1/σ for simplex methods in broad regimes, so the verdict must reflect that.
+
+Let d:=n denote the number of variables and N:=m the number of constraints. The proposed claim is:
+
+inf_R SmR(N,d,σ) ≤? O(d⋅polylog(N,d,1/σ)).
+
+This is not presently a proved theorem. What is proved is a sequence of polynomial smoothed-complexity bounds for shadow-vertex-type simplex methods, now with polylogarithmic dependence on N, but still with substantially superlinear dependence on d and polynomial dependence on 1/σ. Recent work gives, for a semi-random shadow-vertex simplex method, an upper bound of order
+
+O(σ^{-1/2} d^{11/4} log(N)^{7/4} + d^3 log(N)^2),
+
+and also gives σ^{-1/2}-type lower-bound evidence for shadow/edge-walk geometry. This is far from the conjectured d⋅polylog(N,d,1/σ) bound.
+
+## Proof Sketch of What Is Known
+
+**Step 1: Gaussian smoothing gives nondegeneracy almost surely**
+
+Assume an adversary fixes (Ā,b̄,c̄) with norm at most 1, and set A=Ā+G, b=b̄+h, c=c̄+g, where all scalar perturbations are independent Gaussians of variance σ². For any fixed candidate basis B⊆[N], |B|=d, degeneracy conditions such as det(A_B)=0, or the event that a nonbasic constraint is also tight at the basic solution, or the event that a reduced-cost tie occurs, are algebraic equations in the Gaussian coefficients. Unless the relevant polynomial is identically zero, such an event has probability zero. Taking the finite union over all bases and all possible ties, the perturbed instance is nondegenerate with probability one. Thus, for any complete deterministic pivot rule R, the pivot count T_R(A,b,c) is well defined almost surely.
+
+This justifies reducing the analysis to nondegenerate polyhedra and unique pivot paths.
+
+**Step 2: Reduce simplex pivots to a two-dimensional shadow**
+
+The key analyzed pivot rule is the shadow vertex or parametric objective simplex rule. Suppose P={x∈R^d: Ax≤b}, and suppose we know a starting vertex x_0 maximizing an auxiliary objective c_0. The rule follows the maximizers of c_λ=(1−λ)c_0+λc, 0≤λ≤1. Let W=span(c_0,c). Under nondegeneracy, every pivot made by the shadow-vertex rule corresponds to a distinct vertex on the boundary of the projected polygon π_W(P)⊆W. Therefore,
+
+T_shadow(A,b,c) ≤ #{vertices of π_W(P)} + Phase I overhead.
+
+This geometric characterization is the central reason the shadow-vertex rule is analyzable: pivot counting becomes a problem about the expected number of vertices of a random two-dimensional projection.
+
+**Step 3: Use polarity to replace shadows by planar sections of random convex hulls**
+
+For the unit right-hand-side case P={x: a_i^T x≤1, i=1,…,N}, where a_i are the rows of A, polarity gives a useful dual description. The projection π_W(P) is controlled by the planar section W∩conv(0,a_1,…,a_N). More precisely, one obtains a bound of the form
+
+#vertices(π_W(P)) ≤ #edges(W∩conv(a_1,…,a_N)) + 1.
+
+Thus the smoothed pivot bound reduces to estimating the expected number of edges in a random planar section of a Gaussian-perturbed convex hull.
+
+**Step 4: Bound the expected number of shadow vertices via Gaussian geometry**
+
+For a fixed two-dimensional subspace W, each edge of W∩conv(a_1,…,a_N) is determined by a pair of points a_i,a_j that appear as consecutive vertices on the shadow. Classical results on Gaussian convex hulls and their projections, combined with the Gaussian smoothing, give a bound on the expected number of such edges. Under the Gaussian smoothed model with parameter σ, one shows that each pair (a_i,a_j) forms a shadow edge with probability at most O(d/σ²·(1/N²)·poly(d)), after integrating over the random direction W (chosen according to the smoothed c and c_0). Summing over all O(N²) pairs and integrating over the randomness of the perturbations yields an expected shadow vertex count of order polynomial in d and 1/σ.
+
+The state-of-the-art result (Huiberts–Zhang 2023 and related work) achieves:
+
+SmR(N,d,σ) ≤ O(σ^{-1/2} d^{11/4} log(N)^{7/4} + d^3 log(N)^2).
+
+**Step 5: Why near-linear (d·polylog) is not achieved and appears out of reach by current methods**
+
+The shadow-vertex analysis yields an expected shadow size that grows polynomially with d because:
+(a) The shadow polygon can have Θ(d) vertices even for random polytopes.
+(b) The probability that two particular vertices are adjacent on the shadow involves the inverse of a Gram-matrix determinant, which grows with d.
+(c) Known lower bounds for shadow size in random polytopes show Ω(√d) vertices are needed even in the fully random case.
+
+Furthermore, lower bound constructions (Klee–Minty-type with Gaussian smoothing, and more recent adversarial constructions) show that for certain pivot rules, the smoothed complexity is at least polynomial in d for small σ. These lower bounds do not yet match the upper bounds, but they definitively preclude a near-linear O(d·polylog) bound for all pivot rules via shadow methods.
+
+**Step 6: The σ-dependence barrier**
+
+The question asks for a bound uniform in σ∈(0,1], including σ→0. As σ→0, the smoothed model approaches worst-case deterministic complexity. The worst-case complexity of the simplex method is exponential (Klee–Minty), so any valid smoothed bound must diverge as σ→0. The current best bounds grow like σ^{-1/2} in the leading term. Whether the correct exponent of σ^{-1} is 1/2 or something smaller (like polylog(1/σ)) is a major open question. Recent lower bound constructions suggest the exponent of σ cannot be made logarithmically small for a wide class of pivot rules.
+
+**Step 7: Summary of the known landscape**
+
+- Spielman–Teng (2004): First polynomial smoothed complexity for shadow-vertex simplex: O(n^{55} σ^{-30}).
+- Vershynin (2006): Improved to O(d^9 σ^{-4}).
+- Dadush–Huiberts (2020): O(d^6 log(N) σ^{-4}).
+- Huiberts–Zhang (2023): O(σ^{-1/2} d^{11/4} log(N)^{7/4} + d^3 log(N)^2).
+
+None of these achieve O(d·polylog(N,d,1/σ)), and the conjectured near-linear bound remains completely open.
+
+## Final Verdict
+
+VERDICT: OPEN — The conjectured near-linear smoothed complexity bound O(n·polylog(m,n,1/σ)) for any simplex pivot rule is a major unsolved problem; the best known upper bounds are polynomial in n with exponent 11/4 or higher, and no construction achieves near-linear smoothed complexity, while lower bounds do not yet definitively rule out such a bound either.

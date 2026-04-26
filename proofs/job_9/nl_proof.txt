@@ -1,0 +1,65 @@
+We prove the statement in the standard sense: ζ(−1) means the value at −1 of the meromorphic continuation of the Riemann zeta function, not the ordinary divergent series 1+2+3+⋯.
+
+Let ζ(s)=∑n=1∞1/n^s for Re(s)>1. This series does not converge at s=−1, so the problem is to compute the analytically continued value.
+
+Key lemma: Euler–Maclaurin continuation of ζ(s)
+
+We use the Euler–Maclaurin summation formula. For a sufficiently smooth function f whose derivatives decay suitably at infinity,
+
+∑n=1∞f(n)=∫1∞f(x)dx + f(1)/2 − (B₂/2!)f′(1) − (B₄/4!)f(3)(1) + R₂,
+
+where B₂=1/6, B₄=−1/30, and the remainder has the form
+
+R₂ = −(1/4!)∫1∞ B₄({x})f(4)(x)dx.
+
+Here B₄({x}) denotes the fourth Bernoulli polynomial evaluated at the fractional part of x. The important point is that B₄({x}) is bounded.
+
+Apply this with f(x)=x^(−s).
+
+For Re(s)>1, the zeta series converges and Euler–Maclaurin gives an identity for ζ(s). We compute the pieces.
+
+First, ∫1∞ x^(−s)dx = 1/(s−1).
+
+Also, f(1)=1.
+
+Next, f′(x)=−sx^(−s−1), so f′(1)=−s.
+
+Thus the B₂-term is −(B₂/2!)f′(1) = −(1/6)/2 · (−s) = s/12.
+
+Similarly, f(3)(x)=−s(s+1)(s+2)x^(−s−3), so −(B₄/4!)f(3)(1) = (B₄/4!)s(s+1)(s+2).
+
+Finally, f(4)(x)=s(s+1)(s+2)(s+3)x^(−s−4).
+
+Therefore the remainder is R₂(s) = −(s(s+1)(s+2)(s+3)/4!)∫1∞ B₄({x})x^(−s−4)dx.
+
+Because B₄({x}) is bounded, the integral converges and defines a holomorphic function for Re(s)>−3.
+
+Thus Euler–Maclaurin gives a meromorphic continuation of ζ(s) to the half-plane Re(s)>−3, namely
+
+ζ(s) = 1/(s−1) + 1/2 + s/12 + (B₄/4!)s(s+1)(s+2) + R₂(s),
+
+valid there away from the pole at s=1.
+
+Now evaluate at s=−1. We get
+
+1/(s−1)|_{s=−1} = 1/(−2) = −1/2,
+
+and 1/2 from the midpoint term. These two terms cancel: −1/2 + 1/2 = 0.
+
+The B₂-term gives s/12|_{s=−1} = −1/12.
+
+The B₄-term contains the factor s+1, so at s=−1, (B₄/4!)s(s+1)(s+2) = 0.
+
+The remainder also contains the factor s+1, hence R₂(−1)=0.
+
+Therefore ζ(−1) = 0 − 1/12 + 0 + 0 = −1/12.
+
+Equivalently, this is the special case m=2 of the standard Bernoulli-number formula ζ(1−m) = −B_m/m, since B₂=1/6, giving ζ(−1) = ζ(1−2) = −B₂/2 = −(1/6)/2 = −1/12.
+
+This does not assert that the ordinary series 1+2+3+⋯ converges to −1/12. It asserts that the analytic continuation of the Riemann zeta function takes the value −1/12 at s=−1.
+
+## Final Verdict
+
+VERDICT: PROVED
+
+The analytically continued Riemann zeta function satisfies ζ(−1)=−1/12, as follows from Euler–Maclaurin summation, equivalently from the standard Bernoulli-number formula for zeta values at negative integers.

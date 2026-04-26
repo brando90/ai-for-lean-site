@@ -1,0 +1,31 @@
+Theorem
+
+There do not exist integers a and b, with b≠0, such that (a/b)² = 2.
+
+Equivalently, √2 is irrational.
+
+Proof
+
+Assume, for the sake of contradiction, that there exist integers a and b, with b≠0, such that (a/b)² = 2. Then a²/b² = 2, so multiplying both sides by b², we obtain a² = 2b². Thus a² is even.
+
+We use the following elementary lemma.
+
+Lemma: If n² is even, then n is even.
+
+Proof of Lemma: We prove the contrapositive. Suppose n is odd. Then n = 2k+1 for some integer k. Therefore n² = (2k+1)² = 4k²+4k+1 = 2(2k²+2k)+1. Hence n² is odd. Therefore, if n² is even, n must be even. This proves the lemma.
+
+Now return to the main proof. Since a² is even, the lemma implies that a is even. Therefore there exists an integer c such that a = 2c. Substituting this into the equation a² = 2b², we get (2c)² = 2b². Hence 4c² = 2b². Dividing by 2, we obtain 2c² = b². Thus b² is even. By the same lemma, b is even.
+
+Therefore both a and b are even. Hence they have a common factor of 2.
+
+Now take the original fraction a/b. If such integers a, b existed, we could divide both by their greatest common divisor and obtain an equivalent fraction p/q in lowest terms, where p, q are integers, q≠0, and gcd(p,q)=1. Since p/q = a/b, we would still have (p/q)² = 2. Repeating the argument above with p and q, we find that both p and q must be even. But this contradicts the assumption that p/q is in lowest terms, since two even integers share the common divisor 2.
+
+This contradiction shows that our original assumption was false.
+
+Therefore there are no integers a and b, with b≠0, such that (a/b)² = 2.
+
+## Final Verdict
+
+VERDICT: PROVED
+
+The conjecture is true: assuming such a rational fraction exists forces its numerator and denominator, after reduction to lowest terms, to both be even, which is impossible.

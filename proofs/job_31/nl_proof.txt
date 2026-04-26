@@ -1,0 +1,116 @@
+# Review, Critique, and Improvement of the Proof Sketch
+
+## Overall Assessment of the Submitted Sketch
+
+The submitted sketch correctly identifies the core architecture of any honest proof: (a) a definitional repair of Bonacich centrality on subsets, (b) a local-weak-limit reduction of $G(n,c/n)$ to the Poisson Galton–Watson tree $\mathrm{PGW}(c)$, (c) a recursive distributional equation (RDE) for cavity messages, and (d) a Lyapunov–Schmidt / saddle-node analysis for the square-root exponent. The strategic picture is correct and well aligned with the $k$-core literature (Pittel–Spencer–Wormald, Janson–Luczak, Riordan).
+
+However, I think the submitted sketch understates two things and overstates one:
+
+- **Understated (pro-conjecture):** The spectral-admissibility issue is less severe than it looks, because the Bonacich $u$-core *as a fixed point of $T_u$* must automatically lie in a region where $\beta\rho(A_S)<1$, or the operator $T_u$ is not well-defined there. A careful reading of the definition shows the conjecture implicitly restricts to admissible $S$. I expand this below.
+- **Understated (pro-conjecture):** In the regime $\beta c<1$, the cavity RDE admits a clean contraction-based analysis for *subcritical* $u$, which gives *uniqueness* of the small-core fixed point and rules out many pathologies.
+- **Overstated (pro-conjecture):** The generic saddle-node mechanism really does require verification that the normal-form coefficients $a,b$ are nonzero. For the Bonacich $u$-core this cannot be taken for granted — it depends on the tail of the random variable $Y$ and is genuinely where the argument is incomplete.
+
+Below is an improved proof sketch that incorporates these refinements.
+
+---
+
+## Improved Proof Sketch
+
+### 1. Definitional repair and admissibility
+
+Let $\mathcal A:=\{S\subseteq[n]: \beta\rho(A_S)<1\}$ be the set of **admissible subsets**. Note that $\varnothing\in\mathcal A$ and $\mathcal A$ is closed under taking subsets (by interlacing of spectral radii of principal submatrices of a nonnegative matrix, $\rho(A_{S'})\le\rho(A_S)$ for $S'\subseteq S$). Consequently $T_u$ is well-defined on $\mathcal A$:
+$$T_u(S)=\{i\in S:b_i(\beta,S)\ge u\},\qquad S\in\mathcal A.$$
+
+The correct formal reading of the conjecture is therefore:
+$$S^*(u)=\text{maximal }S\in\mathcal A\text{ with }T_u(S)=S.$$
+Maximality is achieved by monotone iteration. Starting from the largest admissible set $S_0:=$ (the union of all admissible $S$, which is itself admissible because $\rho$ is monotone), one has $S_0\supseteq T_u(S_0)\supseteq T_u^2(S_0)\supseteq\cdots$, converging to the maximal fixed point $S^*(u)$.
+
+**Why this is consistent with $\beta<1/c$:** In $G(n,c/n)$ with $c>1$, the spectral radius of the full adjacency matrix scales as $\rho(A_{[n]})\sim\sqrt{\Delta_{\max}}\sim\sqrt{\log n/\log\log n}$ (Krivelevich–Sudakov), so $[n]\notin\mathcal A$ for large $n$. But the offending subgraphs are star-like neighborhoods of high-degree vertices; they are $o(n)$ in size. One can show that the **2-core** of $G(n,c/n)$, after stripping vertices of degree $>D$ for some large constant $D$, has $\beta\rho<1$ w.h.p. for $\beta<1/c$ — this is standard via a trace-moment argument combined with the fact that the $\ell^2$-operator norm of a sparse $(c,D)$-random graph is at most $2\sqrt{c}+o(1)$ (Benaych-Georges–Bordenave–Knowles, and related results). So there is a large admissible "bulk" containing all extensive candidates for $S^*(u)$.
+
+This formalization preserves the conjecture's meaning and closes the spectral gap.
+
+### 2. Linear self-consistent form on an admissible $S$
+
+On any $S\in\mathcal A$, the vector $x^S:=(I-\beta A_S)^{-1}\mathbf 1$ is the unique positive solution of
+$$x_i^S=1+\beta\sum_{j\sim i,\,j\in S}x_j^S.\tag{$\ast$}$$
+This gives the basic monotonicity: if $S'\subseteq S$ are both admissible, then $x^{S'}\le x^S$ coordinatewise. Consequently $T_u$ is antitone-monotone in the right sense, and the maximal fixed point exists.
+
+### 3. Local weak limit and the cavity RDE
+
+$G(n,c/n)$ converges locally in probability to the Poisson Galton–Watson tree $\mathrm{PGW}(c)$ (standard; see Van der Hofstad, Vol. 1). For a rooted tree $(T,o)$ and a *local* rule $\mathcal R$, the fraction of vertices satisfying $\mathcal R$ in $G(n,c/n)$ converges to $\mathbb P(\mathcal R\text{ holds at root of }\mathrm{PGW}(c))$ *provided* $\mathcal R$ is continuous with respect to local convergence.
+
+The Bonacich rule $x_i^S\ge u$ is globally defined, but in the regime $\beta c<1$ it is **exponentially local**. Indeed, for any admissible $S$ and any $i\in S$,
+$$|x_i^S-x_i^{S\cap B_L(i)}|\le \sum_{k>L}\beta^k[A_S^k\mathbf 1]_i\le \frac{(\beta\rho(A_S))^{L+1}}{1-\beta\rho(A_S)}\cdot\|\mathbf 1\|_\infty.$$
+So truncating to a depth-$L$ neighborhood introduces error $(\beta c)^{L(1+o(1))}$ on admissible sets, which is uniform in $n$. This is the quantitative handle that lets local weak convergence pass through to the Bonacich pruning.
+
+Define cavity messages on $\mathrm{PGW}(c)$: for a directed edge $x\to y$, let $M_{x\to y}$ be the Bonacich-field-sent-to-$y$ from the subtree rooted at $x$ with $y$ removed, **conditional on $x$ surviving $u$-core pruning restricted to that subtree** (set $M_{x\to y}=0$ otherwise). Then the messages obey the recursive distributional equation
+$$M\stackrel d=\Bigl(1+\beta\sum_{i=1}^NM_i\Bigr)\mathbf 1\!\left\{1+\beta\sum_{i=1}^NM_i\ge u\right\},\qquad N\sim\mathrm{Poisson}(c).\tag{RDE}$$
+The root survival probability is
+$$\phi(u)=\mathbb P\!\left(1+\beta\sum_{i=1}^{N_0}M_i\ge u\right),\qquad N_0\sim\mathrm{Poisson}(c),$$
+with $\{M_i\}$ i.i.d. copies of $M$ distributed as the **maximal** solution of (RDE).
+
+### 4. Existence, monotonicity, and contraction structure
+
+Let $Y$ be the weighted total progeny,
+$$Y\stackrel d=1+\beta\sum_{i=1}^NY_i,\qquad \mathbb EY=\frac1{1-\beta c}<\infty,$$
+unique in law (contraction in Wasserstein-$1$ since $\beta c<1$). Every solution $M$ of (RDE) satisfies $0\le M\le Y$ a.s. Iterating the thresholded recursion from $M^{(0)}=Y$ produces a stochastically decreasing sequence $M^{(t)}\downarrow M^{\max}$, which is the maximal fixed point. This gives $(\text{i})$ (non-empty $u$-core for $u<u_c$) and $(\text{ii})$ (sublinear for $u>u_c$) immediately, once one defines $u_c:=\sup\{u:\phi(u)>0\}$.
+
+Moreover, for $u=1$, one has $M=Y$ a.s. (the indicator is automatically $1$), and as $u$ increases the threshold becomes progressively selective. A useful observation: if $\|M_{u_1}\|_\infty$ is bounded by some deterministic constant $K$, then on the event the threshold fails one prunes to zero, and on the event it succeeds the map $\mathcal F_u$ is Lipschitz with constant $\beta c<1$ in Wasserstein distance restricted to $[0,K]$. This gives **local uniqueness** of the maximal fixed point for $u$ in any interval where the support of $M$ stays bounded.
+
+### 5. Upgrade from tree to graph
+
+By the local-weak-limit argument and the exponential locality of item 3, for any continuity point $u$ of $\phi$,
+$$\frac{|S^*(u)|}n\xrightarrow{\mathbb P}\phi(u),\qquad n\to\infty.$$
+The upgrade from convergence of expectations to convergence in probability uses vertex-exposure martingale concentration: $|S^*(u)|/n$ is a local-and-monotone functional of the edge configuration, so Azuma–Hoeffding applies after truncating high-degree vertices (which contribute $o(n)$). This part is essentially the argument used by Janson–Luczak for the $k$-core.
+
+### 6. The critical threshold and the square-root law
+
+By monotonicity of $\phi$, there exists a unique $u_c\in(1,\mathbb EY]$. At $u_c$ either $\phi$ is continuous (giving $\phi_c=0$ and a second-order transition with exponent $\neq 1/2$ generically), or $\phi$ has a jump and approaches $u_c$ from below along a branch terminating at a saddle-node bifurcation.
+
+The relevant scenario for $(iii)$ is the **discontinuous (hybrid) transition**: $\phi(u)\to\phi_c>0$ as $u\nearrow u_c$, and the approach is by a square-root. This is the same phenomenon as in the $k$-core for $k\ge 3$.
+
+**Normal-form analysis.** Parametrize the maximal fixed-point law $\mu_u$ of (RDE) by a scalar order parameter $\xi$ (e.g., $\xi=\phi(u)-\phi_c$, or $\xi=\mathbb E M_u-m_c$). Define
+$$\mathcal G(u,\xi):=\xi-\Phi(u,\xi),$$
+where $\Phi(u,\xi)$ is the induced scalar dynamics from applying $\mathcal F_u$ and projecting back. At a saddle-node $(u_c,\xi_c)$:
+- $\partial_\xi\mathcal G(u_c,\xi_c)=0$ (zero eigenvalue of the linearization in the reduced variable),
+- $\partial_u\mathcal G(u_c,\xi_c)\neq 0$ (transversality in the parameter),
+- $\partial_\xi^2\mathcal G(u_c,\xi_c)\neq 0$ (quadratic nondegeneracy).
+
+Under these three conditions the implicit function theorem (Lyapunov–Schmidt) gives the unfolding
+$$a(u_c-u)=b(\xi-\xi_c)^2+o(|u_c-u|+|\xi-\xi_c|^2),\qquad a,b>0,$$
+and hence $\xi(u)-\xi_c\sim\sqrt{a/b}\,\sqrt{u_c-u}$. Because $\phi$ is a smooth nonconstant functional of $\mu_u$ (it is an expectation of an indicator against a law with absolutely-continuous-on-its-support tail-image — a point that genuinely needs verifying, see §7), one transfers:
+$$\phi(u)-\phi_c\sim C\sqrt{u_c-u}.$$
+
+### 7. Where the argument genuinely remains open
+
+Four items are not complete even in this improved form; I label them by severity.
+
+**(a) Verification of nondegeneracy at $u_c$ (severity: high).**
+The nondegeneracy $\partial_\xi^2\mathcal G\neq 0$ and the transversality $\partial_u\mathcal G\neq 0$ are exactly the subtle points. They reduce to a statement about the tail of $Y$: the density of the random variable $Y_{\text{trunc}}:=1+\beta\sum_{i=1}^NY_i\mathbf 1\{\cdots\}$ should not vanish or have a flat critical inflection at $u_c$. This is plausible because $Y$ has an absolutely continuous component whose density is real-analytic on $(1,\infty)$ (by standard smoothing from the Poisson convolution structure), but the proof requires control of $Y$'s density near $u_c$, which is not folklore.
+
+**(b) The order parameter $\phi$ might depend on $\mu$ through a nonsmooth map (severity: medium).**
+Even if $\mu_u$ has a $\sqrt{u_c-u}$ expansion in Wasserstein sense, $\phi(u)$ is an expectation of an *indicator*, and one must show the underlying distribution function is $C^1$ at the threshold to conclude the same exponent $1/2$ transfers. This essentially requires that $\mathbb P(1+\beta\sum_{i=1}^{N_0}M_i=u_c)=0$ at the critical law. Usually provable, not trivial.
+
+**(c) Uniqueness of the maximal cavity fixed point (severity: low–medium).**
+The monotone-iteration argument always produces *a* maximal solution; uniqueness in the relevant basin follows from contraction when $\beta c<1$, but showing the basin contains all physically relevant initializations is technical.
+
+**(d) Global passage $G(n,c/n)\to$ tree (severity: low).**
+Standard but tedious. The Janson–Luczak/Riordan framework should adapt, because the Bonacich rule $(\ast)$ is local in the quantitative sense of item 3 on admissible sets.
+
+### 8. Candidate explicit form for small $c$
+
+As a sanity check: when $c$ is near $1^+$, the giant component is small and the tree is nearly critical. One expects $u_c$ to approach $1/(1-\beta c)=\mathbb EY$ and the transition to become continuous; the exponent might degenerate away from $1/2$ in this edge regime, suggesting the conjecture should further require $c$ bounded away from $1$ (or $\beta c$ bounded away from $1$).
+
+---
+
+## Summary of the Improvement
+
+1. **Closed the spectral-admissibility gap** by observing that $T_u$ is well-defined on the admissible lattice $\mathcal A$, which is subset-closed, and that the extensive candidates all lie in the admissible bulk (via spectral bounds of Benaych-Georges–Bordenave–Knowles).
+2. **Made the truncation bound quantitative** with $(\beta\rho)^L$ control, which is what enables local-weak-limit transfer.
+3. **Used contraction in Wasserstein** ($\beta c<1$) to get uniqueness and continuity of the maximal RDE fixed point in subcritical $u$.
+4. **Pinpointed the genuine open step** as the nondegeneracy of the scalar normal form at $u_c$ — specifically, non-vanishing of the density of the cavity threshold random variable at $u_c$.
+
+The square-root law $(iii)$ is therefore reduced to a concrete, checkable regularity statement about the law of $Y$ on $\mathrm{PGW}(c)$ — a statement I find plausible but cannot fully verify in this sketch.
+
+## Final Verdict
+VERDICT: PARTIALLY_PROVED — Parts (i) and (ii) follow rigorously from the improved cavity-RDE reduction together with standard local-weak-limit concentration for sparse random graphs, while part (iii) is reduced to — but not completed by — a nondegenerate saddle-node bifurcation whose quadratic-nondegeneracy coefficient requires a further density estimate on the weighted total progeny $Y$ that remains unverified.

@@ -1,0 +1,65 @@
+# Proof Sketch: Goldbach's Conjecture
+
+## Statement and Historical Context
+
+The conjecture in question is the **binary (strong) Goldbach Conjecture**, first communicated by Christian Goldbach in a letter to Leonhard Euler dated June 7, 1742. In its modern form: for every even integer $n > 2$, there exist primes $p, q$ (not necessarily distinct) such that $n = p + q$.
+
+Despite nearly 300 years of attention from the mathematical community, **no proof (or disproof) of this statement is known**. What follows is an honest exposition of what is known, what is conjectured, and why a complete proof is not currently available.
+
+## 1. Empirical and Numerical Evidence
+
+The conjecture has been verified computationally for all even $n$ up to $4 \cdot 10^{18}$ by Oliveira e Silva, Herzog, and Pardi (2014). This provides overwhelming empirical support but does not constitute a proof.
+
+## 2. Heuristic Argument (Non-rigorous)
+
+A standard heuristic uses the prime number theorem (PNT): the density of primes near $n$ is approximately $1/\ln n$. If we model primes as "random" integers with this density, the expected number of representations of $n$ as $p+q$ with $p, q$ prime is approximately
+$$
+R(n) \;\approx\; \sum_{p \leq n} \frac{1}{\ln(n-p)} \;\sim\; \frac{n}{\ln^2 n},
+$$
+corrected by a local factor (the *singular series*) accounting for the fact that primes avoid small prime factors. Hardy and Littlewood's circle-method heuristic (1923) predicts the precise asymptotic
+$$
+R(n) \;\sim\; 2 \prod_{p > 2} \frac{p-1}{p-2} \prod_{\substack{p \mid n \\ p>2}} \frac{p-1}{p-2} \cdot \frac{n}{\ln^2 n}.
+$$
+Since this grows to infinity, no *even* $n$ should fail to be a Goldbach sum for large $n$. However, this is a *heuristic*; turning it into a theorem is precisely the open problem.
+
+## 3. Major Partial Results (Rigorous)
+
+Several major theorems approximate the conjecture, but none closes it.
+
+**(a) Vinogradov's three-prime theorem (1937).** Every sufficiently large *odd* integer is a sum of three primes. Combined with Helfgott's (2013) result proving the bound is effective down to 7, this settles the *ternary* Goldbach conjecture completely. It does **not** settle the binary case.
+
+**(b) Chen's theorem (1966/1973).** Every sufficiently large even integer can be written as $p + q$ where $p$ is prime and $q$ is either prime or a product of two primes (a "semiprime"). Chen's theorem uses sophisticated sieve methods (the weighted sieve, building on Selberg and Bombieri). It falls short of Goldbach because one cannot presently eliminate the semiprime case.
+
+**(c) Schnirelmann's theorem (1930).** Every integer $>1$ is a sum of a bounded number of primes. The best current Schnirelmann constant is small, but still $>2$.
+
+**(d) Density results.** Montgomery and Vaughan (1975) proved that the number of even integers $\leq N$ that are *not* a sum of two primes is $O(N^{1-\delta})$ for some $\delta > 0$. Thus the set of exceptions has density zero, but could in principle still be infinite.
+
+## 4. Why a Full Proof Is Out of Reach
+
+The circle method partitions $[0,1]$ into **major arcs** (rational points with small denominator) and **minor arcs** (the rest). For ternary Goldbach, minor-arc contributions can be controlled by Vinogradov's bound on exponential sums over primes. For the binary problem, the analogous minor-arc estimate would require cancellation of square-root type in
+$$
+S(\alpha) = \sum_{p \leq N} e^{2\pi i \alpha p},
+$$
+squared and integrated — and this is beyond current technology. It is widely believed that binary Goldbach lies *just* beyond the reach of sieve theory due to the **parity problem** identified by Selberg: sieves cannot, by themselves, distinguish integers with an even versus odd number of prime factors. Chen's theorem pushes sieve methods to their known limit.
+
+## 5. Attempted Proof Strategies and Their Failure
+
+- **Pure induction on $n$**: no known mechanism relates the Goldbach representation of $n$ to that of smaller even numbers.
+- **Direct PNT application**: gives only the existence of primes near $n/2$, not of a pair summing to $n$.
+- **Sieve methods alone**: blocked by the parity problem.
+- **Circle method alone**: blocked by the lack of a square-root cancellation estimate on minor arcs.
+
+A conditional proof under the Generalized Riemann Hypothesis is *also* not known; GRH yields strong results on primes in arithmetic progressions and on ternary Goldbach with explicit bounds (Deshouillers–Effinger–te Riele–Zinoviev, 1997), but still does not imply binary Goldbach.
+
+## 6. Is the Conjecture True?
+
+All available evidence — numerical verification, heuristic asymptotics, density of exceptions, Chen's theorem, Vinogradov's theorem — points strongly to the conjecture being **true**. There is no known structural obstruction, and the expected number of representations grows like $n/\ln^2 n$. Nevertheless, "believed true with overwhelming evidence" is not a proof.
+
+## 7. Conclusion
+
+I am unable to supply a valid proof of Goldbach's conjecture. Doing so would constitute a resolution of one of the most famous open problems in number theory. Any short "proof" of this statement in the current state of the art is almost certainly incorrect: the obstructions (parity problem, minor-arc estimates) are well understood and rule out elementary or straightforwardly analytic approaches.
+
+## Final Verdict
+
+## Final Verdict
+VERDICT: OPEN — The binary Goldbach conjecture is a celebrated unsolved problem in number theory; despite verification up to $4\cdot 10^{18}$ and strong partial results (Vinogradov, Chen, Montgomery–Vaughan), no proof is currently known, and the parity problem in sieve theory together with the absence of adequate minor-arc bounds in the circle method place it beyond present techniques.

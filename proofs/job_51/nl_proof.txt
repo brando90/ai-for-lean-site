@@ -1,0 +1,141 @@
+# Detailed Proof of the Battery Inventory MDP Conjecture
+
+I will work through all four propositions, give complete arguments where the conjecture is correct, identify and fix the errors flagged in the prior review, and strengthen the comparative-statics argument that the prior reviewer (correctly) noted does not follow from convexity alone.
+
+---
+
+## Setup and Notation
+
+Define the post-charge state $x = b + u \in [b, \min(B, b+U_{\max})]$ and the post-charge expected cost-to-go
+$$G_t(x) \;=\; (1-p)\, V_{t+1}(x) \;+\; p\, \Phi_t(x),$$
+where
+$$\Phi_t(x) \;=\; \min_{0 \le d \le \min(x, U_{\max})} \Bigl\{\operatorname{VOLL}\,(\ell_t - d)^+ \;+\; V_{t+1}(x - d)\Bigr\}.$$
+With this notation,
+$$V_t(b) \;=\; \min_{0 \le u \le \min(U_{\max},\, B-b)} \Bigl\{ \lambda_t u + G_t(b+u)\Bigr\}.$$
+
+---
+
+## Proposition 1: Convexity and Monotonicity of $V_t$
+
+**Backward induction.** $V_{T+1}\equiv 0$ is convex and nonincreasing. Assume $V_{t+1}$ is convex and nonincreasing on $[0,B]$.
+
+**Step 1: $\Phi_t$ is convex and nonincreasing.**
+
+Substitute $y = x - d$ so $d = x - y$. Then
+$$\Phi_t(x) \;=\; \min_{\max(0,\,x-U_{\max}) \,\le\, y \,\le\, x} \Bigl\{ \operatorname{VOLL}\,(\ell_t - x + y)^+ + V_{t+1}(y)\Bigr\}.$$
+
+The feasible set $\{(x,y) : \max(0,x-U_{\max})\le y\le x,\; 0\le x \le B\}$ is a convex polytope in $\mathbb{R}^2$. The integrand is convex jointly in $(x,y)$: $V_{t+1}(y)$ is convex by hypothesis, and $\operatorname{VOLL}(\ell_t - x + y)^+$ is the positive part of an affine function, hence convex jointly in $(x,y)$. Partial minimization of a jointly convex function over a convex set with respect to one variable yields a convex function in the remaining variable; therefore $\Phi_t$ is convex on $[0,B]$.
+
+For monotonicity, fix $x_1 \le x_2$ and let $d_1^*$ be optimal at $x_1$. Then $d_1^* \le \min(x_1, U_{\max}) \le \min(x_2, U_{\max})$, so $d_1^*$ is feasible at $x_2$. The penalty term $\operatorname{VOLL}(\ell_t-d_1^*)^+$ is unchanged, while $V_{t+1}(x_2 - d_1^*) \le V_{t+1}(x_1 - d_1^*)$ since $V_{t+1}$ is nonincreasing. Thus $\Phi_t(x_2) \le \Phi_t(x_1)$.
+
+**Step 2: $G_t$ is convex and nonincreasing.** Convex combination of two convex nonincreasing functions on a convex domain.
+
+**Step 3: $V_t$ is convex.** Reparameterize via the post-charge level $x = b+u$:
+$$V_t(b) \;=\; -\lambda_t b + \min_{b \,\le\, x \,\le\, \min(B,\, b+U_{\max})} \bigl\{ \lambda_t x + G_t(x)\bigr\}.$$
+
+The feasible set $\{(b,x) : 0 \le b \le B,\; b \le x \le \min(B, b+U_{\max})\}$ is a convex polytope, and $\lambda_t x + G_t(x)$ is jointly convex in $(b,x)$ (it depends only on $x$). By the partial-minimization principle, the minimum is convex in $b$. Subtracting the affine $\lambda_t b$ preserves convexity. Hence $V_t$ is convex.
+
+**Step 4: $V_t$ is nonincreasing.** Let $b_1 \le b_2$. Any feasible policy $u_1$ at state $b_1$ with $u_1 \le \min(U_{\max}, B-b_1)$ satisfies $b_1 + u_1 \le B$. Define a coupling at $b_2$: charge $u_2 = (b_1 + u_1 - b_2)^+ \le u_1$. Then $b_2 + u_2 \ge b_1 + u_1$. So the post-charge level at $b_2$ is at least that of $b_1$, while charging cost is no greater. Since $G_t$ is nonincreasing, the total cost at $b_2$ is at most that at $b_1$. Thus $V_t(b_2) \le V_t(b_1)$.
+
+This completes the induction. **Proposition 1 is proved.** $\square$
+
+---
+
+## Proposition 2: Optimal Base-Stock Policy
+
+Define
+$$H_t(x) \;=\; \lambda_t x + G_t(x), \qquad x \in [0,B].$$
+By Step 2 above, $H_t$ is the sum of a linear function and a convex function, hence convex on $[0,B]$. Let
+$$S_t \;=\; \min\bigl\{\arg\min_{x \in [0,B]} H_t(x)\bigr\},$$
+the smallest minimizer (which exists by convexity and compactness). By convexity, $H_t$ is nonincreasing on $[0, S_t]$ and nondecreasing on $[S_t, B]$.
+
+At state $b$, the controller selects $x \in [b, \min(B, b+U_{\max})]$:
+
+- **Case $b \ge S_t$.** Since $H_t$ is nondecreasing on $[S_t, B] \supseteq [b, \min(B, b+U_{\max})]$, the minimum is at $x = b$, giving $u_t^*(b) = 0$.
+- **Case $b < S_t$.** Since $H_t$ is nonincreasing on $[0, S_t]$, the controller wants to increase $x$ toward $S_t$. The largest feasible $x$ not exceeding $S_t$ is $\min(S_t, b + U_{\max})$. If this equals $S_t$ (i.e., $b + U_{\max} \ge S_t$), then $x^* = S_t$. Otherwise $b + U_{\max} < S_t$ and $H_t$ is still nonincreasing on $[b, b+U_{\max}]$, so $x^* = b + U_{\max}$.
+
+In both subcases, $x^*(b) = \min(S_t, b+U_{\max})$ and therefore
+$$\boxed{\,u_t^*(b) \;=\; x^*(b) - b \;=\; \min\!\bigl(U_{\max},\, (S_t - b)^+\bigr),\,}$$
+which is the base-stock form claimed.
+
+**Critique of the original justification.** The conjecture writes "$\mu_t(b) = -dV_t/db$ is nonincreasing, so there is a unique crossover where $\mu_t(S_t)=\lambda_t$." Two corrections are needed:
+
+1. The relevant condition is on $H_t' = \lambda_t + G_t'$ (derivatives interpreted as one-sided/subgradient where needed), not on $V_t$. The minimizer of $H_t$ — not a crossover of $-V_t'$ — is what governs the base-stock level.
+2. Without strict convexity, the minimizer set may be an interval, not a unique point. The "smallest minimizer" selection makes the policy well-defined, and the structural claim is robust.
+
+With these two clarifications, **Proposition 2 holds.** $\square$
+
+---
+
+## Proposition 3: The Single-Period "Newsvendor" Claim — *Incorrect as Stated*
+
+For $T=1$, with no power limit, $V_2 \equiv 0$, so
+$$V_1(b) \;=\; \min_{0 \le u \le B - b} \bigl\{\lambda u + p\,\operatorname{VOLL}\,(\ell - b - u)^+\bigr\}.$$
+Equivalently, with reserve $x = b+u \in [b, B]$:
+$$C(x) \;=\; \lambda x + p\,\operatorname{VOLL}\,(\ell - x)^+,\qquad x\in[0,B].$$
+
+This is piecewise linear with two pieces:
+- For $x \le \min(\ell, B)$: slope $\lambda - p\operatorname{VOLL}$.
+- For $x \in [\ell, B]$ (if $\ell < B$): slope $\lambda > 0$.
+
+**Suppose $B \ge \ell$.** Then:
+- If $\lambda < p\operatorname{VOLL}$, the slope is negative on $[0,\ell]$ and positive on $[\ell, B]$, so $S_1 = \ell$.
+- If $\lambda > p\operatorname{VOLL}$, the slope is positive on $[0,\ell]$ and on $[\ell,B]$, so $S_1 = 0$.
+- If $\lambda = p\operatorname{VOLL}$, the entire interval $[0,\ell]$ is optimal; the smallest minimizer is $S_1 = 0$.
+
+**Why the stated equality $\mathbb{P}(D>x^*) = \lambda/\operatorname{VOLL}$ fails.** Demand $D = \delta\ell$ is two-valued ($0$ with probability $1-p$, $\ell$ with probability $p$). The CDF jumps at $\ell$. So $\mathbb{P}(D > x^*) = p\cdot\mathbf{1}\{x^* < \ell\}$, taking only the values $0$ or $p$ — generally not equal to $\lambda/\operatorname{VOLL}$. The correct *discrete* newsvendor condition is the subgradient inclusion
+$$\mathbb{P}(D > x^*) \;\le\; \frac{\lambda}{\operatorname{VOLL}} \;\le\; \mathbb{P}(D \ge x^*),$$
+i.e., $\lambda/\operatorname{VOLL}$ lies in the (right- and left-continuous) probability bracket at $x^*$. Substituting $x^* = \ell$ gives $0 \le \lambda/\operatorname{VOLL} \le p$, recovering the regime $\lambda \le p\operatorname{VOLL}$; substituting $x^* = 0$ gives $p \le \lambda/\operatorname{VOLL} \le 1$, recovering $\lambda \ge p\operatorname{VOLL}$. So the *thresholds* in the conjecture are correct, but the *equality* statement is not.
+
+**Capacity feasibility.** If $B < \ell$ (a feasible parameter combination under the assumptions), then $x^* = \ell$ is infeasible. Concrete counterexample: $B=1$, $\ell=2$, $p=0.9$, $\operatorname{VOLL}=1$, $\lambda=0.1$. Since $p > \lambda/\operatorname{VOLL}$, the proposition asserts $x^*=2$, but the largest feasible reserve is $1$.
+
+**Corrected statement.** Let $\bar\ell = \min(\ell, B)$. Then
+$$x^* \;=\; \begin{cases} \bar\ell & \text{if } \lambda < p\,\operatorname{VOLL},\\ 0 & \text{if } \lambda > p\,\operatorname{VOLL},\\ \text{any element of } [0, \bar\ell] & \text{if } \lambda = p\,\operatorname{VOLL},\end{cases}$$
+characterized by the subgradient inclusion above (with the natural truncation at $B$).
+
+**Conclusion.** Proposition 3 as written is **false**. The corrected version above is true. $\square$
+
+---
+
+## Proposition 4: Comparative Statics — *True, but Requires Lattice Programming*
+
+The reviewer correctly notes that monotone comparative statics do not follow from convexity of $V_t$ alone. We must verify that for each parameter $\theta \in \{p, \ell_t, \operatorname{VOLL}\}$, the family $\{H_t(\,\cdot\,;\theta)\}$ has *decreasing differences* in $(x, \theta)$ on $[0,B]\times\Theta$ — equivalently, increasing the parameter raises the marginal benefit of additional reserve. Then by Topkis's monotone-selection theorem, the smallest minimizer $S_t(\theta)$ is nondecreasing in $\theta$.
+
+**(d) $S_t$ is nonincreasing in $\lambda_t$.** Holding $G_t$ fixed (it does not depend on $\lambda_t$), $H_t(x;\lambda_t) = \lambda_t x + G_t(x)$ has *increasing* differences in $(x,\lambda_t)$:
+$$H_t(x_2;\lambda) - H_t(x_1;\lambda) \;=\; \lambda(x_2-x_1) + [G_t(x_2)-G_t(x_1)],$$
+which is increasing in $\lambda$ when $x_2 > x_1$. By Topkis, the minimizer set is nonincreasing in $\lambda_t$ in the strong set order; hence the smallest minimizer $S_t$ is nonincreasing in $\lambda_t$. $\checkmark$
+
+**(a)–(c) The harder direction.** The challenge is that $G_t$ depends on $V_{t+1}$, which itself depends on $\theta$, so we need a *backward induction* on the joint claim: for each $t$,
+1. $V_t(\,\cdot\,;\theta)$ is convex and nonincreasing (Prop. 1, already done), AND
+2. $V_t$ has *decreasing differences* in $(b, \theta)$ (i.e., $-V_t$ is supermodular in $(b,\theta)$).
+
+We sketch the argument for $\theta = \operatorname{VOLL}$; the cases $\theta = \ell_t$ and $\theta = p$ are analogous (with care for $p$, since both summands of $G_t$ depend on $p$).
+
+*Base.* $V_{T+1}\equiv 0$ trivially has decreasing differences.
+
+*Inductive step.* Assume $V_{t+1}(\,\cdot\,;\operatorname{VOLL})$ has decreasing differences. The penalty $\operatorname{VOLL}\cdot(\ell_t-d)^+$ has *increasing* differences in $(\,-d, \operatorname{VOLL})$, equivalently decreasing differences in $(d, \operatorname{VOLL})$. The minimization defining $\Phi_t(x;\operatorname{VOLL})$ over $d$ — using the substitution $y = x-d$ as in Step 1 of Proposition 1 — is a parametric optimization over a sublattice. Standard preservation results (Topkis, *Supermodularity and Complementarity*, Ch. 2) show that the resulting $\Phi_t(x;\operatorname{VOLL})$ has decreasing differences in $(x,\operatorname{VOLL})$ — intuitively, raising $\operatorname{VOLL}$ raises the marginal value of an extra unit of $x$ in the outage state. Combining via $G_t = (1-p)V_{t+1}+p\Phi_t$ preserves decreasing differences (nonnegative weighted sum).
+
+Therefore $H_t(x;\operatorname{VOLL}) = \lambda_t x + G_t(x;\operatorname{VOLL})$ has decreasing differences in $(x,\operatorname{VOLL})$, so by Topkis the smallest minimizer $S_t$ is **nondecreasing** in $\operatorname{VOLL}$. Finally, one verifies that $V_t(b;\operatorname{VOLL}) = -\lambda_t b + \min_{x\in[b,\min(B,b+U_{\max})]} H_t(x;\operatorname{VOLL})$ inherits decreasing differences in $(b,\operatorname{VOLL})$ from $H_t$ via the same partial-minimization-of-supermodular-functions principle (the constraint set is a sublattice in $(b,x)$).
+
+The same recipe gives (b) for $\ell_t$ (the penalty $\operatorname{VOLL}(\ell_t-d)^+$ has increasing differences in $(\ell_t,-d)$) and (a) for $p$, where the relevant quantity is $G_t = V_{t+1} + p(\Phi_t - V_{t+1})$ and one uses the fact that $\Phi_t \le V_{t+1}$ with the gap nondecreasing in $x$ in the appropriate sense (because outage cost is concentrated in the unmet-load region, which shrinks as $x$ grows).
+
+All four monotonicities therefore hold, but only with the lattice-programming machinery; the conjecture's claim that they "follow from Proposition 1" is logically too weak.
+
+A subtle subtlety: when the smallest minimizer hits the boundary ($S_t = 0$ or $S_t = B$), monotonicity is preserved trivially (capped at the boundary). $\square$
+
+---
+
+## Summary of What Is Proved, Improved, and Refuted
+
+| Claim | Status |
+|---|---|
+| **Prop. 1** (convex, nonincreasing $V_t$) | **Proved** as stated. |
+| **Prop. 2** (base-stock $u_t^*(b)=\min(U_{\max},(S_t-b)^+)$) | **Proved**, with the marginal-value justification corrected to reference $H_t$, not $V_t$, and the "unique crossover" relaxed to "smallest minimizer." |
+| **Prop. 3** (Bernoulli newsvendor equality) | **False as stated.** Equality fails because the demand CDF is a step function; correct condition is the subgradient inclusion $\mathbb{P}(D>x^*) \le \lambda/\operatorname{VOLL} \le \mathbb{P}(D\ge x^*)$. Also fails when $B<\ell$ since $x^* = \ell$ is infeasible. The **corrected** statement (with $\bar\ell = \min(\ell,B)$ and threshold $\lambda \lessgtr p\operatorname{VOLL}$) is true. |
+| **Prop. 4** (comparative statics in $p,\ell_t,\operatorname{VOLL},\lambda_t$) | **True**, but requires Topkis/Veinott lattice-programming arguments (decreasing differences propagated by backward induction), not merely Proposition 1. |
+
+---
+
+## Final Verdict
+
+VERDICT: PARTIALLY_PROVED — Propositions 1, 2, and (with the proper lattice-programming justification) 4 are proved, but Proposition 3's critical-fractile equality is false as written for Bernoulli demand and additionally fails when capacity $B < \ell$, so the full conjecture as stated is incorrect; the corrected newsvendor statement (subgradient inclusion with the truncation $\bar\ell = \min(\ell,B)$) does hold.

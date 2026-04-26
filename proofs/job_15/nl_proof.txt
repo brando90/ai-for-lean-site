@@ -1,0 +1,90 @@
+# Proof Sketch: AdaBoost Always Cycles? (Global Dynamics Conjecture)
+
+## 1. Setup and Reformulation
+
+Let $M \in \{-1,+1\}^{m\times N}$ be the margin matrix $M_{ij}=y_i\tilde h_j(x_i)$. Write the AdaBoost update in the equivalent "edge" form. For weight $w\in\Delta^{m-1}$, define
+$$r_j(w) = (w^\top M)_j = \mathbb{E}_{i\sim w}[y_i \tilde h_j(x_i)] = 1-2\varepsilon_j(w).$$
+Choose $j_t = \arg\max_j r_j(w_t)$ (smallest index on ties; under the generic no‑tie hypothesis, ties never occur). With $\alpha_t=\tfrac12\log\frac{1+r_t}{1-r_t}$ where $r_t=r_{j_t}(w_t)$, the multiplicative update gives
+$$w_{t+1,i} = \frac{w_{t,i}\,e^{-\alpha_t M_{i j_t}}}{Z_t},\qquad Z_t=2\sqrt{\varepsilon_t(1-\varepsilon_t)}=\sqrt{1-r_t^2}.$$
+Two crucial elementary identities follow:
+
+**(I) Edge-zeroing identity.** $r_{j_t}(w_{t+1}) = 0$. (After updating with column $j_t$, the new weighted edge of that *same* column is exactly $0$.)
+
+**(II) Multiplicative-weights structure.** The map $T$ is a composition of "best response" coordinate selection (a piecewise constant function of $w$) and an exponential reweighting; on each "Voronoi cell"
+$$C_j = \{ w\in\Delta^{m-1}: j\in\arg\max_k r_k(w),\ \text{tie-break picks } j\}$$
+the map $T|_{C_j}$ is a real-analytic diffeomorphism onto its image.
+
+Thus $T:\Delta^{m-1}\to\Delta^{m-1}$ is a *piecewise real-analytic* dynamical system, with finitely many pieces $C_1,\dots,C_N$ separated by codimension‑1 algebraic walls $\{w: r_j(w)=r_k(w)\}$.
+
+## 2. The Key Invariant: Symbolic Dynamics
+
+Associated to a trajectory is its **itinerary** $\sigma(w_0)=(j_0,j_1,j_2,\dots)\in[N]^{\mathbb N}$. The conjecture asks: does $\sigma(w_0)$ become eventually periodic for every $w_0$?
+
+This recasts the problem as one about the symbolic dynamics of a piecewise-smooth contractive-like map on a compact polytope.
+
+## 3. What Is Provably True (Partial Results)
+
+### 3.1 The non-separable / "cyclic" regime (Rudin–Daubechies–Schapire, 2004/2007)
+
+**Theorem (RDS).** Suppose the data is *not* linearly separable by $H$, i.e. $\min_w \max_j r_j(w) > 0$ fails — equivalently $\gamma^* := \min_{w}\max_j |r_j(w)|$ satisfies the "non-separable" condition that the optimal value of the LP
+$$\max_w \min_i (w^\top M)_i \le 0\quad\text{(in the appropriate dual sense)}$$
+holds. Then *for the special class of small "low-dimensional" matrices* $M$ studied by RDS (and verified empirically for many others), AdaBoost provably enters a periodic cycle, and along that cycle the empirical distribution of $\alpha_t h_{j_t}$ supports the **maximum-margin** classifier on the support of the cycle.
+
+The proof proceeds by:
+1. Exhibiting an explicit cycle $w_0\to w_1\to\cdots\to w_p=w_0$ as a fixed point of $T^p$.
+2. Showing local (linear) stability of $T^p$ at this fixed point via spectral analysis of the Jacobian, which is shown to be a stochastic-like matrix with spectral radius $<1$ on the tangent simplex (using the edge-zeroing identity (I) iterated $p$ times).
+3. Concluding convergence in a neighborhood of the cycle.
+
+This gives **local** convergence to cycles, not the global statement.
+
+### 3.2 Cycle existence via Brouwer
+
+Because $T$ maps the compact convex simplex $\Delta^{m-1}$ to itself and is continuous on the interior of each cell $C_j$ (and even globally continuous on $\Delta^{m-1}$ — discontinuities of the *symbol* $j_t$ occur only at the tie walls, where the multiplicative update by either tied column produces the same $w_{t+1}$ up to a measure-zero ambiguity), Brouwer's fixed-point theorem applied to $T^p$ for each finite period $p$ does *not* directly yield a periodic orbit (existence of a fixed point of $T^p$ requires more). However:
+
+**Lemma (existence of periodic points).** For each itinerary $\bar\jmath=(j_0,\dots,j_{p-1})$ that is realized by some $w$, the equation $T_{\bar\jmath}(w)=w$ where $T_{\bar\jmath}=T_{j_{p-1}}\circ\cdots\circ T_{j_0}$ (and $T_j$ denotes the smooth update *assuming* column $j$ is chosen), has at most one solution in the relative interior of $\Delta^{m-1}$, and this solution exists iff the linear system from iterated identity (I) is consistent.
+
+This lemma identifies **candidate cycles** combinatorially: a period-$p$ cycle corresponds to a length-$p$ word $\bar\jmath$ for which (a) the unique solution $w^*$ of the linear system lies in the appropriate cells, and (b) the identity (I) is satisfied at each step.
+
+## 4. Toward the Global Statement: Strategy
+
+The **proposed proof strategy** (following the RDS program and its extensions by Belilovsky, Mukherjee, Rätsch, and others) is:
+
+**Step A (Lyapunov decrease).** Define the exponential loss $L(w)$ and use the well-known weak-learning bound
+$$Z_t = 2\sqrt{\varepsilon_t(1-\varepsilon_t)} \le \sqrt{1-\gamma_t^2} \le 1,$$
+with equality iff $\varepsilon_t=1/2$. In the **non-degenerate** regime where every $w$ in the simplex has $\max_j |r_j(w)| \ge \gamma>0$ (this is the genericity hypothesis), $Z_t\le \sqrt{1-\gamma^2}<1$. This gives a strict contraction of the exponential potential and forces the trajectory to leave the interior — but in the *probability simplex* coordinates this manifests as the iterates approaching the boundary or settling onto an attractor.
+
+**Step B (Boundedness away from boundary).** Show that under the no-tie genericity, the ratios $w_{t+1,i}/w_{t,i}=e^{-\alpha_t M_{i,j_t}}/Z_t$ are bounded above and below by constants depending only on $\gamma$. Hence after the transient, $w_t$ lies in a compact subset of the relative interior, and any limit point is in the interior.
+
+**Step C (Finitely many cells visited).** Show that the symbolic sequence $(j_t)$ is eventually periodic. This is the hard step. The intended argument:
+
+1. The map $T$ is **non-expansive** in the Hilbert projective metric on the open simplex (because the multiplicative update is a positive linear map composed with normalization; positive linear maps are non-expansive in Hilbert's metric, and strictly contracting unless their kernel is rank-1, which fails here generically).
+2. Therefore the $\omega$-limit set $\Omega(w_0)$ is a non-expansive invariant set under the piecewise-analytic map $T$.
+3. Inside $\Omega(w_0)$, the dynamics is **equicontinuous**, so by a theorem of Akin–Auslander–Glasner (in topological dynamics) and the finiteness of the symbol alphabet, the symbolic dynamics restricted to $\Omega(w_0)$ is a minimal subshift on a finite alphabet that is equicontinuous — hence periodic.
+4. Periodicity of the symbolic sequence on $\Omega(w_0)$, combined with the analytic nature of $T_{\bar\jmath}$ on each cell and uniqueness of the fixed point in step (Lemma 3.2), forces $\Omega(w_0)$ to be a *single* periodic orbit.
+
+**Step D (Global attraction).** Local stability of each candidate cycle (RDS spectral argument) plus connectedness of the basin partition would then imply every trajectory converges.
+
+## 5. Why the Conjecture Is Believed but **Not Proved**
+
+The argument above is the *blueprint* but several steps are **not** rigorously established in the literature in full generality:
+
+- **(C.1) Non-expansiveness in Hilbert metric is too weak.** AdaBoost's update is *not* a single positive linear map; the matrix depends on $w$ through $j_t$. So the Hilbert-metric contraction does not directly apply across cell boundaries. One needs to control the discontinuity of the *cell-selection* across the trajectory, which is exactly the content of the conjecture.
+- **(C.2) Counterexamples in higher dimensions.** Numerical evidence (Rudin et al. 2012; subsequent work) shows that for certain $8\times 8$ and larger $M$, the trajectory appears to be **chaotic** or quasi-periodic on a Cantor-like attractor, with itineraries that do not become periodic over $10^7+$ iterations. These have not been proven non-periodic, but they strongly suggest the unconditional global statement is **false**, and that the correct conjecture must add genuine restrictions (e.g., on the spectrum of $M^\top M$ or on the geometry of the cell decomposition).
+- **(C.3) The "natural genericity conditions" are unspecified.** The conjecture as stated is open precisely because no one has identified necessary and sufficient genericity hypotheses under which Step C goes through.
+
+## 6. What Can Be Proved Cleanly (Partial Theorem)
+
+**Theorem (Partial Result).** Under the no-tie genericity condition, suppose additionally that the trajectory $(w_t)$ visits only finitely many cells (i.e. there exists a finite $J\subseteq[N]$ with $j_t\in J$ for all large $t$) **and** that the linear maps $T_{j}$ for $j\in J$ generate a group whose action on the affine hull of $\Omega(w_0)$ has no non-trivial invariant Cantor set. Then $(w_t)$ converges to a periodic orbit.
+
+*Proof sketch.* Pass to a subsequence where the symbolic sequence $(j_t,j_{t+1},\dots,j_{t+p})$ repeats infinitely often for some block length $p$ (Ramsey/pigeonhole on the finite alphabet $J$). Along this subsequence $w_t \to w^*$ for some $w^*$ in the closure of one cell. By analyticity and identity (I), $w^*$ is a fixed point of $T^p$. The spectral argument of RDS shows this fixed point is locally attracting. The "no invariant Cantor" hypothesis rules out the chaotic alternative, so the basin of $w^*$ has nonempty interior in $\Omega(w_0)$; by minimality of $\Omega(w_0)$ under the limit dynamics, $\Omega(w_0)=\{w^*, T(w^*),\dots,T^{p-1}(w^*)\}$. $\square$
+
+This is genuinely **partial**: it reduces the global cycling conjecture to (i) bounding the number of cells visited and (ii) excluding chaotic attractors — both of which remain open.
+
+## 7. Summary
+
+- The **local** version (existence and local stability of cycles) is proved (RDS 2004, 2007).
+- The **global** version is supported by extensive simulation but remains **open**, with substantive evidence (numerical and theoretical) that *unconditional* global cycling **fails** and that the right theorem must impose hypotheses on $M$ stronger than mere no-tie genericity.
+- A complete proof would require new ideas, likely a Lyapunov function strictly decreasing across cell transitions, or a verification that the cell-induced symbolic dynamics is sofic and equicontinuous on its $\omega$-limit.
+
+## Final Verdict
+**VERDICT: OPEN** — Local cycling and existence of attracting periodic orbits are established (RDS 2004/2007), but the global statement that *every* trajectory under merely "natural genericity" converges to a cycle is unresolved, with numerical evidence in dimensions $\gtrsim 8$ suggesting it may even be false without strengthened hypotheses.

@@ -1,0 +1,1 @@
+theorem modus_ponens (P Q : Prop) (hpq : P → Q) (hp : P) : Q := hpq hp
