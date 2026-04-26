@@ -6,6 +6,28 @@ Submit a mathematical conjecture in plain language and receive a machine-verifie
 
 > **Note:** The pipeline details below reflect the system as of April 2026 and may become outdated as the prover evolves. The live site and email results are always authoritative.
 
+## What is this repo?
+
+This is the **public-facing submission website** only. It contains `index.html` and `thanks.html` — the form that collects conjectures from users.
+
+The **prover pipeline itself is private.** The code that does the actual proving — NL proof generation, multi-model debate, Lean 4 formalization, verification, repair, semantic checks, negation guards, empirical testing, and email delivery — lives in a separate private repository and is not open source.
+
+```
+ Public (this repo)                    Private (separate repo)
++-------------------------+           +----------------------------------+
+|  conjecture-prover      |           |  agentic-nl-fl-maths             |
+|                         |           |                                  |
+|  index.html (form)      |  submit   |  NL proof generation             |
+|  thanks.html            | ───────>  |  Multi-model debate              |
+|                         |           |  Lean 4 formalization + Mathlib   |
+|  Hosted on GitHub Pages |           |  Verify & repair loop            |
+|  No pipeline code here  |           |  Semantic alignment check        |
+|                         |           |  Negation guard                  |
+|                         |           |  Empirical testing               |
+|                         |           |  Email delivery (results + PDF)  |
++-------------------------+           +----------------------------------+
+```
+
 ## What it does
 
 An automated pipeline takes your conjecture and attempts to:
@@ -81,6 +103,6 @@ You can use plain text, LaTeX notation, or a mix. The more precise your statemen
 
 ## Built by
 
-[Brando Miranda](https://brando90.github.io)
+[Brando Miranda](https://brando90.github.io), Claude Code & Codex
 
 Questions? Email brando.science@gmail.com
