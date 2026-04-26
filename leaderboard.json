@@ -1,0 +1,416 @@
+[
+  {
+    "id": 50,
+    "name": "AdaBoost Always Cycles? (Global Dynamics Conjecture)",
+    "statement": "Let \ud835\udc46 = { ( \ud835\udc65 \ud835\udc56 , \ud835\udc66 \ud835\udc56 ) } \ud835\udc56 = 1 \ud835\udc5a S={(x i \u200b ,y i \u200b )} i=1 m \u200b be a fixed binary-labeled dataset with \ud835\udc66 \ud835\udc56 \u2208 { \u2212 1 , + 1 } y i \u200b \u2208{\u22121,+1}, and let \ud835\udc3b H be a weak-hypothesis class. Consider the discrete A",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-25T16:55:29.303827-07:00",
+    "proof_path": "lean_project/LeanProject/Job_50.lean"
+  },
+  {
+    "id": 49,
+    "name": "I am modeling battery operation problem a random outage condition. Add one wr...",
+    "statement": "Yes. This problem has a strong inventory-theoretic structure. The battery state of charge is the inventory, charging is ordering, discharge during outage is demand fulfillment from inventory, and VOLL",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-25T15:06:39.759737-07:00",
+    "proof_path": ""
+  },
+  {
+    "id": 48,
+    "name": "Can Single-Shuffle SGD be Better than Reshuffling SGD and GD?",
+    "statement": "Let n >= 2, K >= 1, and d >= 1. Let S_n denote the set of all permutations of {1,...,n}. For real symmetric d x d matrices X, Y, write X \u2aaf Y for the Loewner order (i.e., Y - X is positive semidefinite",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-25T14:58:43.256777-07:00",
+    "proof_path": "lean_project/LeanProject/Job_48.lean"
+  },
+  {
+    "id": 47,
+    "name": "Smoothed Complexity of the Simplex Method",
+    "statement": "Fix integers \ud835\udc5b \u2265 1 n\u22651 (variables) and \ud835\udc5a \u2265 \ud835\udc5b m\u2265n (constraints). Consider linear programs max \u2061 \ud835\udc65 \u2208 \ud835\udc45 \ud835\udc5b \ud835\udc50 \u22a4 \ud835\udc65 subject\u00a0to \ud835\udc34 \ud835\udc65 \u2264 \ud835\udc4f , x\u2208R n max \u200b c \u22a4 xsubject\u00a0toAx\u2264b, with \ud835\udc34 \u2208 \ud835\udc45 \ud835\udc5a \u00d7 \ud835\udc5b A\u2208R m\u00d7n , \ud835\udc4f \u2208 \ud835\udc45 \ud835\udc5a b\u2208",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-25T14:02:43.057758-07:00",
+    "proof_path": ""
+  },
+  {
+    "id": 46,
+    "name": "Anytime Convergence Rate of Gradient Descent",
+    "statement": "Let \ud835\udc53 : \ud835\udc45 \ud835\udc51 \u2192 \ud835\udc45 f:R d \u2192R be a convex differentiable function with \ud835\udc3f L-Lipschitz gradient (\" \ud835\udc3f L-smooth\"), i.e., \u2225 \u2207 \ud835\udc53 ( \ud835\udc65 ) \u2212 \u2207 \ud835\udc53 ( \ud835\udc66 ) \u2225 \u2264 \ud835\udc3f \u2225 \ud835\udc65 \u2212 \ud835\udc66 \u2225 \u2225\u2207f(x)\u2212\u2207f(y)\u2225\u2264L\u2225x\u2212y\u2225 for all \ud835\udc65 , \ud835\udc66 x,y. Assume \ud835\udc53",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-25T13:49:54.725341-07:00",
+    "proof_path": "lean_project/LeanProject/Job_46.lean"
+  },
+  {
+    "id": 45,
+    "name": "KLS Conjecture (Kannan\u2013Lov\u00e1sz\u2013Simonovits)",
+    "statement": "For each integer \ud835\udc5b \u2265 1 n\u22651, let \ud835\udf07 \u03bc be a Borel probability measure on \ud835\udc45 \ud835\udc5b R n that is absolutely continuous with respect to Lebesgue measure, with density \ud835\udc53 : \ud835\udc45 \ud835\udc5b \u2192 [ 0 , \u221e ) f:R n \u2192[0,\u221e) of the form ",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-25T11:04:29.540464-07:00",
+    "proof_path": "lean_project/LeanProject/Job_45.lean"
+  },
+  {
+    "id": 51,
+    "name": "Battery Inventory MDP \u2014 Optimal Base-Stock Policy",
+    "statement": "Consider a finite-horizon battery operation problem modeled as a stochastic inventory system.\n\n**Setup.** A battery with capacity B stores energy (state of charge b_t in [0, B]). In each period t = 1,",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-25T09:43:45.745148-07:00",
+    "proof_path": "lean_project/LeanProject/Job_51.lean"
+  },
+  {
+    "id": 44,
+    "name": "Let $G \\sim G(n, c/n)$ be an Erd\\H{o}s--R\\'{e}nyi random graph with mean degr...",
+    "statement": "\\begin{definition}[Bonacich centrality] For $\\beta < \\rho(A_S)^{-1}$, the \\emph{Bonacich centrality} of node $i \\in S$ within $G[S]$ is \\[ b_i(\\beta, S) \\;=\\; \\bigl[(I - \\beta\\, A_S)^{-1}\\,\\mathbf{1}\\",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-25T07:05:13.436213-07:00",
+    "proof_path": "lean_project/LeanProject/Job_44.lean"
+  },
+  {
+    "id": 43,
+    "name": "Every odd integer greater than 5 can be expressed as the sum of a prime and t...",
+    "statement": "Every odd integer greater than 5 can be expressed as the sum of a prime and twice another prime.",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-25T05:05:56.614534-07:00",
+    "proof_path": "lean_project/LeanProject/Job_43.lean"
+  },
+  {
+    "id": 42,
+    "name": "There are infinitely many pairs of prime numbers that differ by exactly 2.",
+    "statement": "There are infinitely many pairs of prime numbers that differ by exactly 2.",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-25T04:39:42.546601-07:00",
+    "proof_path": "lean_project/LeanProject/Job_42.lean"
+  },
+  {
+    "id": 41,
+    "name": "Every even integer strictly greater than 2 can be expressed as the sum of two...",
+    "statement": "Every even integer strictly greater than 2 can be expressed as the sum of two prime numbers.",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-25T04:18:05.499959-07:00",
+    "proof_path": "lean_project/LeanProject/Job_41.lean"
+  },
+  {
+    "id": 40,
+    "name": "Let A be subset of the set {1,...,N} such that there is no solution to at = b...",
+    "statement": "Let A be subset of the set {1,...,N} such that there is no solution to at = b where a,b in A and the smallest prime factor of t is strictly greater than a. Estimate the maximum of: the product of the ",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-25T03:50:19.272026-07:00",
+    "proof_path": "lean_project/LeanProject/Job_40.lean"
+  },
+  {
+    "id": 39,
+    "name": "A unitary divisor d of a positive integer n is a divisor such that d and n/d ...",
+    "statement": "A unitary divisor d of a positive integer n is a divisor such that d and n/d are coprime. A positive integer n is called a unitary perfect number if it is the sum of its unitary divisors (aside from n",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-25T02:25:25.633839-07:00",
+    "proof_path": "lean_project/LeanProject/Job_39.lean"
+  },
+  {
+    "id": 38,
+    "name": "Let A be a set of positive integers. For each n in A, choose some collection ...",
+    "statement": "Let A be a set of positive integers. For each n in A, choose some collection X_n  of forbidden residue classes modulo n. Define B to be the set of positive integers m such that, for every n in A with ",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-25T01:50:39.397289-07:00",
+    "proof_path": "lean_project/LeanProject/Job_38.lean"
+  },
+  {
+    "id": 37,
+    "name": "If A is a subset of the natural numbers such that the sum of the reciprocals ...",
+    "statement": "If A is a subset of the natural numbers such that the sum of the reciprocals of the elements in A is infinite, then A must contain arbitrarily long arithmetic progressions.",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-24T23:08:01.154586-07:00",
+    "proof_path": "lean_project/LeanProject/Job_37.lean"
+  },
+  {
+    "id": 36,
+    "name": "Let n be a positive integer and define L_n to be the least common multiple of...",
+    "statement": "Let n be a positive integer and define L_n to be the least common multiple of {1,...,n} and define a_n such that a_n divided by L_n is equal to the nth harmonic number. Then, each of the following hap",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-24T21:49:17.211773-07:00",
+    "proof_path": "lean_project/LeanProject/Job_36.lean"
+  },
+  {
+    "id": 28,
+    "name": "I am modeling battery operation problem a random outage condition. Add one wr...",
+    "statement": "Yes. This problem has a strong inventory-theoretic structure. The battery state of charge is the inventory, charging is ordering, discharge during outage is demand fulfillment from inventory, and VOLL",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-23T00:36:23.052381-07:00",
+    "proof_path": ""
+  },
+  {
+    "id": 24,
+    "name": "Let n be a positive integer and define L_n to be the least common multiple of...",
+    "statement": "Let n be a positive integer and define L_n to be the least common multiple of {1,...,n} and define a_n such that a_n divided by L_n is equal to the nth harmonic number. Then, each of the following hap",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-23T00:30:03.261076-07:00",
+    "proof_path": "lean_project/LeanProject/Job_24.lean"
+  },
+  {
+    "id": 10,
+    "name": "Every odd integer greater than 5 can be expressed as the sum of a prime and t...",
+    "statement": "Every odd integer greater than 5 can be expressed as the sum of a prime and twice another prime.",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-22T23:12:55.211616-07:00",
+    "proof_path": "lean_project/LeanProject/Job_10.lean"
+  },
+  {
+    "id": 31,
+    "name": "Let $G \\sim G(n, c/n)$ be an Erd\\H{o}s--R\\'{e}nyi random graph with mean degr...",
+    "statement": "\\begin{definition}[Bonacich centrality] For $\\beta < \\rho(A_S)^{-1}$, the \\emph{Bonacich centrality} of node $i \\in S$ within $G[S]$ is \\[ b_i(\\beta, S) \\;=\\; \\bigl[(I - \\beta\\, A_S)^{-1}\\,\\mathbf{1}\\",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-21T13:41:46.479140-07:00",
+    "proof_path": "lean_project/LeanProject/Job_31.lean"
+  },
+  {
+    "id": 29,
+    "name": "AdaBoost Always Cycles? (Global Dynamics Conjecture)",
+    "statement": "Let \ud835\udc46 = { ( \ud835\udc65 \ud835\udc56 , \ud835\udc66 \ud835\udc56 ) } \ud835\udc56 = 1 \ud835\udc5a S={(x i \u200b ,y i \u200b )} i=1 m \u200b be a fixed binary-labeled dataset with \ud835\udc66 \ud835\udc56 \u2208 { \u2212 1 , + 1 } y i \u200b \u2208{\u22121,+1}, and let \ud835\udc3b H be a weak-hypothesis class. Consider the discrete A",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-21T01:21:51.591605-07:00",
+    "proof_path": "lean_project/LeanProject/Job_29.lean"
+  },
+  {
+    "id": 21,
+    "name": "If A is a subset of the natural numbers such that the sum of the reciprocals ...",
+    "statement": "If A is a subset of the natural numbers such that the sum of the reciprocals of the elements in A is infinite, then A must contain arbitrarily long arithmetic progressions.",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-21T01:15:59.623378-07:00",
+    "proof_path": "lean_project/LeanProject/Job_21.lean"
+  },
+  {
+    "id": 27,
+    "name": "Smoothed Complexity of the Simplex Method",
+    "statement": "Fix integers \ud835\udc5b \u2265 1 n\u22651 (variables) and \ud835\udc5a \u2265 \ud835\udc5b m\u2265n (constraints). Consider linear programs max \u2061 \ud835\udc65 \u2208 \ud835\udc45 \ud835\udc5b \ud835\udc50 \u22a4 \ud835\udc65 subject\u00a0to \ud835\udc34 \ud835\udc65 \u2264 \ud835\udc4f , x\u2208R n max \u200b c \u22a4 xsubject\u00a0toAx\u2264b, with \ud835\udc34 \u2208 \ud835\udc45 \ud835\udc5a \u00d7 \ud835\udc5b A\u2208R m\u00d7n , \ud835\udc4f \u2208 \ud835\udc45 \ud835\udc5a b\u2208",
+    "verdict": "disproved",
+    "is_open_conjecture": true,
+    "date": "2026-04-21T01:12:53.186671-07:00",
+    "proof_path": "lean_project/LeanProject/Job_27_neg.lean"
+  },
+  {
+    "id": 13,
+    "name": "The Kerr black hole metric is stable, in the sens that small perturbations of...",
+    "statement": "The Kerr black hole metric is stable, in the sens that small perturbations of the initial data leads to a solution which is globally close to a Kerr black hole.",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-21T01:07:36.973168-07:00",
+    "proof_path": "lean_project/LeanProject/Job_13.lean"
+  },
+  {
+    "id": 8,
+    "name": "If statement P implies statement Q, and statement P is true, then statement Q...",
+    "statement": "If statement P implies statement Q, and statement P is true, then statement Q must also be true.",
+    "verdict": "proved",
+    "is_open_conjecture": true,
+    "date": "2026-04-21T00:56:56.371170-07:00",
+    "proof_path": "lean_project/LeanProject/Job_8.lean"
+  },
+  {
+    "id": 16,
+    "name": "Anytime Convergence Rate of Gradient Descent",
+    "statement": "Let \ud835\udc53 : \ud835\udc45 \ud835\udc51 \u2192 \ud835\udc45 f:R d \u2192R be a convex differentiable function with \ud835\udc3f L-Lipschitz gradient (\" \ud835\udc3f L-smooth\"), i.e., \u2225 \u2207 \ud835\udc53 ( \ud835\udc65 ) \u2212 \u2207 \ud835\udc53 ( \ud835\udc66 ) \u2225 \u2264 \ud835\udc3f \u2225 \ud835\udc65 \u2212 \ud835\udc66 \u2225 \u2225\u2207f(x)\u2212\u2207f(y)\u2225\u2264L\u2225x\u2212y\u2225 for all \ud835\udc65 , \ud835\udc66 x,y. Assume \ud835\udc53",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-21T00:56:09.565166-07:00",
+    "proof_path": "lean_project/LeanProject/Job_16.lean"
+  },
+  {
+    "id": 18,
+    "name": "Can Single-Shuffle SGD be Better than Reshuffling SGD and GD?",
+    "statement": "Let n >= 2, K >= 1, and d >= 1. Let S_n denote the set of all permutations of {1,...,n}. For real symmetric d x d matrices X, Y, write X \u2aaf Y for the Loewner order (i.e., Y - X is positive semidefinite",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-21T00:53:46.950483-07:00",
+    "proof_path": "lean_project/LeanProject/Job_18.lean"
+  },
+  {
+    "id": 20,
+    "name": "Can Single-Shuffle SGD be Better than Reshuffling SGD and GD?",
+    "statement": "Let n >= 2, K >= 1, and d >= 1. Let S_n denote the set of all permutations of {1,...,n}. For real symmetric d x d matrices X, Y, write X \u2aaf Y for the Loewner order (i.e., Y - X is positive semidefinite",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-21T00:51:06.642995-07:00",
+    "proof_path": "lean_project/LeanProject/Job_20.lean"
+  },
+  {
+    "id": 12,
+    "name": "```Research Proposal: Asymptotic Consistency & Scaling Laws for Reference-Fre...",
+    "statement": "by Brando Miranda, Henry Bosch, et al. Summary We propose establishing the theoretical foundations of Total Variation Distance - Mutual Information (TVD-MI) (or any similar metric) as a robust, refere",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-21T00:50:30.136098-07:00",
+    "proof_path": "lean_project/LeanProject/Job_12.lean"
+  },
+  {
+    "id": 19,
+    "name": "Smoothed Complexity of the Simplex Method",
+    "statement": "Fix integers \ud835\udc5b \u2265 1 n\u22651 (variables) and \ud835\udc5a \u2265 \ud835\udc5b m\u2265n (constraints). Consider linear programs max \u2061 \ud835\udc65 \u2208 \ud835\udc45 \ud835\udc5b \ud835\udc50 \u22a4 \ud835\udc65 subject\u00a0to \ud835\udc34 \ud835\udc65 \u2264 \ud835\udc4f , x\u2208R n max \u200b c \u22a4 xsubject\u00a0toAx\u2264b, with \ud835\udc34 \u2208 \ud835\udc45 \ud835\udc5a \u00d7 \ud835\udc5b A\u2208R m\u00d7n , \ud835\udc4f \u2208 \ud835\udc45 \ud835\udc5a b\u2208",
+    "verdict": "disproved",
+    "is_open_conjecture": true,
+    "date": "2026-04-21T00:47:32.225538-07:00",
+    "proof_path": "lean_project/LeanProject/Job_19_neg.lean"
+  },
+  {
+    "id": 3,
+    "name": "Every even integer strictly greater than 2 can be expressed as the sum of two...",
+    "statement": "Every even integer strictly greater than 2 can be expressed as the sum of two prime numbers.",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-21T00:44:19.269786-07:00",
+    "proof_path": "lean_project/LeanProject/Job_3.lean"
+  },
+  {
+    "id": 1,
+    "name": "a^2 + b2 = c^2 (pythagoras)",
+    "statement": "a^2 + b2 = c^2 (pythagoras)",
+    "verdict": "proved",
+    "is_open_conjecture": true,
+    "date": "2026-04-21T00:40:26.260705-07:00",
+    "proof_path": "lean_project/LeanProject/Job_1.lean"
+  },
+  {
+    "id": 17,
+    "name": "Smoothed Complexity of the Simplex Method",
+    "statement": "Fix integers \ud835\udc5b \u2265 1 n\u22651 (variables) and \ud835\udc5a \u2265 \ud835\udc5b m\u2265n (constraints). Consider linear programs max \u2061 \ud835\udc65 \u2208 \ud835\udc45 \ud835\udc5b \ud835\udc50 \u22a4 \ud835\udc65 subject\u00a0to \ud835\udc34 \ud835\udc65 \u2264 \ud835\udc4f , x\u2208R n max \u200b c \u22a4 xsubject\u00a0toAx\u2264b, with \ud835\udc34 \u2208 \ud835\udc45 \ud835\udc5a \u00d7 \ud835\udc5b A\u2208R m\u00d7n , \ud835\udc4f \u2208 \ud835\udc45 \ud835\udc5a b\u2208",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-21T00:35:31.853248-07:00",
+    "proof_path": "lean_project/LeanProject/Job_17.lean"
+  },
+  {
+    "id": 14,
+    "name": "KLS Conjecture (Kannan\u2013Lov\u00e1sz\u2013Simonovits)",
+    "statement": "For each integer \ud835\udc5b \u2265 1 n\u22651, let \ud835\udf07 \u03bc be a Borel probability measure on \ud835\udc45 \ud835\udc5b R n that is absolutely continuous with respect to Lebesgue measure, with density \ud835\udc53 : \ud835\udc45 \ud835\udc5b \u2192 [ 0 , \u221e ) f:R n \u2192[0,\u221e) of the form ",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-21T00:33:10.826897-07:00",
+    "proof_path": "lean_project/LeanProject/Job_14.lean"
+  },
+  {
+    "id": 5,
+    "name": "There are infinitely many pairs of prime numbers that differ by exactly 2.",
+    "statement": "There are infinitely many pairs of prime numbers that differ by exactly 2.",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-21T00:18:17.134084-07:00",
+    "proof_path": "lean_project/LeanProject/Job_5.lean"
+  },
+  {
+    "id": 15,
+    "name": "AdaBoost Always Cycles? (Global Dynamics Conjecture)",
+    "statement": "Let \ud835\udc46 = { ( \ud835\udc65 \ud835\udc56 , \ud835\udc66 \ud835\udc56 ) } \ud835\udc56 = 1 \ud835\udc5a S={(x i \u200b ,y i \u200b )} i=1 m \u200b be a fixed binary-labeled dataset with \ud835\udc66 \ud835\udc56 \u2208 { \u2212 1 , + 1 } y i \u200b \u2208{\u22121,+1}, and let \ud835\udc3b H be a weak-hypothesis class. Consider the discrete A",
+    "verdict": "disproved",
+    "is_open_conjecture": true,
+    "date": "2026-04-21T00:18:06.251674-07:00",
+    "proof_path": "lean_project/LeanProject/Job_15_neg.lean"
+  },
+  {
+    "id": 25,
+    "name": "Let A be subset of the set {1,...,N} such that there is no solution to at = b...",
+    "statement": "Let A be subset of the set {1,...,N} such that there is no solution to at = b where a,b in A and the smallest prime factor of t is strictly greater than a. Estimate the maximum of: the product of the ",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-21T00:14:29.523095-07:00",
+    "proof_path": "lean_project/LeanProject/Job_25.lean"
+  },
+  {
+    "id": 22,
+    "name": "Let A be a set of positive integers. For each n in A, choose some collection ...",
+    "statement": "Let A be a set of positive integers. For each n in A, choose some collection X_n  of forbidden residue classes modulo n. Define B to be the set of positive integers m such that, for every n in A with ",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-21T00:14:25.505451-07:00",
+    "proof_path": "lean_project/LeanProject/Job_22.lean"
+  },
+  {
+    "id": 9,
+    "name": "The Riemann zeta function evaluated at \u22121 equals \u22121/12.",
+    "statement": "The Riemann zeta function evaluated at \u22121 equals \u22121/12.",
+    "verdict": "proved",
+    "is_open_conjecture": true,
+    "date": "2026-04-21T00:08:02.291812-07:00",
+    "proof_path": "lean_project/LeanProject/Job_9.lean"
+  },
+  {
+    "id": 23,
+    "name": "A unitary divisor d of a positive integer n is a divisor such that d and n/d ...",
+    "statement": "A unitary divisor d of a positive integer n is a divisor such that d and n/d are coprime. A positive integer n is called a unitary perfect number if it is the sum of its unitary divisors (aside from n",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-21T00:07:00.791683-07:00",
+    "proof_path": "lean_project/LeanProject/Job_23.lean"
+  },
+  {
+    "id": 11,
+    "name": "Let $G \\sim G(n, c/n)$ be an Erd\\H{o}s--R\\'{e}nyi random graph with mean degr...",
+    "statement": "\\begin{definition}[Bonacich centrality] For $\\beta < \\rho(A_S)^{-1}$, the \\emph{Bonacich centrality} of node $i \\in S$ within $G[S]$ is \\[ b_i(\\beta, S) \\;=\\; \\bigl[(I - \\beta\\, A_S)^{-1}\\,\\mathbf{1}\\",
+    "verdict": "open",
+    "is_open_conjecture": true,
+    "date": "2026-04-21T00:00:47.986642-07:00",
+    "proof_path": ""
+  },
+  {
+    "id": 2,
+    "name": "Any number divided by itself is a whole number",
+    "statement": "Any number divided by itself is a whole number",
+    "verdict": "disproved",
+    "is_open_conjecture": true,
+    "date": "2026-04-20T23:59:47.825616-07:00",
+    "proof_path": "lean_project/LeanProject/Job_2_neg.lean"
+  },
+  {
+    "id": 26,
+    "name": "Let A be an infinite subset which contains no three points on a line and no f...",
+    "statement": "Let A be an infinite subset which contains no three points on a line and no four points on a circle. Consider the graph with vertices the point in A, where two vertices are joined by an edge if they a",
+    "verdict": "disproved",
+    "is_open_conjecture": true,
+    "date": "2026-04-20T23:44:29.575504-07:00",
+    "proof_path": "lean_project/LeanProject/Job_26_neg.lean"
+  },
+  {
+    "id": 4,
+    "name": "The sum of the first n odd natural numbers equals n^2",
+    "statement": "The sum of the first n odd natural numbers equals n^2",
+    "verdict": "proved",
+    "is_open_conjecture": true,
+    "date": "2026-04-20T23:43:00.209263-07:00",
+    "proof_path": "lean_project/LeanProject/Job_4.lean"
+  },
+  {
+    "id": 6,
+    "name": "There are no two integers a and b (where b is not zero) such that the fractio...",
+    "statement": "There are no two integers a and b (where b is not zero) such that the fraction a/b squared equals 2.",
+    "verdict": "proved",
+    "is_open_conjecture": true,
+    "date": "2026-04-20T23:42:55.079542-07:00",
+    "proof_path": "lean_project/LeanProject/Job_6.lean"
+  },
+  {
+    "id": 7,
+    "name": "For every integer n, n^5\u2212 n is divisible by 30",
+    "statement": "For every integer n, n^5\u2212 n is divisible by 30",
+    "verdict": "proved",
+    "is_open_conjecture": true,
+    "date": "2026-04-20T23:42:10.508749-07:00",
+    "proof_path": "lean_project/LeanProject/Job_7.lean"
+  }
+]
