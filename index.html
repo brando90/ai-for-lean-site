@@ -815,13 +815,8 @@
             </p>
 
             <div class="form-card">
-                <form action="https://formsubmit.co/brandojazz@gmail.com" method="POST">
-                    <!-- FormSubmit config -->
-                    <input type="hidden" name="_subject" value="New conjecture submission">
-                    <input type="hidden" name="_captcha" value="true">
-                    <input type="hidden" name="_template" value="table">
-                    <input type="hidden" name="_next" value="https://brando90.github.io/conjecture-prover/thanks.html">
-                    <!-- Honeypot -->
+                <form id="conjecture-form" action="https://adams-primary-wonder-publish.trycloudflare.com/api/submit" method="POST">
+                    <!-- Honeypot (spam filter) -->
                     <input type="text" name="_honey" style="display:none">
 
                     <div class="form-group">
