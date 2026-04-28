@@ -448,6 +448,10 @@
         .form-group textarea.small {
             min-height: 80px;
         }
+        .form-group input[type="file"] {
+            padding: 0.6rem;
+            font-size: 0.9rem;
+        }
         .consent-group {
             display: flex;
             align-items: flex-start;
@@ -815,7 +819,7 @@
             </p>
 
             <div class="form-card">
-                <form id="conjecture-form" action="https://wireless-jurisdiction-peter-neo.trycloudflare.com/api/submit" method="POST">
+                <form id="conjecture-form" action="https://letter-numerous-isolated-undertaken.trycloudflare.com/api/submit" method="POST" enctype="multipart/form-data">
                     <!-- Honeypot (spam filter) -->
                     <input type="text" name="_honey" style="display:none">
 
@@ -852,6 +856,13 @@
                                placeholder="e.g. Erdos & Renyi (1960), arXiv:2401.12345">
                     </div>
 
+                    <div class="form-group">
+                        <label for="attachment">Supporting document
+                            <span class="hint">&mdash; optional PDF with proofs, definitions, or background (max 20 MB)</span></label>
+                        <input type="file" id="attachment" name="attachment"
+                               accept=".pdf,.doc,.docx,.tex">
+                    </div>
+
                     <div class="consent-group">
                         <input type="checkbox" id="is_open_conjecture" name="is_open_conjecture" checked>
                         <label for="is_open_conjecture">
@@ -883,12 +894,6 @@
                         </svg>
                     </button>
                 </form>
-                <p style="text-align:center;margin-top:1.2rem;font-size:0.82rem;color:var(--fg-dim);">
-                    Prefer Google Forms?
-                    <a href="https://forms.gle/8admh8evFKrmnbw49" target="_blank" rel="noopener"
-                       style="color:var(--accent-bright);text-decoration:none;border-bottom:1px solid rgba(165,180,252,0.3);">Submit via Google Form</a>
-                    instead.
-                </p>
             </div>
         </section>
 
