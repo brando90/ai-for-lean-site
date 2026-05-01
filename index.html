@@ -397,6 +397,42 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
         }
+        .privacy-notice {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.85rem;
+            margin: 0 0 1.5rem;
+            padding: 1.1rem 1.25rem;
+            background: rgba(251, 191, 36, 0.08);
+            border: 1px solid rgba(251, 191, 36, 0.35);
+            border-left: 3px solid var(--amber);
+            border-radius: 12px;
+            color: var(--fg);
+        }
+        .privacy-notice svg {
+            flex: 0 0 auto;
+            width: 20px;
+            height: 20px;
+            color: var(--amber);
+            margin-top: 0.15rem;
+        }
+        .privacy-notice .body {
+            font-size: 0.88rem;
+            line-height: 1.6;
+            color: var(--fg);
+        }
+        .privacy-notice .body strong {
+            color: var(--amber);
+            font-weight: 600;
+            letter-spacing: 0.01em;
+        }
+        .privacy-notice .body p {
+            margin: 0;
+        }
+        .privacy-notice .body p + p {
+            margin-top: 0.45rem;
+            color: var(--fg-muted);
+        }
         .form-group {
             margin-bottom: 1.5rem;
         }
@@ -661,7 +697,7 @@
         <div class="hero">
             <div class="hero-badge">
                 <span class="dot"></span>
-                Pipeline active &mdash; accepting submissions
+                Research preview &mdash; pipeline active, accepting submissions
             </div>
             <h1>Conjecture Prover</h1>
             <p class="subtitle">
@@ -817,6 +853,23 @@
                 State your conjecture as precisely as you can. We'll attempt a formal
                 proof and email you the results.
             </p>
+
+            <div class="privacy-notice" role="note" aria-label="Research preview privacy notice">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+                </svg>
+                <div class="body">
+                    <p><strong>Research preview &mdash; please read before submitting.</strong></p>
+                    <p>
+                        This is an experimental research system. Submitted conjectures, contextual notes,
+                        attachments, and pipeline outputs <strong>may be shared with frontier AI labs</strong>
+                        (e.g. for prompts, evaluation, or training) and with collaborators.
+                        We <strong>cannot guarantee the privacy or confidentiality</strong> of anything you submit.
+                        Please do not submit unpublished work, embargoed results, or any material you are not
+                        comfortable sharing publicly.
+                    </p>
+                </div>
+            </div>
 
             <div class="form-card">
                 <form id="conjecture-form" action="https://recommended-tribes-str-procedures.trycloudflare.com/api/submit" method="POST" enctype="multipart/form-data">
