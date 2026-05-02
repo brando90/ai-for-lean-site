@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-02T16:31:08.416895+00:00",
+  "generated_at": "2026-05-02T16:35:31.966206+00:00",
   "overall_state": "online",
   "summary": "1 worker active (1 threads total)",
   "workers": [
@@ -10,8 +10,8 @@
       "mode": "forever",
       "started": "2026-05-02T09:18:02.303102-07:00",
       "heartbeat": "2026-05-02T09:18:02.303102-07:00",
-      "age_seconds": 786.112368,
-      "age_pretty": "13m ago",
+      "age_seconds": 1049.659689,
+      "age_pretty": "17m ago",
       "credits_ok": true,
       "status": {},
       "state": "degraded"
@@ -21,10 +21,10 @@
       "hostname": "DN2t9cli.SUNet",
       "workers": 1,
       "mode": "forever",
-      "started": "2026-05-02T09:30:15.967924-07:00",
-      "heartbeat": "2026-05-02T09:30:15.968598-07:00",
-      "age_seconds": 52.446872,
-      "age_pretty": "52s ago",
+      "started": "2026-05-02T09:35:28.372935-07:00",
+      "heartbeat": "2026-05-02T09:35:28.373055-07:00",
+      "age_seconds": 3.589736,
+      "age_pretty": "3s ago",
       "credits_ok": true,
       "status": {},
       "state": "online"
@@ -36,8 +36,8 @@
       "mode": "forever",
       "started": "2026-05-02T09:12:18.158040-07:00",
       "heartbeat": "2026-05-02T09:12:18.158189-07:00",
-      "age_seconds": 1130.257281,
-      "age_pretty": "18m ago",
+      "age_seconds": 1393.804602,
+      "age_pretty": "23m ago",
       "credits_ok": true,
       "status": {},
       "state": "degraded"
@@ -49,7 +49,7 @@
       "mode": "forever",
       "started": "2026-04-26T18:55:41.839308",
       "heartbeat": "2026-04-26T18:55:41.839334",
-      "age_seconds": 509726.576136,
+      "age_seconds": 509990.123457,
       "age_pretty": "5d ago",
       "credits_ok": true,
       "status": {
@@ -65,8 +65,8 @@
       "mode": "forever",
       "started": "2026-05-02T09:18:45.442577-07:00",
       "heartbeat": "2026-05-02T09:18:45.442577-07:00",
-      "age_seconds": 742.972893,
-      "age_pretty": "12m ago",
+      "age_seconds": 1006.520214,
+      "age_pretty": "16m ago",
       "credits_ok": true,
       "status": {},
       "state": "degraded"
