@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-02T13:35:36.444706+00:00",
+  "generated_at": "2026-05-02T13:40:51.347280+00:00",
   "overall_state": "online",
   "summary": "1 worker active (1 threads total)",
   "workers": [
@@ -7,9 +7,9 @@
       "anon": "bc3ba5",
       "workers": 1,
       "mode": "forever",
-      "started": "2026-05-02T06:35:32.470181-07:00",
-      "heartbeat": "2026-05-02T06:35:32.470308-07:00",
-      "age_seconds": 3.97307,
+      "started": "2026-05-02T06:40:47.591674-07:00",
+      "heartbeat": "2026-05-02T06:40:47.591777-07:00",
+      "age_seconds": 3.754056,
       "age_pretty": "3s ago",
       "credits_ok": true,
       "status": {},
@@ -21,7 +21,7 @@
       "mode": "forever",
       "started": "2026-04-26T18:55:41.839308",
       "heartbeat": "2026-04-26T18:55:41.839334",
-      "age_seconds": 499194.604044,
+      "age_seconds": 499509.506499,
       "age_pretty": "5d ago",
       "credits_ok": true,
       "status": {
