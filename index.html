@@ -397,41 +397,19 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
         }
-        .privacy-notice {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.85rem;
-            margin: 0 0 1.5rem;
-            padding: 1.1rem 1.25rem;
-            background: rgba(251, 191, 36, 0.08);
-            border: 1px solid rgba(251, 191, 36, 0.35);
-            border-left: 3px solid var(--amber);
-            border-radius: 12px;
-            color: var(--fg);
-        }
-        .privacy-notice svg {
-            flex: 0 0 auto;
-            width: 20px;
-            height: 20px;
-            color: var(--amber);
-            margin-top: 0.15rem;
-        }
-        .privacy-notice .body {
-            font-size: 0.88rem;
-            line-height: 1.6;
-            color: var(--fg);
-        }
-        .privacy-notice .body strong {
-            color: var(--amber);
+        .preview-tag {
+            display: inline-block;
+            margin-left: 0.5rem;
+            padding: 0.18rem 0.6rem;
+            font-size: 0.68rem;
             font-weight: 600;
-            letter-spacing: 0.01em;
-        }
-        .privacy-notice .body p {
-            margin: 0;
-        }
-        .privacy-notice .body p + p {
-            margin-top: 0.45rem;
-            color: var(--fg-muted);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--amber);
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid rgba(251, 191, 36, 0.35);
+            border-radius: 999px;
+            vertical-align: 0.15em;
         }
         .form-group {
             margin-bottom: 1.5rem;
@@ -929,35 +907,11 @@
         <!-- Submit form -->
         <section class="form-section fade-in" id="submit">
             <span class="section-label">Submit</span>
-            <h2>Your conjecture</h2>
+            <h2>Your conjecture <span class="preview-tag">Research preview</span></h2>
             <p class="section-desc">
                 State your conjecture as precisely as you can. We'll attempt a formal
                 proof and email you the results.
             </p>
-
-            <div class="privacy-notice" role="note" aria-label="Research preview privacy notice">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
-                </svg>
-                <div class="body">
-                    <p><strong>Research preview &mdash; please read before submitting.</strong></p>
-                    <p>
-                        The pipeline works by sending your conjecture, attachments, and intermediate
-                        prompts to <strong>commercial frontier-model APIs &mdash; OpenAI, Anthropic, and
-                        Google</strong> &mdash; because that is what runs the actual proving. There is no
-                        on-prem alternative for a project of this size; one researcher cannot train
-                        a frontier model. Anything you submit therefore leaves our infrastructure
-                        under those vendors&rsquo; standard API terms, and may also be shared with
-                        research collaborators or used in evaluations and write-ups.
-                        We <strong>cannot guarantee privacy or confidentiality</strong>.
-                    </p>
-                    <p>
-                        Please do not submit unpublished work, embargoed results, third-party
-                        confidential material, or anything you would not be comfortable having
-                        public.
-                    </p>
-                </div>
-            </div>
 
             <div class="form-card">
                 <form id="conjecture-form" action="https://recommended-tribes-str-procedures.trycloudflare.com/api/submit" method="POST" enctype="multipart/form-data">
@@ -1023,9 +977,7 @@
                         <label for="consent">
                             I understand that my conjecture and results may be published on the
                             project&rsquo;s public site (e.g., listed in the conjecture log and
-                            linked as a PDF report), and that the contents are sent to commercial
-                            frontier-model APIs (OpenAI, Anthropic, Google) for processing. My
-                            email will not be published.
+                            linked as a PDF report). Data might be shared with frontier labs.
                         </label>
                     </div>
 
@@ -1331,14 +1283,13 @@
                         <span class="worker-state">offline</span>
                       </div>
                       <ul class="worker-meta">
-                        <li>Backend: <code>codex-cli</code></li>
                         <li>Threads: 3</li>
                         <li>Heartbeat: 5d ago</li>
                         <li>Queue: passed: 44, queued: 6</li>
                       </ul>
                     </div>
                   </div>
-                  <p class="status-meta">Snapshot 2026-05-02 04:13 UTC (auto-refreshes every 60s). <a href="https://github.com/brando90/agentic-nl-fl-maths">repo</a></p>
+                  <p class="status-meta">Snapshot 2026-05-02 04:29 UTC (auto-refreshes every 60s). <a href="https://github.com/brando90/agentic-nl-fl-maths">repo</a></p>
                 </div>
                 <!-- PIPELINE-STATUS-END -->
         </section>
@@ -1499,7 +1450,6 @@
                             '<span class="worker-state">' + esc(w.state) + '</span>' +
                             '</div>' +
                             '<ul class="worker-meta">' +
-                            '<li>Backend: <code>' + esc(w.backend) + '</code></li>' +
                             '<li>Threads: ' + esc(w.workers) + '</li>' +
                             '<li>Heartbeat: ' + esc(w.age_pretty) + '</li>' +
                             '<li>Queue: ' + countsStr + '</li>' +
