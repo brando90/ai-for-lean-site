@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-02T17:01:14.552891+00:00",
+  "generated_at": "2026-05-02T17:06:25.833670+00:00",
   "overall_state": "online",
   "summary": "1 worker active (1 threads total)",
   "workers": [
@@ -12,8 +12,8 @@
       "mode": "forever",
       "started": "2026-05-02T09:18:02.303102-07:00",
       "heartbeat": "2026-05-02T09:18:02.303102-07:00",
-      "age_seconds": 2592.247292,
-      "age_pretty": "43m ago",
+      "age_seconds": 2903.528525,
+      "age_pretty": "48m ago",
       "credits_ok": true,
       "status": {},
       "state": "degraded"
@@ -25,9 +25,9 @@
       "nickname": "laptop-mbp",
       "workers": 1,
       "mode": "forever",
-      "started": "2026-05-02T10:01:10.860689-07:00",
-      "heartbeat": "2026-05-02T10:01:10.860832-07:00",
-      "age_seconds": 3.689562,
+      "started": "2026-05-02T10:06:22.273072-07:00",
+      "heartbeat": "2026-05-02T10:06:22.273595-07:00",
+      "age_seconds": 3.558032,
       "age_pretty": "3s ago",
       "credits_ok": true,
       "status": {},
@@ -42,8 +42,8 @@
       "mode": "forever",
       "started": "2026-05-02T09:51:02.474351-07:00",
       "heartbeat": "2026-05-02T09:51:02.475074-07:00",
-      "age_seconds": 612.07532,
-      "age_pretty": "10m ago",
+      "age_seconds": 923.356553,
+      "age_pretty": "15m ago",
       "credits_ok": true,
       "status": {},
       "state": "degraded"
@@ -57,7 +57,7 @@
       "mode": "forever",
       "started": "2026-04-26T18:55:41.839308",
       "heartbeat": "2026-04-26T18:55:41.839334",
-      "age_seconds": 511532.71106,
+      "age_seconds": 511843.992293,
       "age_pretty": "5d ago",
       "credits_ok": true,
       "status": {
@@ -75,8 +75,8 @@
       "mode": "forever",
       "started": "2026-05-02T09:18:45.442577-07:00",
       "heartbeat": "2026-05-02T09:18:45.442577-07:00",
-      "age_seconds": 2549.107817,
-      "age_pretty": "42m ago",
+      "age_seconds": 2860.38905,
+      "age_pretty": "47m ago",
       "credits_ok": true,
       "status": {},
       "state": "degraded"
