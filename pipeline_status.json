@@ -1,0 +1,23 @@
+{
+  "generated_at": "2026-05-02T04:13:06.847028+00:00",
+  "overall_state": "offline",
+  "summary": "No active workers. Last heartbeat 5d ago. Submissions are queued; they will process when a worker comes online.",
+  "workers": [
+    {
+      "anon": "4e7e11",
+      "backend": "codex-cli",
+      "workers": 3,
+      "mode": "forever",
+      "started": "2026-04-26T18:55:41.839308",
+      "heartbeat": "2026-04-26T18:55:41.839334",
+      "age_seconds": 465445.007219,
+      "age_pretty": "5d ago",
+      "credits_ok": true,
+      "status": {
+        "passed": 44,
+        "queued": 6
+      },
+      "state": "offline"
+    }
+  ]
+}
