@@ -942,12 +942,19 @@
                 <div class="body">
                     <p><strong>Research preview &mdash; please read before submitting.</strong></p>
                     <p>
-                        This is an experimental research system. Submitted conjectures, contextual notes,
-                        attachments, and pipeline outputs <strong>may be shared with frontier AI labs</strong>
-                        (e.g. for prompts, evaluation, or training) and with collaborators.
-                        We <strong>cannot guarantee the privacy or confidentiality</strong> of anything you submit.
-                        Please do not submit unpublished work, embargoed results, or any material you are not
-                        comfortable sharing publicly.
+                        The pipeline works by sending your conjecture, attachments, and intermediate
+                        prompts to <strong>commercial frontier-model APIs &mdash; OpenAI, Anthropic, and
+                        Google</strong> &mdash; because that is what runs the actual proving. There is no
+                        on-prem alternative for a project of this size; one researcher cannot train
+                        a frontier model. Anything you submit therefore leaves our infrastructure
+                        under those vendors&rsquo; standard API terms, and may also be shared with
+                        research collaborators or used in evaluations and write-ups.
+                        We <strong>cannot guarantee privacy or confidentiality</strong>.
+                    </p>
+                    <p>
+                        Please do not submit unpublished work, embargoed results, third-party
+                        confidential material, or anything you would not be comfortable having
+                        public.
                     </p>
                 </div>
             </div>
@@ -1014,9 +1021,11 @@
                     <div class="consent-group">
                         <input type="checkbox" id="consent" name="consent" required>
                         <label for="consent">
-                            I understand that my conjecture and results may be shared publicly
-                            (e.g., as a GitHub pull request with the Lean proof). My email will
-                            not be published.
+                            I understand that my conjecture and results may be published on the
+                            project&rsquo;s public site (e.g., listed in the conjecture log and
+                            linked as a PDF report), and that the contents are sent to commercial
+                            frontier-model APIs (OpenAI, Anthropic, Google) for processing. My
+                            email will not be published.
                         </label>
                     </div>
 
