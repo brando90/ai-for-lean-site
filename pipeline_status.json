@@ -1,15 +1,27 @@
 {
-  "generated_at": "2026-05-02T04:29:03.172152+00:00",
+  "generated_at": "2026-05-02T05:11:43.764748+00:00",
   "overall_state": "offline",
-  "summary": "No active workers. Last heartbeat 5d ago. Submissions are queued; they will process when a worker comes online.",
+  "summary": "No active workers. Last heartbeat 7h ago. Submissions are queued; they will process when a worker comes online.",
   "workers": [
+    {
+      "anon": "bc3ba5",
+      "workers": 1,
+      "mode": "forever",
+      "started": "2026-05-01T22:11:40.644599",
+      "heartbeat": null,
+      "age_seconds": 25203.11516,
+      "age_pretty": "7h ago",
+      "credits_ok": true,
+      "status": {},
+      "state": "offline"
+    },
     {
       "anon": "4e7e11",
       "workers": 3,
       "mode": "forever",
       "started": "2026-04-26T18:55:41.839308",
       "heartbeat": "2026-04-26T18:55:41.839334",
-      "age_seconds": 466401.332069,
+      "age_seconds": 468961.920425,
       "age_pretty": "5d ago",
       "credits_ok": true,
       "status": {
