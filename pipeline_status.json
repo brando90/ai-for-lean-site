@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-02T16:40:43.362390+00:00",
+  "generated_at": "2026-05-02T16:45:54.683849+00:00",
   "overall_state": "online",
   "summary": "1 worker active (1 threads total)",
   "workers": [
@@ -10,8 +10,8 @@
       "mode": "forever",
       "started": "2026-05-02T09:18:02.303102-07:00",
       "heartbeat": "2026-05-02T09:18:02.303102-07:00",
-      "age_seconds": 1361.055968,
-      "age_pretty": "22m ago",
+      "age_seconds": 1672.377186,
+      "age_pretty": "27m ago",
       "credits_ok": true,
       "status": {},
       "state": "degraded"
@@ -21,9 +21,9 @@
       "hostname": "DN2t9cli.SUNet",
       "workers": 1,
       "mode": "forever",
-      "started": "2026-05-02T09:40:39.748070-07:00",
-      "heartbeat": "2026-05-02T09:40:39.748160-07:00",
-      "age_seconds": 3.61091,
+      "started": "2026-05-02T09:45:50.867529-07:00",
+      "heartbeat": "2026-05-02T09:45:50.869590-07:00",
+      "age_seconds": 3.810698,
       "age_pretty": "3s ago",
       "credits_ok": true,
       "status": {},
@@ -36,8 +36,8 @@
       "mode": "forever",
       "started": "2026-05-02T09:12:18.158040-07:00",
       "heartbeat": "2026-05-02T09:12:18.158189-07:00",
-      "age_seconds": 1705.200881,
-      "age_pretty": "28m ago",
+      "age_seconds": 2016.522099,
+      "age_pretty": "33m ago",
       "credits_ok": true,
       "status": {},
       "state": "degraded"
@@ -49,7 +49,7 @@
       "mode": "forever",
       "started": "2026-04-26T18:55:41.839308",
       "heartbeat": "2026-04-26T18:55:41.839334",
-      "age_seconds": 510301.519736,
+      "age_seconds": 510612.840954,
       "age_pretty": "5d ago",
       "credits_ok": true,
       "status": {
@@ -65,8 +65,8 @@
       "mode": "forever",
       "started": "2026-05-02T09:18:45.442577-07:00",
       "heartbeat": "2026-05-02T09:18:45.442577-07:00",
-      "age_seconds": 1317.916493,
-      "age_pretty": "21m ago",
+      "age_seconds": 1629.237711,
+      "age_pretty": "27m ago",
       "credits_ok": true,
       "status": {},
       "state": "degraded"
