@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-05-02T16:12:22.172897+00:00",
+  "generated_at": "2026-05-02T16:17:32.244583+00:00",
   "overall_state": "online",
-  "summary": "1 worker active (1 threads total)",
+  "summary": "2 workers active (2 threads total)",
   "workers": [
     {
       "anon": "bc3ba5",
@@ -9,8 +9,8 @@
       "mode": "forever",
       "started": "2026-05-02T09:12:18.158040-07:00",
       "heartbeat": "2026-05-02T09:12:18.158189-07:00",
-      "age_seconds": 4.013343,
-      "age_pretty": "4s ago",
+      "age_seconds": 314.083734,
+      "age_pretty": "5m ago",
       "credits_ok": true,
       "status": {},
       "state": "online"
@@ -21,7 +21,7 @@
       "mode": "forever",
       "started": "2026-04-26T18:55:41.839308",
       "heartbeat": "2026-04-26T18:55:41.839334",
-      "age_seconds": 508600.332198,
+      "age_seconds": 508910.402589,
       "age_pretty": "5d ago",
       "credits_ok": true,
       "status": {
@@ -29,6 +29,18 @@
         "queued": 6
       },
       "state": "offline"
+    },
+    {
+      "anon": "75fbd0",
+      "workers": 1,
+      "mode": "forever",
+      "started": "2026-05-02T09:17:31.679713-07:00",
+      "heartbeat": "2026-05-02T09:17:31.679713-07:00",
+      "age_seconds": 0.56221,
+      "age_pretty": "0s ago",
+      "credits_ok": true,
+      "status": {},
+      "state": "online"
     }
   ]
 }
