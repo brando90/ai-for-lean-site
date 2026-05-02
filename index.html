@@ -679,6 +679,27 @@
             line-height: 1.55;
         }
         .worker-meta code { color: var(--fg); }
+        /* Host name is hidden by default; revealed only when Shift is held
+           AND the cursor is over a worker card. Operator convenience —
+           hostnames are still in pipeline_status.json, so this is not real
+           privacy, just unlisted. */
+        .host-reveal {
+            display: none;
+            margin-top: 0.45rem;
+            padding-top: 0.45rem;
+            border-top: 1px dashed var(--border);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--accent-bright);
+            user-select: text;
+            word-break: break-all;
+        }
+        body.shift-held .worker-card:hover .host-reveal {
+            display: block;
+        }
+        body.shift-held .worker-card {
+            cursor: help;
+        }
         .status-empty,
         .status-meta {
             font-size: 0.78rem;
@@ -1284,9 +1305,10 @@
                       </div>
                       <ul class="worker-meta">
                         <li>Threads: 1</li>
-                        <li>Heartbeat: 12m ago</li>
+                        <li>Heartbeat: 13m ago</li>
                         <li>Queue: —</li>
                       </ul>
+                      <div class="host-reveal" aria-hidden="true">DN0a1e8182.SUNet</div>
                     </div>
                     <div class="worker-card worker-online">
                       <div class="worker-head">
@@ -1296,9 +1318,10 @@
                       </div>
                       <ul class="worker-meta">
                         <li>Threads: 1</li>
-                        <li>Heartbeat: 3s ago</li>
+                        <li>Heartbeat: 52s ago</li>
                         <li>Queue: —</li>
                       </ul>
+                      <div class="host-reveal" aria-hidden="true">DN2t9cli.SUNet</div>
                     </div>
                     <div class="worker-card worker-degraded">
                       <div class="worker-head">
@@ -1311,6 +1334,7 @@
                         <li>Heartbeat: 18m ago</li>
                         <li>Queue: —</li>
                       </ul>
+                      <div class="host-reveal" aria-hidden="true">DN51s5b1.SUNet</div>
                     </div>
                     <div class="worker-card worker-offline">
                       <div class="worker-head">
@@ -1323,6 +1347,7 @@
                         <li>Heartbeat: 5d ago</li>
                         <li>Queue: passed: 44, queued: 6</li>
                       </ul>
+                      <div class="host-reveal" aria-hidden="true">DNa81a18c.SUNet</div>
                     </div>
                     <div class="worker-card worker-degraded">
                       <div class="worker-head">
@@ -1332,12 +1357,13 @@
                       </div>
                       <ul class="worker-meta">
                         <li>Threads: 1</li>
-                        <li>Heartbeat: 11m ago</li>
+                        <li>Heartbeat: 12m ago</li>
                         <li>Queue: —</li>
                       </ul>
+                      <div class="host-reveal" aria-hidden="true">Sanmis-MacBook-Air.local</div>
                     </div>
                   </div>
-                  <p class="status-meta">Snapshot 2026-05-02 16:30 UTC (auto-refreshes every 60s). <a href="https://github.com/brando90/agentic-nl-fl-maths">repo</a></p>
+                  <p class="status-meta">Snapshot 2026-05-02 16:31 UTC (auto-refreshes every 60s). <a href="https://github.com/brando90/agentic-nl-fl-maths">repo</a></p>
                 </div>
                 <!-- PIPELINE-STATUS-END -->
         </section>
@@ -1501,7 +1527,12 @@
                             '<li>Threads: ' + esc(w.workers) + '</li>' +
                             '<li>Heartbeat: ' + esc(w.age_pretty) + '</li>' +
                             '<li>Queue: ' + countsStr + '</li>' +
-                            '</ul></div>';
+                            '</ul>' +
+                            (w.hostname
+                                ? '<div class="host-reveal" aria-hidden="true">' +
+                                  esc(w.hostname) + '</div>'
+                                : '') +
+                            '</div>';
                     }
                     html += '</div>';
                 }
@@ -1526,6 +1557,20 @@
 
             refresh();
             setInterval(refresh, 60000);
+
+            // Shift-hover reveal of hostnames on worker cards.
+            // Adds body.shift-held while Shift is down; CSS shows
+            // .host-reveal only when shift-held AND .worker-card:hover.
+            // Cleared on blur so the page can't get stuck "revealed".
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Shift') document.body.classList.add('shift-held');
+            });
+            document.addEventListener('keyup', e => {
+                if (e.key === 'Shift') document.body.classList.remove('shift-held');
+            });
+            window.addEventListener('blur', () => {
+                document.body.classList.remove('shift-held');
+            });
         })();
     </script>
 </body>
