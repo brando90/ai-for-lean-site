@@ -688,11 +688,25 @@
             margin-top: 0.45rem;
             padding-top: 0.45rem;
             border-top: 1px dashed var(--border);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.78rem;
-            color: var(--accent-bright);
             user-select: text;
             word-break: break-all;
+        }
+        .host-reveal .host-nick {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--accent-bright);
+            margin-bottom: 0.15rem;
+        }
+        .host-reveal .host-cwd {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.74rem;
+            color: var(--fg);
+            margin-bottom: 0.1rem;
+        }
+        .host-reveal .host-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--fg-muted);
         }
         body.shift-held .worker-card:hover .host-reveal {
             display: block;
@@ -1293,7 +1307,7 @@
                     <div class="status-headline">
                       <span class="status-dot"></span>
                       <strong>Pipeline ONLINE</strong>
-                      <span class="status-summary">&mdash; 1 worker active (1 threads total)</span>
+                      <span class="status-summary">&mdash; 2 workers active (2 threads total)</span>
                     </div>
                   </div>
                   <div class="worker-grid">
@@ -1305,10 +1319,23 @@
                       </div>
                       <ul class="worker-meta">
                         <li>Threads: 1</li>
-                        <li>Heartbeat: 33m ago</li>
+                        <li>Heartbeat: 37m ago</li>
                         <li>Queue: —</li>
                       </ul>
-                      <div class="host-reveal" aria-hidden="true">DN0a1e8182.SUNet</div>
+                      <div class="host-reveal" aria-hidden="true"><div class="host-name">DN0a1e8182.SUNet</div></div>
+                    </div>
+                    <div class="worker-card worker-online">
+                      <div class="worker-head">
+                        <span class="status-dot"></span>
+                        Worker <code>89741e</code>
+                        <span class="worker-state">online</span>
+                      </div>
+                      <ul class="worker-meta">
+                        <li>Threads: 1</li>
+                        <li>Heartbeat: 3s ago</li>
+                        <li>Queue: —</li>
+                      </ul>
+                      <div class="host-reveal" aria-hidden="true"><div class="host-nick">laptop-mbp</div><div class="host-cwd">/Users/sanmikoyejo-mba-1/agentic-nl-fl-maths</div><div class="host-name">DN0a2333b4.SUNet</div></div>
                     </div>
                     <div class="worker-card worker-online">
                       <div class="worker-head">
@@ -1318,10 +1345,10 @@
                       </div>
                       <ul class="worker-meta">
                         <li>Threads: 1</li>
-                        <li>Heartbeat: 3s ago</li>
+                        <li>Heartbeat: 4m ago</li>
                         <li>Queue: —</li>
                       </ul>
-                      <div class="host-reveal" aria-hidden="true">DN2t9cli.SUNet</div>
+                      <div class="host-reveal" aria-hidden="true"><div class="host-name">DN2t9cli.SUNet</div></div>
                     </div>
                     <div class="worker-card worker-degraded">
                       <div class="worker-head">
@@ -1331,10 +1358,10 @@
                       </div>
                       <ul class="worker-meta">
                         <li>Threads: 1</li>
-                        <li>Heartbeat: 38m ago</li>
+                        <li>Heartbeat: 43m ago</li>
                         <li>Queue: —</li>
                       </ul>
-                      <div class="host-reveal" aria-hidden="true">DN51s5b1.SUNet</div>
+                      <div class="host-reveal" aria-hidden="true"><div class="host-name">DN51s5b1.SUNet</div></div>
                     </div>
                     <div class="worker-card worker-offline">
                       <div class="worker-head">
@@ -1347,7 +1374,7 @@
                         <li>Heartbeat: 5d ago</li>
                         <li>Queue: passed: 44, queued: 6</li>
                       </ul>
-                      <div class="host-reveal" aria-hidden="true">DNa81a18c.SUNet</div>
+                      <div class="host-reveal" aria-hidden="true"><div class="host-name">DNa81a18c.SUNet</div></div>
                     </div>
                     <div class="worker-card worker-degraded">
                       <div class="worker-head">
@@ -1357,13 +1384,13 @@
                       </div>
                       <ul class="worker-meta">
                         <li>Threads: 1</li>
-                        <li>Heartbeat: 32m ago</li>
+                        <li>Heartbeat: 37m ago</li>
                         <li>Queue: —</li>
                       </ul>
-                      <div class="host-reveal" aria-hidden="true">Sanmis-MacBook-Air.local</div>
+                      <div class="host-reveal" aria-hidden="true"><div class="host-name">Sanmis-MacBook-Air.local</div></div>
                     </div>
                   </div>
-                  <p class="status-meta">Snapshot 2026-05-02 16:51 UTC (auto-refreshes every 60s). <a href="https://github.com/brando90/agentic-nl-fl-maths">repo</a></p>
+                  <p class="status-meta">Snapshot 2026-05-02 16:56 UTC (auto-refreshes every 60s). <a href="https://github.com/brando90/agentic-nl-fl-maths">repo</a></p>
                 </div>
                 <!-- PIPELINE-STATUS-END -->
         </section>
@@ -1528,9 +1555,18 @@
                             '<li>Heartbeat: ' + esc(w.age_pretty) + '</li>' +
                             '<li>Queue: ' + countsStr + '</li>' +
                             '</ul>' +
-                            (w.hostname
+                            (w.hostname || w.cwd || w.nickname
                                 ? '<div class="host-reveal" aria-hidden="true">' +
-                                  esc(w.hostname) + '</div>'
+                                  (w.nickname
+                                      ? '<div class="host-nick">' + esc(w.nickname) + '</div>'
+                                      : '') +
+                                  (w.cwd
+                                      ? '<div class="host-cwd">' + esc(w.cwd) + '</div>'
+                                      : '') +
+                                  (w.hostname
+                                      ? '<div class="host-name">' + esc(w.hostname) + '</div>'
+                                      : '') +
+                                  '</div>'
                                 : '') +
                             '</div>';
                     }
