@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-05-03T01:09:41.506818+00:00",
+  "generated_at": "2026-05-03T01:14:51.384602+00:00",
   "overall_state": "online",
-  "summary": "1 worker active (1 threads total)",
+  "summary": "2 workers active (2 threads total)",
   "workers": [
     {
       "anon": "47c67b",
@@ -12,7 +12,7 @@
       "mode": "forever",
       "started": "2026-05-02T09:18:02.303102-07:00",
       "heartbeat": "2026-05-02T09:18:02.303102-07:00",
-      "age_seconds": 31899.200403,
+      "age_seconds": 32209.079396,
       "age_pretty": "8h ago",
       "credits_ok": true,
       "status": {},
@@ -27,8 +27,8 @@
       "mode": "forever",
       "started": "2026-05-02T18:09:37.744569-07:00",
       "heartbeat": "2026-05-02T18:09:37.744889-07:00",
-      "age_seconds": 3.758616,
-      "age_pretty": "3s ago",
+      "age_seconds": 313.637609,
+      "age_pretty": "5m ago",
       "credits_ok": true,
       "status": {},
       "state": "online"
@@ -42,7 +42,7 @@
       "mode": "forever",
       "started": "2026-05-02T09:51:02.474351-07:00",
       "heartbeat": "2026-05-02T09:51:02.475074-07:00",
-      "age_seconds": 29919.028431,
+      "age_seconds": 30228.907424,
       "age_pretty": "8h ago",
       "credits_ok": true,
       "status": {},
@@ -57,7 +57,7 @@
       "mode": "forever",
       "started": "2026-04-26T18:55:41.839308",
       "heartbeat": "2026-04-26T18:55:41.839334",
-      "age_seconds": 540839.664171,
+      "age_seconds": 541149.543164,
       "age_pretty": "6d ago",
       "credits_ok": true,
       "status": {
@@ -69,17 +69,17 @@
     {
       "anon": "75fbd0",
       "hostname": "Sanmis-MacBook-Air.local",
-      "cwd": "",
-      "nickname": "",
+      "cwd": "/Users/sanmikoyejo-mba-1/agentic-nl-fl-maths",
+      "nickname": "laptop-mbp",
       "workers": 1,
       "mode": "forever",
-      "started": "2026-05-02T09:18:45.442577-07:00",
-      "heartbeat": "2026-05-02T09:18:45.442577-07:00",
-      "age_seconds": 31856.060928,
-      "age_pretty": "8h ago",
+      "started": "2026-05-02T18:14:50.665745-07:00",
+      "heartbeat": "2026-05-02T18:14:50.665745-07:00",
+      "age_seconds": 0.716753,
+      "age_pretty": "0s ago",
       "credits_ok": true,
       "status": {},
-      "state": "offline"
+      "state": "online"
     }
   ]
 }
