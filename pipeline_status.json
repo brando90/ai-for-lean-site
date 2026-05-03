@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-05-03T01:16:29.143936+00:00",
+  "generated_at": "2026-05-03T01:21:46.056472+00:00",
   "overall_state": "online",
-  "summary": "3 workers active (3 threads total)",
+  "summary": "2 workers active (2 threads total)",
   "workers": [
     {
       "anon": "47c67b",
@@ -10,10 +10,10 @@
       "nickname": "laptop-mbp",
       "workers": 1,
       "mode": "forever",
-      "started": "2026-05-02T18:16:23.433351-07:00",
-      "heartbeat": "2026-05-02T18:16:23.433351-07:00",
-      "age_seconds": 5.706759,
-      "age_pretty": "5s ago",
+      "started": "2026-05-02T18:21:42.714513-07:00",
+      "heartbeat": "2026-05-02T18:21:42.714632-07:00",
+      "age_seconds": 3.337994,
+      "age_pretty": "3s ago",
       "credits_ok": true,
       "status": {},
       "state": "online"
@@ -27,11 +27,11 @@
       "mode": "forever",
       "started": "2026-05-02T18:09:37.744569-07:00",
       "heartbeat": "2026-05-02T18:09:37.744889-07:00",
-      "age_seconds": 411.395221,
-      "age_pretty": "6m ago",
+      "age_seconds": 728.307737,
+      "age_pretty": "12m ago",
       "credits_ok": true,
       "status": {},
-      "state": "online"
+      "state": "degraded"
     },
     {
       "anon": "df1206",
@@ -42,7 +42,7 @@
       "mode": "forever",
       "started": "2026-05-02T09:51:02.474351-07:00",
       "heartbeat": "2026-05-02T09:51:02.475074-07:00",
-      "age_seconds": 30326.665036,
+      "age_seconds": 30643.577552,
       "age_pretty": "8h ago",
       "credits_ok": true,
       "status": {},
@@ -57,7 +57,7 @@
       "mode": "forever",
       "started": "2026-04-26T18:55:41.839308",
       "heartbeat": "2026-04-26T18:55:41.839334",
-      "age_seconds": 541247.300776,
+      "age_seconds": 541564.213292,
       "age_pretty": "6d ago",
       "credits_ok": true,
       "status": {
@@ -75,8 +75,8 @@
       "mode": "forever",
       "started": "2026-05-02T18:15:52.454234-07:00",
       "heartbeat": "2026-05-02T18:15:52.454234-07:00",
-      "age_seconds": 36.685876,
-      "age_pretty": "36s ago",
+      "age_seconds": 353.598392,
+      "age_pretty": "5m ago",
       "credits_ok": true,
       "status": {},
       "state": "online"
