@@ -1008,7 +1008,8 @@
 
                     <div class="form-group">
                         <label for="conjecture">Conjecture<span class="req">*</span>
-                            <span class="hint">&mdash; state it as precisely as you can</span></label>
+                            <span class="hint">&mdash; state it as precisely as you can.
+                                <a href="#" id="standard-test-link">Try the standard test conjecture</a></span></label>
                         <textarea id="conjecture" name="conjecture" required
                             placeholder="For every integer n >= 1, the sum of the first n odd natural numbers equals n^2.&#10;&#10;Or use LaTeX: For all $n \geq 1$, $\sum_{k=1}^{n} (2k-1) = n^2$."></textarea>
                     </div>
@@ -1038,13 +1039,6 @@
                         <label for="is_open_conjecture">
                             This is an <strong>open conjecture</strong> (not a known theorem).
                             <span class="hint">&mdash; Open conjectures get priority; known results may be deferred to save compute.</span>
-                        </label>
-                    </div>
-
-                    <div class="consent-group">
-                        <input type="checkbox" id="is_private" name="is_private">
-                        <label for="is_private">
-                            Keep my submission <strong>private</strong> (do not show on the public leaderboard).
                         </label>
                     </div>
 
@@ -1675,6 +1669,25 @@
           .catch(err => {
             console.warn('api-endpoint.json fetch failed; using fallback action:', form.action, err);
           });
+      })();
+
+      // Standard test conjecture — single source of truth, also used by
+      // scripts/synthetic_probe.py for the deeper "actually-submit" smoke
+      // test mode. Keep these strings in sync if you change them.
+      (function bindStandardTest() {
+        const link = document.getElementById('standard-test-link');
+        const textarea = document.getElementById('conjecture');
+        if (!link || !textarea) return;
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          textarea.value = 'If K is compact then K is closed.';
+          const ctx = document.getElementById('context');
+          if (ctx && !ctx.value.trim()) {
+            ctx.value = 'Standard test conjecture: in a Hausdorff space, every compact subset is closed (Munkres, Topology, §26).';
+          }
+          textarea.focus();
+          textarea.dispatchEvent(new Event('input', { bubbles: true }));
+        });
       })();
     </script>
 </body>
