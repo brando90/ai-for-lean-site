@@ -1657,7 +1657,7 @@
         const form = document.getElementById('conjecture-form');
         if (!form) return;
         const bust = Date.now();
-        fetch('api-endpoint.json?v=' + bust, { cache: 'no-store' })
+        const p = fetch('api-endpoint.json?v=' + bust, { cache: 'no-store' })
           .then(r => r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status)))
           .then(cfg => {
             if (cfg && cfg.submit_url) {
@@ -1668,7 +1668,15 @@
           })
           .catch(err => {
             console.warn('api-endpoint.json fetch failed; using fallback action:', form.action, err);
+            form.dataset.endpointBound = 'fallback';
           });
+
+        form.addEventListener('submit', function(e) {
+          if (form.dataset.endpointBound === 'false') {
+            e.preventDefault();
+            p.finally(() => form.submit());
+          }
+        });
       })();
 
       // Standard test conjecture — single source of truth, also used by
