@@ -1,5 +1,5 @@
 {
   "submit_url": "https://designer-poet-missile-contribute.trycloudflare.com/api/submit",
-  "health_url": "https://designer-poet-missile-contribute.trycloudflare.com/healthz",
+  "health_url": "https://designer-poet-missile-contribute.trycloudflare.com/health",
   "updated_at": "2026-05-04T04:30:00Z"
 }
