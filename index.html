@@ -981,7 +981,16 @@
             </p>
 
             <div class="form-card">
-                <form id="conjecture-form" action="https://designer-poet-missile-contribute.trycloudflare.com/api/submit" method="POST" enctype="multipart/form-data">
+                <!--
+                  IMPORTANT: do NOT hand-edit `action="..."` here.
+                  The action is set on page load from `api-endpoint.json`,
+                  which is auto-published by `scripts/submission_server.py
+                  --tunnel`. Hardcoding the URL is what caused the silent
+                  outage on 2026-05-03 (issue #106). The `action` below is
+                  a fallback only — the inline script overrides it as soon
+                  as the JSON loads.
+                -->
+                <form id="conjecture-form" action="https://designer-poet-missile-contribute.trycloudflare.com/api/submit" method="POST" enctype="multipart/form-data" data-endpoint-bound="false">
                     <!-- Honeypot (spam filter) -->
                     <input type="text" name="_honey" style="display:none">
 
@@ -1640,6 +1649,33 @@
                 document.body.classList.remove('shift-held');
             });
         })();
+    </script>
+
+    <!--
+      Bind the submission form to whatever URL is currently published in
+      api-endpoint.json. Written by scripts/submission_server.py on every
+      cloudflared restart. Cache-busted with a timestamp so a stale CDN
+      copy can't pin us to a dead tunnel. Falls back to the form's literal
+      action="..." if the fetch fails (with a console warning).
+    -->
+    <script>
+      (function bindEndpoint() {
+        const form = document.getElementById('conjecture-form');
+        if (!form) return;
+        const bust = Date.now();
+        fetch('api-endpoint.json?v=' + bust, { cache: 'no-store' })
+          .then(r => r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status)))
+          .then(cfg => {
+            if (cfg && cfg.submit_url) {
+              form.action = cfg.submit_url;
+              form.dataset.endpointBound = 'true';
+              console.log('Form action bound to:', cfg.submit_url, '(updated:', cfg.updated_at + ')');
+            }
+          })
+          .catch(err => {
+            console.warn('api-endpoint.json fetch failed; using fallback action:', form.action, err);
+          });
+      })();
     </script>
 </body>
 </html>
