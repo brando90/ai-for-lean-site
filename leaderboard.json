@@ -321,8 +321,8 @@
   },
   {
     "id": 9,
-    "name": "The Riemann zeta function evaluated at \u22121 equals \u22121/12.",
-    "statement": "The Riemann zeta function evaluated at \u22121 equals \u22121/12.",
+    "name": "The analytically continued Riemann zeta function satisfies \u03b6(\u22121) = \u22121/12.",
+    "statement": "The analytically continued Riemann zeta function satisfies \u03b6(\u22121) = \u22121/12.",
     "verdict": "proved",
     "detailed_verdict": "formally_proved",
     "is_open_conjecture": true,
