@@ -1,39 +1,27 @@
 {
-<<<<<<< Updated upstream
-  "generated_at": "2026-05-17T20:10:40.413883+00:00",
-=======
-  "generated_at": "2026-05-17T20:13:39.976934+00:00",
->>>>>>> Stashed changes
+  "generated_at": "2026-05-17T20:15:55.433439+00:00",
   "overall_state": "online",
-  "summary": "1 worker active (3 threads total)",
+  "summary": "1 worker active (1 threads total)",
   "workers": [
     {
       "anon": "47c67b",
-      "hostname": "DN0a1e8182.SUNet",
-      "cwd": "/Users/sanmikoyejo-mba-1/agentic-nl-fl-maths",
-      "nickname": "laptop-mbp",
       "workers": 1,
       "mode": "forever",
       "started": "2026-05-03T14:49:35.259543-07:00",
       "heartbeat": "2026-05-03T14:49:35.295977-07:00",
-<<<<<<< Updated upstream
-      "age_seconds": 1203665.108198,
-=======
-      "age_seconds": 1203844.679239,
->>>>>>> Stashed changes
+      "age_seconds": 1203980.125646,
       "age_pretty": "13d ago",
       "credits_ok": true,
       "status": {},
       "state": "offline"
     },
     {
-<<<<<<< Updated upstream
       "anon": "0e2920",
       "workers": 1,
       "mode": "forever",
       "started": "2026-05-12T11:20:51.373590-07:00",
       "heartbeat": "2026-05-12T11:20:51.373590-07:00",
-      "age_seconds": 438589.030585,
+      "age_seconds": 438904.048033,
       "age_pretty": "5d ago",
       "credits_ok": true,
       "status": {},
@@ -45,7 +33,7 @@
       "mode": "forever",
       "started": "2026-05-16T14:03:12.749675-07:00",
       "heartbeat": "2026-05-16T14:03:12.752264-07:00",
-      "age_seconds": 83247.651911,
+      "age_seconds": 83562.669359,
       "age_pretty": "23h ago",
       "credits_ok": true,
       "status": {},
@@ -57,7 +45,7 @@
       "mode": "forever",
       "started": "2026-05-10T15:23:23.830207-07:00",
       "heartbeat": "2026-05-10T15:23:23.830207-07:00",
-      "age_seconds": 596836.573968,
+      "age_seconds": 597151.591416,
       "age_pretty": "6d ago",
       "credits_ok": true,
       "status": {},
@@ -69,7 +57,7 @@
       "mode": "forever",
       "started": "2026-05-06T16:42:06.055083-07:00",
       "heartbeat": "2026-05-06T16:42:06.055702-07:00",
-      "age_seconds": 937714.348473,
+      "age_seconds": 938029.365921,
       "age_pretty": "10d ago",
       "credits_ok": true,
       "status": {},
@@ -81,7 +69,7 @@
       "mode": "forever",
       "started": "2026-05-10T15:13:17.429016-07:00",
       "heartbeat": "2026-05-10T15:13:17.429016-07:00",
-      "age_seconds": 597442.975159,
+      "age_seconds": 597757.992607,
       "age_pretty": "6d ago",
       "credits_ok": true,
       "status": {},
@@ -93,7 +81,7 @@
       "mode": "forever",
       "started": "2026-05-08T15:20:59.998940-07:00",
       "heartbeat": "2026-05-08T15:20:59.999027-07:00",
-      "age_seconds": 769780.405148,
+      "age_seconds": 770095.422596,
       "age_pretty": "8d ago",
       "credits_ok": true,
       "status": {},
@@ -105,28 +93,19 @@
       "mode": "forever",
       "started": "2026-05-06T16:56:34.299731-07:00",
       "heartbeat": "2026-05-06T16:56:34.300407-07:00",
-      "age_seconds": 936846.103768,
+      "age_seconds": 937161.121216,
       "age_pretty": "10d ago",
       "credits_ok": true,
       "status": {},
       "state": "offline"
     },
     {
-=======
->>>>>>> Stashed changes
       "anon": "89741e",
-      "hostname": "DN0a2333b4.SUNet",
-      "cwd": "/Users/sanmikoyejo-mba-1/agentic-nl-fl-maths",
-      "nickname": "laptop-mbp",
       "workers": 1,
       "mode": "forever",
       "started": "2026-05-02T18:09:37.744569-07:00",
       "heartbeat": "2026-05-02T18:09:37.744889-07:00",
-<<<<<<< Updated upstream
-      "age_seconds": 1278062.659286,
-=======
-      "age_seconds": 1278242.230327,
->>>>>>> Stashed changes
+      "age_seconds": 1278377.676734,
       "age_pretty": "14d ago",
       "credits_ok": true,
       "status": {},
@@ -134,31 +113,23 @@
     },
     {
       "anon": "df1206",
-      "hostname": "DN2t9cli.SUNet",
-      "cwd": "",
-      "nickname": "",
       "workers": 1,
       "mode": "forever",
       "started": "2026-05-02T09:51:02.474351-07:00",
       "heartbeat": "2026-05-02T09:51:02.475074-07:00",
-<<<<<<< Updated upstream
-      "age_seconds": 1307977.929101,
-=======
-      "age_seconds": 1308157.500142,
->>>>>>> Stashed changes
+      "age_seconds": 1308292.946549,
       "age_pretty": "15d ago",
       "credits_ok": true,
       "status": {},
       "state": "offline"
     },
     {
-<<<<<<< Updated upstream
       "anon": "07cf1b",
       "workers": 1,
       "mode": "forever",
       "started": "2026-05-10T12:09:03.462259-07:00",
       "heartbeat": "2026-05-10T12:09:03.467138-07:00",
-      "age_seconds": 608496.937037,
+      "age_seconds": 608811.954485,
       "age_pretty": "7d ago",
       "credits_ok": true,
       "status": {},
@@ -170,25 +141,19 @@
       "mode": "forever",
       "started": "2026-05-13T08:34:23.780752-07:00",
       "heartbeat": "2026-05-13T08:34:23.780752-07:00",
-      "age_seconds": 362176.623423,
+      "age_seconds": 362491.640871,
       "age_pretty": "4d ago",
       "credits_ok": true,
       "status": {},
       "state": "offline"
     },
     {
-=======
->>>>>>> Stashed changes
       "anon": "bc3ba5",
-      "hostname": "DN51s5b1.SUNet",
-      "cwd": "/Users/sanmikoyejo-mba-1/agentic-nl-fl-maths",
-      "nickname": "laptop-mbp",
       "workers": 1,
       "mode": "forever",
-<<<<<<< Updated upstream
       "started": "2026-05-07T18:00:39.771176-07:00",
       "heartbeat": "2026-05-07T18:00:39.771269-07:00",
-      "age_seconds": 846600.632906,
+      "age_seconds": 846915.650354,
       "age_pretty": "9d ago",
       "credits_ok": true,
       "status": {},
@@ -200,7 +165,7 @@
       "mode": "forever",
       "started": "2026-05-15T10:26:25.057865-07:00",
       "heartbeat": "2026-05-15T10:26:25.057992-07:00",
-      "age_seconds": 182655.346183,
+      "age_seconds": 182970.363631,
       "age_pretty": "2d ago",
       "credits_ok": true,
       "status": {},
@@ -210,10 +175,10 @@
       "anon": "fff26a",
       "workers": 1,
       "mode": "forever",
-      "started": "2026-05-17T13:10:33.569338-07:00",
-      "heartbeat": "2026-05-17T13:10:33.570493-07:00",
-      "age_seconds": 6.833682,
-      "age_pretty": "6s ago",
+      "started": "2026-05-17T13:15:47.197515-07:00",
+      "heartbeat": "2026-05-17T13:15:47.199589-07:00",
+      "age_seconds": 8.222034,
+      "age_pretty": "8s ago",
       "credits_ok": true,
       "status": {},
       "state": "online"
@@ -224,7 +189,7 @@
       "mode": "forever",
       "started": "2026-05-08T09:57:38.536930-07:00",
       "heartbeat": "2026-05-08T09:57:38.536930-07:00",
-      "age_seconds": 789181.867245,
+      "age_seconds": 789496.884693,
       "age_pretty": "9d ago",
       "credits_ok": true,
       "status": {},
@@ -236,7 +201,7 @@
       "mode": "forever",
       "started": "2026-05-10T15:42:58.176221-07:00",
       "heartbeat": "2026-05-10T15:42:58.176221-07:00",
-      "age_seconds": 595662.227954,
+      "age_seconds": 595977.245402,
       "age_pretty": "6d ago",
       "credits_ok": true,
       "status": {},
@@ -248,7 +213,7 @@
       "mode": "forever",
       "started": "2026-05-14T15:58:43.730555-07:00",
       "heartbeat": "2026-05-14T15:58:43.730555-07:00",
-      "age_seconds": 249116.67362,
+      "age_seconds": 249431.691068,
       "age_pretty": "2d ago",
       "credits_ok": true,
       "status": {},
@@ -260,7 +225,7 @@
       "mode": "forever",
       "started": "2026-05-16T11:18:20.470782-07:00",
       "heartbeat": "2026-05-16T11:18:20.474963-07:00",
-      "age_seconds": 93139.929212,
+      "age_seconds": 93454.94666,
       "age_pretty": "1d ago",
       "credits_ok": true,
       "status": {},
@@ -272,7 +237,7 @@
       "mode": "forever",
       "started": "2026-05-07T18:57:18.863225-07:00",
       "heartbeat": "2026-05-07T18:57:18.863225-07:00",
-      "age_seconds": 843201.54095,
+      "age_seconds": 843516.558398,
       "age_pretty": "9d ago",
       "credits_ok": true,
       "status": {},
@@ -284,29 +249,19 @@
       "mode": "forever",
       "started": "2026-05-07T21:29:23.730183-07:00",
       "heartbeat": "2026-05-07T21:29:23.730283-07:00",
-      "age_seconds": 834076.673892,
+      "age_seconds": 834391.69134,
       "age_pretty": "9d ago",
-=======
-      "started": "2026-05-04T07:26:55.662432-07:00",
-      "heartbeat": "2026-05-04T07:26:55.663128-07:00",
-      "age_seconds": 1144004.312088,
-      "age_pretty": "13d ago",
->>>>>>> Stashed changes
       "credits_ok": true,
       "status": {},
       "state": "offline"
     },
     {
       "anon": "4e7e11",
-      "hostname": "DNa81a18c.SUNet",
-      "cwd": "/Users/brandomiranda/agentic-nl-fl-maths",
-      "nickname": "",
       "workers": 3,
       "mode": "forever",
-<<<<<<< Updated upstream
       "started": "2026-04-26T18:55:41.839308",
       "heartbeat": "2026-04-26T18:55:41.839334",
-      "age_seconds": 1818898.564841,
+      "age_seconds": 1819213.582289,
       "age_pretty": "21d ago",
       "credits_ok": true,
       "status": {
@@ -314,31 +269,15 @@
         "queued": 6
       },
       "state": "offline"
-=======
-      "started": "2026-05-17T13:13:36.585702-07:00",
-      "heartbeat": "2026-05-17T13:13:36.585729-07:00",
-      "age_seconds": 3.389487,
-      "age_pretty": "3s ago",
-      "credits_ok": true,
-      "status": {
-        "passed": 53,
-        "queued": 10
-      },
-      "state": "online"
->>>>>>> Stashed changes
     },
     {
       "anon": "75fbd0",
-      "hostname": "Sanmis-MacBook-Air.local",
-      "cwd": "/Users/sanmikoyejo-mba-1/agentic-nl-fl-maths",
-      "nickname": "laptop-mbp",
       "workers": 1,
       "mode": "forever",
-<<<<<<< Updated upstream
       "started": "2026-05-16T14:12:56.438209-07:00",
       "heartbeat": "2026-05-16T14:12:56.438209-07:00",
-      "age_seconds": 82663.965966,
-      "age_pretty": "22h ago",
+      "age_seconds": 82978.983414,
+      "age_pretty": "23h ago",
       "credits_ok": true,
       "status": {},
       "state": "offline"
@@ -349,14 +288,8 @@
       "mode": "forever",
       "started": "2026-05-10T08:46:59.698506-07:00",
       "heartbeat": "2026-05-10T08:46:59.698598-07:00",
-      "age_seconds": 620620.705577,
+      "age_seconds": 620935.723025,
       "age_pretty": "7d ago",
-=======
-      "started": "2026-05-02T18:15:52.454234-07:00",
-      "heartbeat": "2026-05-02T18:15:52.454234-07:00",
-      "age_seconds": 1277867.520982,
-      "age_pretty": "14d ago",
->>>>>>> Stashed changes
       "credits_ok": true,
       "status": {},
       "state": "offline"
